@@ -44,7 +44,6 @@ w_names=[[[[[0 for col in range(Col)] for row in range(Row)] for o in range(Obje
 y=[[[[[0 for col in range(Col)] for row in range(Row)] for o in range(Object)] for n in range(V)]for i in range(V)] 
 # y_names[i][n][o][row][col]
 y_names=[[[[[0 for col in range(Col)] for row in range(Row)] for o in range(Object)] for n in range(V)]for i in range(V)] 
-
 # Defines c[i][row][col] unit cost    
 c=[[[0 for col in range(Col)] for row in range(Row)] for i in range(V)] 
 # Defines s[o] size of object o   
@@ -150,6 +149,25 @@ def build_model():
     # print("Y names")              
     # pprint.pprint(y_names)                
     
+    """   Benefits  """
+    build_b1benefit()
+#     build_b2benefit()
+#     build_b3benefit()
+
+    """   Costs  """
+    build_c1cost()
+#     build_c2cost()
+#     build_c3cost()
+#     
+    """ Constraints   """   
+    build_constraintA()       
+    build_constraintB()       
+    
+    """ CPLEX Model """   
+    cplex_model()
+
+
+def build_b1benefit():
     """ B1:  Benefit   """ 
     for i in range(V):
         for o in range(Object): 
@@ -165,7 +183,12 @@ def build_model():
     
 #     print("--- B1 Gain coefficients ---")              
 #     pprint.pprint(b1_coeff)
+
+
+# def build_b2benefit():
+# def build_b3benefit():
     
+def build_c1cost:
     """ C1:  Cost   """
     for i in range(V):
         for o in range(Object):
@@ -180,13 +203,10 @@ def build_model():
     
 #     print("----- C1 Cost coefficients----")
 #     pprint.pprint(c1_coeff)
-  
-    """ Constraints   """   
-    build_constraintA()       
-    build_constraintB()       
+
+# def build_c2cost():
+# def build_c3cost():    
     
-    """ CPLEX Model """   
-    cplex_model()
     
 def build_constraintA():       
     """
@@ -349,7 +369,7 @@ my_rhs = [20.0, 30.0, 0.0]
 my_rownames = ["r1", "r2", "r3"]
 my_sense = "LLE"
 
-def temp_populatebyrow(prob):
+def populatebyrow(prob):
     prob.objective.set_sense(prob.objective.sense.maximize)
 
     prob.variables.add(obj=my_temp_obj, lb=my_temp_lb, ub=my_temp_ub, types=my_temp_ctype,
@@ -358,23 +378,23 @@ def temp_populatebyrow(prob):
     prob.linear_constraints.add(lin_expr=my_temp_rows, senses=my_temp_sense,
                                 rhs=my_temp_rhs, names=my_temp_rownames)
     
-def populatebyrow(prob):
-    prob.objective.set_sense(prob.objective.sense.maximize)
-
-    prob.variables.add(obj=my_obj, lb=my_lb, ub=my_ub, types=my_ctype,
-                       names=my_colnames)
-
-    rows = [[["x1", "x2", "x3", "x4"], [-1.0, 1.0, 1.0, 10.0]],
-            [["x1", "x2", "x3"], [1.0, -3.0, 1.0]],
-            [["x2", "x4"], [1.0, -3.5]]]
-
-    prob.linear_constraints.add(lin_expr=rows, senses=my_sense,
-                                rhs=my_rhs, names=my_rownames)
+# def populatebyrow(prob):
+#     prob.objective.set_sense(prob.objective.sense.maximize)
+# 
+#     prob.variables.add(obj=my_obj, lb=my_lb, ub=my_ub, types=my_ctype,
+#                        names=my_colnames)
+# 
+#     rows = [[["x1", "x2", "x3", "x4"], [-1.0, 1.0, 1.0, 10.0]],
+#             [["x1", "x2", "x3"], [1.0, -3.0, 1.0]],
+#             [["x2", "x4"], [1.0, -3.5]]]
+# 
+#     prob.linear_constraints.add(lin_expr=rows, senses=my_sense,
+#                                 rhs=my_rhs, names=my_rownames)
 
 def solver():
     try:
         my_prob = cplex.Cplex()
-        handle = temp_populatebyrow(my_prob)
+        handle = populatebyrow(my_prob)
         my_prob.solve()
     except CplexError as exc:
         print(exc)
