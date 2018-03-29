@@ -6,24 +6,19 @@ import pprint
 import cplex
 from cplex.exceptions import CplexError
 
-#***** Example******
-# V=1
-# Object=10
-# k=[[0 for i in range(V)] for o in range(Object)] 
-# for i in range(Object):
-#     for j in range(V): 
-#         k[i][j]="k"+str(i)+","+str(j)
-# pprint.pprint (k)
-
-#  B1 coefficients
+# CDN providers
 global V 
 V=2
+# Mobile operators
 global M
 M=1
+# Objects
 global Object  
 Object=2
+# Rows of the Grid
 global Row 
 Row=2
+# Columns of the Grid
 global Col
 Col=2
 
@@ -78,27 +73,37 @@ c3_coeff={}
 
 
 def initialize_tables():
-    # Defines r[i][o][row][m]: rate of requests
-
-#     Operator 0
+    """ Rate of requests r[i][o][row][m]: """
+#   i=0, m=0
     r[0][0][0][0]=10
     r[0][0][1][0]=10
     r[0][1][0][0]=30
     r[0][1][1][0]=30
-
-#     Operator 1
+#     i=0, m=1
 #     r[0][0][0][1]=2
 #     r[0][0][1][1]=2
 #     r[0][1][0][1]=40
 #     r[0][1][1][1]=40
+#   i=0, m=0
+    r[1][0][0][0]=20
+    r[1][0][1][0]=20
+    r[1][1][0][0]=20
+    r[1][1][1][0]=20
+#     i=0, m=1
+#     r[1][0][0][1]=2
+#     r[1][0][1][1]=2
+#     r[1][1][0][1]=40
+#     r[1][1][1][1]=40
     
     
+    
+    """ Rate of requests rt[i][n][o]: """
 #     rt[i][n][o]
-    rt[0][1][0]=10
+    rt[0][1][0]=50
     rt[0][1][1]=20
    
-    rt[1][0][0]=330
-    rt[1][0][1]=440
+    rt[1][0][0]=10
+    rt[1][0][1]=5
     
 #     rt[0][2][0]=1
 #     rt[0][2][1]=2
@@ -110,29 +115,28 @@ def initialize_tables():
 #     rt[2][1][0]=3
 #     rt[2][1][1]=8
     
-    # b[i][o][rowS][rowD][col][m] - row 0 gain
-    # Mobile operator 0  
+    """ Benefit b[i][o][rowS][rowD][col][m]: """
 #      obj[0],rowS=0, m=0
-    b[0][0][0][0][0][0]=4
-    b[0][0][0][0][1][0]=4
-    b[0][0][0][1][0][0]=2
-    b[0][0][0][1][1][0]=2
+    b[0][0][0][0][0][0]=40
+    b[0][0][0][0][1][0]=40
+    b[0][0][0][1][0][0]=20
+    b[0][0][0][1][1][0]=20
 #      rowS=1
-    b[0][0][1][0][0][0]=2
-    b[0][0][1][0][1][0]=2
-    b[0][0][1][1][0][0]=1
-    b[0][0][1][1][1][0]=1
+    b[0][0][1][0][0][0]=20
+    b[0][0][1][0][1][0]=20
+    b[0][0][1][1][0][0]=10
+    b[0][0][1][1][1][0]=10
     
 #      obj=1, rowS=0
-    b[0][1][0][0][0][0]=4
-    b[0][1][0][0][1][0]=4
-    b[0][1][0][1][0][0]=2
-    b[0][1][0][1][1][0]=2
+    b[0][1][0][0][0][0]=40
+    b[0][1][0][0][1][0]=40
+    b[0][1][0][1][0][0]=20
+    b[0][1][0][1][1][0]=20
 #      obj=1, rowS=1
-    b[0][1][1][0][0][0]=2
-    b[0][1][1][0][1][0]=2
-    b[0][1][1][1][0][0]=1
-    b[0][1][1][1][1][0]=1
+    b[0][1][1][0][0][0]=20
+    b[0][1][1][0][1][0]=20
+    b[0][1][1][1][0][0]=10
+    b[0][1][1][1][1][0]=10
     
     # Mobile operator 1    
 #     #obj[0],rowS=0, m=1
@@ -156,6 +160,59 @@ def initialize_tables():
 #     b[0][1][1][0][1][1]=2
 #     b[0][1][1][1][0][1]=20
 #     b[0][1][1][1][1][1]=10
+
+#     CDN 1- Mobile operator 0  
+#      obj[0],rowS=0, m=0
+    b[1][0][0][0][0][0]=1
+    b[1][0][0][0][1][0]=1
+    b[1][0][0][1][0][0]=1
+    b[1][0][0][1][1][0]=1
+#      rowS=1
+    b[1][0][1][0][0][0]=1
+    b[1][0][1][0][1][0]=1
+    b[1][0][1][1][0][0]=1
+    b[1][0][1][1][1][0]=1
+    
+#      obj=1, rowS=0
+    b[1][1][0][0][0][0]=1
+    b[1][1][0][0][1][0]=1
+    b[1][1][0][1][0][0]=1
+    b[1][1][0][1][1][0]=1
+#     obj=1, rowS=1
+    b[1][1][1][0][0][0]=1
+    b[1][1][1][0][1][0]=1
+    b[1][1][1][1][0][0]=1
+    b[1][1][1][1][1][0]=1
+    
+    # Mobile operator 1    
+#     #obj[0],rowS=0, m=1
+#     b[0][0][0][0][0][1]=8
+#     b[0][0][0][0][1][1]=6
+#     b[0][0][0][1][0][1]=4
+#     b[0][0][0][1][1][1]=2
+# #      obj[0],rowS=1, m=1
+#     b[0][0][1][0][0][1]=10
+#     b[0][0][1][0][1][1]=8
+#     b[0][0][1][1][0][1]=6
+#     b[0][0][1][1][1][1]=4
+#     
+# #      obj[1],rowS=0, m=1
+#     b[0][1][0][0][0][1]=5
+#     b[0][1][0][0][1][1]=2
+#     b[0][1][0][1][0][1]=10
+#     b[0][1][0][1][1][1]=20
+# #      obj[1],rowS=1, m=1
+#     b[0][1][1][0][0][1]=5
+#     b[0][1][1][0][1][1]=2
+#     b[0][1][1][1][0][1]=20
+#     b[0][1][1][1][1][1]=10
+
+
+    
+    
+    
+    
+    
     # s[o]:  Object size
     s[0]=5
     s[1]=10
@@ -264,10 +321,10 @@ def initialize_tables():
      
      
     # c[i][row][col] Placement COST
-    c[0][0][0]=2
-    c[0][0][1]=1
-    c[0][1][0]=4
-    c[0][1][1]=2
+    c[0][0][0]=200
+    c[0][0][1]=100
+    c[0][1][0]=400
+    c[0][1][1]=200
     
     c[1][0][0]=2
     c[1][0][1]=1
@@ -369,8 +426,8 @@ def build_b1_benefit():
                                     b1_coeff[w_key]=str(coef)
                                     b1_coeff[y_key]=str(coef)
                                     
-    print("--- B1 Gain coefficients ---")              
-    pprint.pprint(b1_coeff)
+#     print("--- B1 Gain coefficients ---")              
+#     pprint.pprint(b1_coeff)
 
 
 def build_b2_benefit():
@@ -388,8 +445,8 @@ def build_b2_benefit():
                             w_key=w_names[n][i][o][row][col]    
                             b2_coeff[w_key]=str(coef)    
    
-    print("--- B2 Gain coefficients ---")              
-    pprint.pprint(b2_coeff)
+#     print("--- B2 Gain coefficients ---")              
+#     pprint.pprint(b2_coeff)
 
 def build_b3_benefit():
    
@@ -406,8 +463,8 @@ def build_b3_benefit():
                             y_key=y_names[n][i][o][row][col]    
                             b3_coeff[y_key]=str(coef)    
     
-    print("--- B3 Gain coefficients ---")              
-    pprint.pprint(b3_coeff)           
+#     print("--- B3 Gain coefficients ---")              
+#     pprint.pprint(b3_coeff)           
 
    
 def build_c1_cost():
@@ -423,8 +480,8 @@ def build_c1_cost():
                     key=x_names[i][o][row][col]    
                     c1_coeff[key]=str(coef)    
     
-    print("----- C1 Cost coefficients----")
-    pprint.pprint(c1_coeff)
+#     print("----- C1 Cost coefficients----")
+#     pprint.pprint(c1_coeff)
     
     
 
@@ -443,8 +500,8 @@ def build_c2_cost():
                             w_key=w_names[i][n][o][row][col]    
                             c2_coeff[w_key]=str(coef)   
                             
-    print("----- C2 Cost coefficients----")
-    pprint.pprint(c2_coeff)
+#     print("----- C2 Cost coefficients----")
+#     pprint.pprint(c2_coeff)
                              
 def build_c3_cost():
     """Cost of asking content from CDN n """
@@ -461,8 +518,8 @@ def build_c3_cost():
                             y_key=y_names[i][n][o][row][col]    
                             c3_coeff[y_key]=str(coef)      
 
-    print("----- C3 Cost coefficients----")
-    pprint.pprint(c3_coeff)
+#     print("----- C3 Cost coefficients----")
+#     pprint.pprint(c3_coeff)
     
         
 def build_constraintA():       
@@ -555,14 +612,17 @@ my_sense=""
 def build_cplex_model():
     temp_obj_coeff={}
     
-    """ Objective function """
+    """ B1: Objective function """
     for b1_key,b1_value in b1_coeff.items():
         if b1_key in temp_obj_coeff:
+#             print ("B1 key: found")
             current_value=int(temp_obj_coeff[b1_key])
             temp_obj_coeff[b1_key]=current_value+int(b1_value)
         else:
+#             print ("B1 key: new key entered"+b1_key)
             temp_obj_coeff[b1_key]=int(b1_value)
-
+            
+            
 #     for b2_key,b2_value in b2_coeff.items():
 #         if b2_key in temp_obj_coeff:
 #             current_value=int(temp_obj_coeff[b2_key])
@@ -577,13 +637,18 @@ def build_cplex_model():
 #         else:
 #             temp_obj_coeff[b3_key]=int(b3_value)      
 #             
-#     for c1_key,c1_value in c1_coeff.items():
-#         if c1_key in temp_obj_coeff:
-#             current_value=int(temp_obj_coeff[c1_key])
-#             temp_obj_coeff[c1_key]=current_value-int(c1_value)
-#         else:
-#             temp_obj_coeff[c1_key]=-1*int(c1_value) 
-#     
+    for c1_key,c1_value in c1_coeff.items():
+        if c1_key in temp_obj_coeff:
+            current_value=int(temp_obj_coeff[c1_key])
+            new_value=current_value-int(c1_value)
+            temp_obj_coeff[c1_key]=new_value
+#             print ("C1 key: Found "+c1_key)
+#             print ("Old Value: "+str(current_value) +" -- New value: "+str(new_value))
+        else:
+#             print ("Did not found the c1_key. New key entered:"+c1_key)
+            value=-1*int(c1_value)
+            temp_obj_coeff[c1_key]=value 
+             
 #     for c2_key,c2_value in c2_coeff.items():
 #         if c2_key in temp_obj_coeff:
 #             current_value=int(temp_obj_coeff[c2_key])
@@ -667,7 +732,6 @@ def build_cplex_model():
 #     print("My rhs with B")
 #     pprint.pprint(my_rhs)
 
-    print("Build C")
     """ Constraint C set"""
     for i in range(V):
         for o in range(Object):
@@ -690,12 +754,12 @@ def build_cplex_model():
                             my_rows.append(constraintc_row)
                             
                             
-    print("My row names with C")
-    pprint.pprint(my_rownames)
-    print("My constraints rows with B")
-    pprint.pprint(my_rows)
-    print("My rhs with C")
-    pprint.pprint(my_rhs)
+#     print("My row names with C")
+#     pprint.pprint(my_rownames)
+#     print("My constraints rows with B")
+#     pprint.pprint(my_rows)
+#     print("My rhs with C")
+#     pprint.pprint(my_rhs)
                             
     """ My sense """
     global my_sense
@@ -758,11 +822,43 @@ def solver():
     slack = my_prob.solution.get_linear_slacks()
     x = my_prob.solution.get_values()
 
-    for j in range(numrows):
-        print("Row %d:  Slack = %10f" % (j, slack[j]))
+#     for j in range(numrows):
+#         print("Row %d:  Slack = %10f" % (j, slack[j]))
+    result_set={}
     for j in range(numcols):
-        print("Column %d:  Value = %10f" % (j, x[j]))
-
+        if x[j]==1.0:
+            print("Column %d -variable %s = %10f" % (j, my_colnames[j],x[j]))
+            result_set[my_colnames[j]]=x[j]
+            
+            
+    pprint.pprint(result_set)
+    process_results(result_set)
+    
+def process_results(results_set):
+    for key,value in results_set.items():
+        if key[0]=="w":
+            i=int(key[2])
+            n=int(key[5])
+            o=int(key[8])
+            r=int(key[11])
+            c=int(key[14])
+            w[i][n][o][r][c]=value
+            print (key,w[i][n][o][r][c])
+        if key[0]=="y":
+            i=int(key[2])
+            n=int(key[5])
+            o=int(key[8])
+            r=int(key[11])
+            c=int(key[14])
+            y[i][n][o][r][c]=value
+            print (key,y[i][n][o][r][c])
+        if key[0]=="x":
+            i=int(key[2])
+            o=int(key[5])
+            r=int(key[8])
+            c=int(key[11])
+            x[i][o][r][c]=value
+            print (key,x[i][o][r][c])
 if __name__ == "__main__":
     initialize_tables()
     build_model() 
