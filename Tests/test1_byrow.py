@@ -93,13 +93,13 @@ def lpex1():
     print("Solution value  = ", my_prob.solution.get_objective_value())
     slack = my_prob.solution.get_linear_slacks()
     pi = my_prob.solution.get_dual_values()
-    x = my_prob.solution.get_values()
+    solution_values = my_prob.solution.get_values()
     dj = my_prob.solution.get_reduced_costs()
     for i in range(numrows):
         print("Row %d:  Slack = %10f  Pi = %10f" % (i, slack[i], pi[i]))
     for j in range(numcols):
         print("Column %d:  Value = %10f Reduced cost = %10f" %
-              (j, x[j], dj[j]))
+              (j, solution_values[j], dj[j]))
 
     my_prob.write("lpex1.lp")
 

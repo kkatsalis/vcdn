@@ -2,9 +2,10 @@ from __future__ import print_function
 
 import sys
 import pprint
-
+import numpy as np
 import cplex
 from cplex.exceptions import CplexError
+
 
 # CDN providers
 global V 
@@ -22,7 +23,12 @@ Row=2
 global Col
 Col=2
 
-# Defines request rate r[i][o][row][m]
+global slots_number
+slots_number=10
+
+# Defines objects popularity weights popularity_weights[o]
+popularity_weights=[0 for o in range(Objects)]
+# Defines request rate r[i][o][row][m]. This is updated at each slot
 r=[[[[0 for m in range(M)]for row in range(Row)] for o in range(Objects)] for i in range(V)] 
 # Defines request rate from others r[i][n][o]
 rt=[[[0 for o in range(Objects)] for n in range(V)] for i in range(V)] 
@@ -114,7 +120,8 @@ def initialize_tables():
 #     rt[2][0][1]=4
 #     rt[2][1][0]=3
 #     rt[2][1][1]=8
-    
+
+def initialize_benefit_b():    
     """ Benefit b[i][o][rowS][rowD][col][m]: """
 #      obj[0],rowS=0, m=0
     b[0][0][0][0][0][0]=40
@@ -211,14 +218,16 @@ def initialize_tables():
     
     
     
+def initialize_objects_size():    
     
-    
-    # s[o]:  Objects size
+    """ s[o]:  Objects size"""
     s[0]=5
     s[1]=10
     
-    
-#     psi[i][n][row][col]
+def initialize_benefit_psi():    
+
+    """ psi[i][n][row][col] """
+
 #   i=0 
     psi[0][1][0][0]=3
     psi[0][1][0][1]=3
@@ -250,8 +259,11 @@ def initialize_tables():
 #     psi[2][1][0][1]=20
 #     psi[2][1][1][0]=45
 #     psi[2][1][1][1]=15
+
+
+
     
-    
+def initialize_benefit_h():    
 #   h[i][n][o][row][col]
     #  i=0,o=0   
     h[0][1][0][0][0]=3   
@@ -318,7 +330,7 @@ def initialize_tables():
 #     h[2][1][1][1][0]=23   
 #     h[2][1][1][1][1]=2   
      
-     
+def initialize_placement_cost():     
      
     # c[i][row][col] Placement COST
     c[0][0][0]=200
@@ -335,6 +347,9 @@ def initialize_tables():
 #     c[2][0][1]=1
 #     c[2][1][0]=4
 #     c[2][1][1]=2
+
+
+def initialize_constraintA_bounds():
 #     constraintA_bound[i][row][col]
     constraintA_bound[0][0][0]=10
     constraintA_bound[0][0][1]=20
@@ -350,8 +365,58 @@ def initialize_tables():
 #     constraintA_bound[2][0][1]=10
 #     constraintA_bound[2][1][0]=30
 #     constraintA_bound[2][1][1]=20    
+
+def initialize_simulator():
+    build_variables_names()
+    initialize_objects_size()
+    initialize_request_rates()
+    initialize_benefit_b()
+    initialize_benefit_psi()
+    initialize_benefit_h()
+    initialize_placement_cost()
+    initialize_constraintA_bounds() 
+    initialize_objects_weights()
     
+    
+def initialize_objects_weights():    
+    """ initializes objects' popularity weights according to zipf distribution"""
+    zipf_parameter = 2.5
+    zipf_object_popularity=np.random.zipf(zipf_parameter,Objects)
+    popularity_list=zipf_object_popularity.tolist()
+    popularity_list_sum=sum(popularity_list) 
+    
+    for i in range(Objects):
+        popularity_weights[i]=popularity_list[i]/popularity_list_sum
+    
+    # pprint.pprint(popularity_list)
+    # print("sum",popularity_list_sum)    
+    pprint.pprint(popularity_weights)
+    
+    
+
+
+def initialize_request_rates():
+    print()
+
 def build_model():
+             
+    """   Benefits  """
+    build_b1_benefit()
+    build_b2_benefit()
+    build_b3_benefit()
+
+    """   Costs  """
+    build_c1_cost()
+    build_c2_cost()
+    build_c3_cost()
+#     
+    """ Constraints   """  
+   
+    build_constraintA()       
+    build_constraintB()       
+    build_constraintC()
+   
+def build_variables_names():
     """ XNAMES: x_names[i][o][row][col]"""
     index=0
     for i in range(V):
@@ -385,24 +450,7 @@ def build_model():
                         y_names[i][n][o][row][col]="y["+str(i)+"]["+str(n)+"]["+str(o)+"]["+str(row)+"]["+str(col)+"]"
                         index=index+1
 #     print("Y names")              
-#     pprint.pprint(y_names)                
-    
-    """   Benefits  """
-    build_b1_benefit()
-    build_b2_benefit()
-    build_b3_benefit()
-
-    """   Costs  """
-    build_c1_cost()
-    build_c2_cost()
-    build_c3_cost()
-#     
-    """ Constraints   """   
-    build_constraintA()       
-    build_constraintB()       
-    build_constraintC()
-   
-
+#     pprint.pprint(y_names)      
 
 def build_b1_benefit():
     """ B1:  Benefit   """ 
@@ -626,21 +674,23 @@ def build_cplex_model():
 #             print ("B1 key: new key entered"+b1_key)
             temp_obj_coeff[b1_key]=int(b1_value)
             
-            
-#     for b2_key,b2_value in b2_coeff.items():
-#         if b2_key in temp_obj_coeff:
-#             current_value=int(temp_obj_coeff[b2_key])
-#             temp_obj_coeff[b2_key]=current_value+int(b2_value)
-#         else:
-#             temp_obj_coeff[b1_key]=int(b2_value)
-#             
-#     for b3_key,b3_value in b3_coeff.items():
-#         if b3_key in temp_obj_coeff:
-#             current_value=int(temp_obj_coeff[b3_key])
-#             temp_obj_coeff[b3_key]=current_value+int(b3_value)
-#         else:
-#             temp_obj_coeff[b3_key]=int(b3_value)      
-#             
+    """ B2: Objective function """        
+    for b2_key,b2_value in b2_coeff.items():
+        if b2_key in temp_obj_coeff:
+            current_value=int(temp_obj_coeff[b2_key])
+            temp_obj_coeff[b2_key]=current_value+int(b2_value)
+        else:
+            temp_obj_coeff[b1_key]=int(b2_value)
+    
+    """ B3: Objective function """         
+    for b3_key,b3_value in b3_coeff.items():
+        if b3_key in temp_obj_coeff:
+            current_value=int(temp_obj_coeff[b3_key])
+            temp_obj_coeff[b3_key]=current_value+int(b3_value)
+        else:
+            temp_obj_coeff[b3_key]=int(b3_value)      
+#   
+    """ C1: Cost function """          
     for c1_key,c1_value in c1_coeff.items():
         if c1_key in temp_obj_coeff:
             current_value=int(temp_obj_coeff[c1_key])
@@ -652,30 +702,32 @@ def build_cplex_model():
 #             print ("Did not found the c1_key. New key entered:"+c1_key)
             value=-1*int(c1_value)
             temp_obj_coeff[c1_key]=value 
-             
-#     for c2_key,c2_value in c2_coeff.items():
-#         if c2_key in temp_obj_coeff:
-#             current_value=int(temp_obj_coeff[c2_key])
-#             temp_obj_coeff[c2_key]=current_value-int(c2_value)
-#         else:
-#             temp_obj_coeff[c2_key]=-1*int(c2_value)
-#     
-#     for c3_key,c3_value in c3_coeff.items():
-#         if c3_key in temp_obj_coeff:
-#             current_value=int(temp_obj_coeff[c3_key])
-#             temp_obj_coeff[c3_key]=current_value-int(c3_value)
-#         else:
-#             temp_obj_coeff[c3_key]=-1*int(c3_value)            
+     
+    """ C2: Cost function """                  
+    for c2_key,c2_value in c2_coeff.items():
+        if c2_key in temp_obj_coeff:
+            current_value=int(temp_obj_coeff[c2_key])
+            temp_obj_coeff[c2_key]=current_value-int(c2_value)
+        else:
+            temp_obj_coeff[c2_key]=-1*int(c2_value)
+    
+    """ C3: Cost function """          
+    for c3_key,c3_value in c3_coeff.items():
+        if c3_key in temp_obj_coeff:
+            current_value=int(temp_obj_coeff[c3_key])
+            temp_obj_coeff[c3_key]=current_value-int(c3_value)
+        else:
+            temp_obj_coeff[c3_key]=-1*int(c3_value)            
     
     """ Prepare the final list"""    
     for key,value in temp_obj_coeff.items():    
         my_obj.append(int(value))  
         my_colnames.append(key)
                  
-    print("my_obj:")                
-    pprint.pprint(my_obj)                
-    print("my_colnames:")                
-    pprint.pprint(my_colnames)                
+#     print("my_obj:")                
+#     pprint.pprint(my_obj)                
+#     print("my_colnames:")                
+#     pprint.pprint(my_colnames)                
     
     """Variables Bounds """
     global my_ctype
@@ -782,15 +834,6 @@ def build_cplex_model():
 # my_rownames = ["r1", "r2", "r3"]
 # my_sense = "LLE"
 
-def populatebyrow(prob):
-    prob.objective.set_sense(prob.objective.sense.maximize)
-
-    prob.variables.add(obj=my_obj, lb=my_lb, ub=my_ub, types=my_ctype,
-                       names=my_colnames)
-
-    prob.linear_constraints.add(lin_expr=my_rows, senses=my_sense,
-                                rhs=my_rhs, names=my_rownames)
-    
 # def populatebyrow(prob):
 #     prob.objective.set_sense(prob.objective.sense.maximize)
 # 
@@ -803,6 +846,16 @@ def populatebyrow(prob):
 # 
 #     prob.linear_constraints.add(lin_expr=rows, senses=my_sense,
 #                                 rhs=my_rhs, names=my_rownames)
+
+def populatebyrow(prob):
+    prob.objective.set_sense(prob.objective.sense.maximize)
+
+    prob.variables.add(obj=my_obj, lb=my_lb, ub=my_ub, types=my_ctype,
+                       names=my_colnames)
+
+    prob.linear_constraints.add(lin_expr=my_rows, senses=my_sense,
+                                rhs=my_rhs, names=my_rownames)
+    
 
 def solver():
     try:
@@ -822,7 +875,6 @@ def solver():
 
     numcols = my_prob.variables.get_num()
     numrows = my_prob.linear_constraints.get_num()
-
     slack = my_prob.solution.get_linear_slacks()
     solution_values = my_prob.solution.get_values()
 
@@ -835,7 +887,7 @@ def solver():
             result_set[my_colnames[j]]=solution_values[j]
             
             
-    pprint.pprint(result_set)
+#     pprint.pprint(result_set)
     process_results(result_set)
     
 def process_results(results_set):
@@ -864,8 +916,19 @@ def process_results(results_set):
             x[i][o][r][c]=value
             print (key,x[i][o][r][c])
             
+            
+def simulator():
+    
+    initialize_simulator()
+    slot=0
+    while slot<slots_number:
+        print ("slot:",slot)
+        slot=slot+1
+
+                 
 if __name__ == "__main__":
     initialize_tables()
+    simulator()
     build_model() 
     build_cplex_model()
     solver()

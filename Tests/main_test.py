@@ -2,9 +2,9 @@ import pprint
 
 #***** Example******
 # V=1
-# Object=10
-# k=[[0 for i in range(V)] for o in range(Object)] 
-# for i in range(Object):
+# Objects=10
+# k=[[0 for i in range(V)] for o in range(Objects)] 
+# for i in range(Objects):
 #     for j in range(V): 
 #         k[i][j]="k"+str(i)+","+str(j)
 # pprint.pprint (k)
@@ -12,31 +12,31 @@ import pprint
 #  B1 coefficients
 V=1
 M=2
-Object=2
+Objects=2
 Row=2
 Col=2
 
 # Defines request rate r[i][o][row][m]
-r=[[[[0 for m in range(M)]for row in range(Row)] for o in range(Object)] for i in range(V)] 
+r=[[[[0 for m in range(M)]for row in range(Row)] for o in range(Objects)] for i in range(V)] 
 # Defines b[i][o][row][col][m]   
-b=[[[[[0 for m in range(M)] for col in range(Col)] for row in range(Row)] for o in range(Object)] for i in range(V)]    
-# Defines x[i][o][row][col]   
-x=[[[[0 for col in range(Col)] for row in range(Row)] for o in range(Object)] for i in range(V)] 
+b=[[[[[0 for m in range(M)] for col in range(Col)] for row in range(Row)] for o in range(Objects)] for i in range(V)]    
+# Defines solution_values[i][o][row][col]   
+solution_values=[[[[0 for col in range(Col)] for row in range(Row)] for o in range(Objects)] for i in range(V)] 
 # x_names[i][o][row][col]
-x_names=[[[[0 for col in range(Col)] for row in range(Row)] for o in range(Object)] for i in range(V)] 
+x_names=[[[[0 for col in range(Col)] for row in range(Row)] for o in range(Objects)] for i in range(V)] 
 # Defines w[i][n][o][row][col]   
-w=[[[[[0 for col in range(Col)] for row in range(Row)] for o in range(Object)] for n in range(V)]for i in range(V)] 
+w=[[[[[0 for col in range(Col)] for row in range(Row)] for o in range(Objects)] for n in range(V)]for i in range(V)] 
 # Defines w_names[i][n][o][row][col]
-w_names=[[[[[0 for col in range(Col)] for row in range(Row)] for o in range(Object)] for n in range(V)]for i in range(V)] 
+w_names=[[[[[0 for col in range(Col)] for row in range(Row)] for o in range(Objects)] for n in range(V)]for i in range(V)] 
 # Defines y[i][n][o][row][col]   
-y=[[[[[0 for col in range(Col)] for row in range(Row)] for o in range(Object)] for n in range(V)]for i in range(V)] 
+y=[[[[[0 for col in range(Col)] for row in range(Row)] for o in range(Objects)] for n in range(V)]for i in range(V)] 
 # y_names[i][n][o][row][col]
-y_names=[[[[[0 for col in range(Col)] for row in range(Row)] for o in range(Object)] for n in range(V)]for i in range(V)] 
+y_names=[[[[[0 for col in range(Col)] for row in range(Row)] for o in range(Objects)] for n in range(V)]for i in range(V)] 
 
 # Defines c[i][row][col] unit cost    
 c=[[[0 for col in range(Col)] for row in range(Row)] for i in range(V)] 
 # Defines s[o] size of object o   
-s=[0 for o in range(Object)]
+s=[0 for o in range(Objects)]
 # Defines s[i][r][c] size of available storage in row r and column c for cdn i   
 sirc=[[[0 for col in range(Col)] for row in range(Row)] for i in range(V)]
 # Defines constraintA_bound[i][row][col]
@@ -44,9 +44,9 @@ constraintA_bound=[[[5+col*5 for col in range(Col)] for row in range(Row)] for i
 # Defines constraintA_coeff[i][row][col]
 constraintA_coeff=[[[0 for col in range(Col)] for row in range(Row)] for i in range(V)]
 # Defines constraintB_bound[i][o]
-constraintB_bound=[[1 for o in range(Object)] for i in range(V)]
+constraintB_bound=[[1 for o in range(Objects)] for i in range(V)]
 # Defines constraintB_coeff[i][o]
-constraintB_coeff=[[0 for o in range(Object)] for i in range(V)]
+constraintB_coeff=[[0 for o in range(Objects)] for i in range(V)]
 
 
 # Defines r[i][o][row][m]: rate of requests
@@ -83,7 +83,7 @@ b[0][1][1][0][1]=2
 b[0][1][1][1][0]=2
 b[0][1][1][1][1]=1
 
-# s[o]:  Object size
+# s[o]:  Objects size
 s[0]=5
 s[1]=10
 
@@ -101,10 +101,10 @@ c[0][1][1]=2
 # x_names[i][o][row][col]
 index=0
 for i in range(V):
-    for o in range(Object): 
+    for o in range(Objects): 
         for row in range(Row):
             for col in range(Col):
-                x_names[i][o][row][col]="x["+str(i)+"]["+str(o)+"]["+str(row)+"]["+str(col)+"]"
+                x_names[i][o][row][col]="solution_values["+str(i)+"]["+str(o)+"]["+str(row)+"]["+str(col)+"]"
                 index=index+1
 # print("X names")              
 # pprint.pprint(x_names)                
@@ -116,7 +116,7 @@ for i in range(V):
 index=0
 for i in range(V):
     for n in range(V):
-        for o in range(Object): 
+        for o in range(Objects): 
             for row in range(Row):
                 for col in range(Col):
                     w_names[i][n][o][row][col]="w["+str(i)+"]["+str(n)+"]["+str(o)+"]["+str(row)+"]["+str(col)+"]"
@@ -131,7 +131,7 @@ for i in range(V):
 index=0
 for i in range(V):
     for n in range(V):
-        for o in range(Object): 
+        for o in range(Objects): 
             for row in range(Row):
                 for col in range(Col):
                     y_names[i][n][o][row][col]="y["+str(i)+"]["+str(n)+"]["+str(o)+"]["+str(row)+"]["+str(col)+"]"
@@ -144,7 +144,7 @@ for i in range(V):
 # ****************************** # 
 b1_coeff={}
 for i in range(V):
-    for o in range(Object): 
+    for o in range(Objects): 
         for row in range(Row):
             for col in range(Col):
                 coef=0
@@ -164,7 +164,7 @@ pprint.pprint(b1_coeff)
 
 c1_coeff={}
 for i in range(V):
-    for o in range(Object):
+    for o in range(Objects):
         size=s[o] 
         for row in range(Row):
             for col in range(Col):
@@ -190,7 +190,7 @@ for i in range(V):
         for col in range(Col):
             constraintA_coeff[i][row][col]={}
 
-            for o in range(Object):
+            for o in range(Objects):
                 xcoef=s[o]
                 key=x_names[i][o][row][col]
                 (constraintA_coeff[i][row][col])[key]=xcoef   
@@ -217,7 +217,7 @@ pprint.pprint(constraintA_coeff)
 
 
 for i in range(V):
-    for o in range(Object):
+    for o in range(Objects):
         constraintB_coeff[i][o]={}
         for row in range(Row):
             for col in range(Col):
