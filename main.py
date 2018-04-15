@@ -16,51 +16,51 @@ M=1
 global Objects  
 Objects=2
 # Rows of the Grid
-global Row 
-Row=2
+global Rows 
+Rows=2
 # Columns of the Grid
-global Col
-Col=2
+global Cols
+Cols=2
 
 # Defines request rate r[i][o][row][m]
-r=[[[[0 for m in range(M)]for row in range(Row)] for o in range(Objects)] for i in range(V)] 
+r=[[[[0 for m in range(M)]for row in range(Rows)] for o in range(Objects)] for i in range(V)] 
 # Defines request rate from others r[i][n][o]
 rt=[[[0 for o in range(Objects)] for n in range(V)] for i in range(V)] 
 # Defines benefit b[i][o][row][col][m]   
-b=[[[[[[0 for m in range(M)] for col in range(Col)]for rowD in range(Row)] for rowS in range(Row)] for o in range(Objects)] for i in range(V)]    
+b=[[[[[[0 for m in range(M)] for col in range(Cols)]for rowD in range(Rows)] for rowS in range(Rows)] for o in range(Objects)] for i in range(V)]    
 # Defines benefit psi[i][n][o][row][col]   
-psi=[[[[0 for col in range(Col)] for row in range(Row)] for n in range(V)]for i in range(V)] 
+psi=[[[[0 for col in range(Cols)] for row in range(Rows)] for n in range(V)]for i in range(V)] 
 # Defines benefit h[i][n][o][row][col]   
-h=[[[[[0 for col in range(Col)] for row in range(Row)] for o in range(Objects)] for n in range(V)]for i in range(V)] 
+h=[[[[[0 for col in range(Cols)] for row in range(Rows)] for o in range(Objects)] for n in range(V)]for i in range(V)] 
 # Defines solution_values[i][o][row][col]   
-x=[[[[0 for col in range(Col)] for row in range(Row)] for o in range(Objects)] for i in range(V)] 
+x=[[[[0 for col in range(Cols)] for row in range(Rows)] for o in range(Objects)] for i in range(V)] 
 # x_names[i][o][row][col]
-x_names=[[[[0 for col in range(Col)] for row in range(Row)] for o in range(Objects)] for i in range(V)] 
+x_names=[[[[0 for col in range(Cols)] for row in range(Rows)] for o in range(Objects)] for i in range(V)] 
 # Defines w[i][n][o][row][col]   
-w=[[[[[0 for col in range(Col)] for row in range(Row)] for o in range(Objects)] for n in range(V)]for i in range(V)] 
+w=[[[[[0 for col in range(Cols)] for row in range(Rows)] for o in range(Objects)] for n in range(V)]for i in range(V)] 
 # Defines w_names[i][n][o][row][col]
-w_names=[[[[[0 for col in range(Col)] for row in range(Row)] for o in range(Objects)] for n in range(V)]for i in range(V)] 
+w_names=[[[[[0 for col in range(Cols)] for row in range(Rows)] for o in range(Objects)] for n in range(V)]for i in range(V)] 
 # Defines y[i][n][o][row][col]   
-y=[[[[[0 for col in range(Col)] for row in range(Row)] for o in range(Objects)] for n in range(V)]for i in range(V)] 
+y=[[[[[0 for col in range(Cols)] for row in range(Rows)] for o in range(Objects)] for n in range(V)]for i in range(V)] 
 # y_names[i][n][o][row][col]
-y_names=[[[[[0 for col in range(Col)] for row in range(Row)] for o in range(Objects)] for n in range(V)]for i in range(V)] 
+y_names=[[[[[0 for col in range(Cols)] for row in range(Rows)] for o in range(Objects)] for n in range(V)]for i in range(V)] 
 # Defines c[i][row][col] unit cost    
-c=[[[0 for col in range(Col)] for row in range(Row)] for i in range(V)] 
+c=[[[0 for col in range(Cols)] for row in range(Rows)] for i in range(V)] 
 # Defines s[o] size of object o   
 s=[0 for o in range(Objects)]
 
 # Defines constraintA_bound[i][row][col]
-constraintA_bound=[[[0 for col in range(Col)] for row in range(Row)] for i in range(V)]
+constraintA_bound=[[[0 for col in range(Cols)] for row in range(Rows)] for i in range(V)]
 # Defines constraintA_coeff[i][row][col]
-constraintA_coeff=[[[0 for col in range(Col)] for row in range(Row)] for i in range(V)]
+constraintA_coeff=[[[0 for col in range(Cols)] for row in range(Rows)] for i in range(V)]
 # Defines constraintB_bound[i][o]
 constraintB_bound=[[1 for o in range(Objects)] for i in range(V)]
 # Defines constraintB_coeff[i][o]
 constraintB_coeff=[[0 for o in range(Objects)] for i in range(V)]
 # Defines constraintC_bound[i][o]
-constraintC_bound=[[[[[0 for col in range(Col)] for row in range(Row)] for o in range(Objects)]for n in range(V)]for i in range(V)]
+constraintC_bound=[[[[[0 for col in range(Cols)] for row in range(Rows)] for o in range(Objects)]for n in range(V)]for i in range(V)]
 # Defines constraintC_coeff[i][o]
-constraintC_coeff=[[[[[0 for col in range(Col)] for row in range(Row)] for o in range(Objects)]for n in range(V)]for i in range(V)]
+constraintC_coeff=[[[[[0 for col in range(Cols)] for row in range(Rows)] for o in range(Objects)]for n in range(V)]for i in range(V)]
 
 # Defines benefit_coefficients dictionary
 b1_coeff={}
@@ -356,8 +356,8 @@ def build_model():
     index=0
     for i in range(V):
         for o in range(Objects): 
-            for row in range(Row):
-                for col in range(Col):
+            for row in range(Rows):
+                for col in range(Cols):
                     x_names[i][o][row][col]="x["+str(i)+"]["+str(o)+"]["+str(row)+"]["+str(col)+"]"
                     index=index+1
 #     print("X names")              
@@ -368,8 +368,8 @@ def build_model():
     for i in range(V):
         for n in range(V):
             for o in range(Objects): 
-                for row in range(Row):
-                    for col in range(Col):
+                for row in range(Rows):
+                    for col in range(Cols):
                         w_names[i][n][o][row][col]="w["+str(i)+"]["+str(n)+"]["+str(o)+"]["+str(row)+"]["+str(col)+"]"
                         index=index+1
 #     print("W names")              
@@ -380,8 +380,8 @@ def build_model():
     for i in range(V):
         for n in range(V):
             for o in range(Objects): 
-                for row in range(Row):
-                    for col in range(Col):
+                for row in range(Rows):
+                    for col in range(Cols):
                         y_names[i][n][o][row][col]="y["+str(i)+"]["+str(n)+"]["+str(o)+"]["+str(row)+"]["+str(col)+"]"
                         index=index+1
 #     print("Y names")              
@@ -409,10 +409,10 @@ def build_b1_benefit():
     coef=0
     for i in range(V):
         for o in range(Objects): 
-            for rowD in range(Row):
-                for col in range(Col):
+            for rowD in range(Rows):
+                for col in range(Cols):
                     coef=0
-                    for rowS in range(Row):
+                    for rowS in range(Rows):
                         for m in range(M):
                             req=r[i][o][rowS][m]
                             gain=b[i][o][rowS][rowD][col][m]
@@ -435,8 +435,8 @@ def build_b2_benefit():
     for i in range(V):
         for o in range(Objects):
             size=s[o] 
-            for row in range(Row):
-                for col in range(Col):
+            for row in range(Rows):
+                for col in range(Cols):
                     for n in range(V):
                         if n!=i:
                             coef=0
@@ -452,8 +452,8 @@ def build_b3_benefit():
    
     for i in range(V):
         for o in range(Objects):
-            for row in range(Row):
-                for col in range(Col):
+            for row in range(Rows):
+                for col in range(Cols):
                     for n in range(V):
                         if n!=i:
                             rate=rt[n][i][o]
@@ -472,8 +472,8 @@ def build_c1_cost():
     for i in range(V):
         for o in range(Objects):
             size=s[o] 
-            for row in range(Row):
-                for col in range(Col):
+            for row in range(Rows):
+                for col in range(Cols):
                     coef=0
                     cost=c[i][row][col]
                     coef=size*cost
@@ -494,8 +494,8 @@ def build_c2_cost():
     for i in range(V):
         for o in range(Objects):
             size=s[o] 
-            for row in range(Row):
-                for col in range(Col):
+            for row in range(Rows):
+                for col in range(Cols):
                     for n in range(V):
                         if n!=i:
                             coef=0
@@ -511,8 +511,8 @@ def build_c3_cost():
     """Cost of asking content from CDN n """
     for i in range(V):
         for o in range(Objects):
-            for row in range(Row):
-                for col in range(Col):
+            for row in range(Rows):
+                for col in range(Cols):
                     for n in range(V):
                         if n!=i:
                             rate=rt[i][n][o]
@@ -531,8 +531,8 @@ def build_constraintA():
         Constraint A: Capacity constraints
     """
     for i in range(V):
-        for row in range(Row):
-            for col in range(Col):
+        for row in range(Rows):
+            for col in range(Cols):
                 global constraintA_coeff
                 constraintA_coeff[i][row][col]={}
     
@@ -564,8 +564,8 @@ def build_constraintB():
     for i in range(V):
         for o in range(Objects):
             constraintB_coeff[i][o]={}
-            for row in range(Row):
-                for col in range(Col):
+            for row in range(Rows):
+                for col in range(Cols):
                     key=x_names[i][o][row][col]
                     (constraintB_coeff[i][o])[key]=1
                     for n in range(V):
@@ -585,8 +585,8 @@ def build_constraintC():
     """ Constraint C: In order to ask for an object from CDN i he needs to have it"""
     for i in range(V):
             for o in range(Objects):
-                for row in range(Row):
-                    for col in range(Col):
+                for row in range(Rows):
+                    for col in range(Cols):
                         for n in range(V):
                             if n!=i:
                                 constraintC_coeff[i][n][o][row][col]={}
@@ -696,8 +696,8 @@ def build_cplex_model():
 
     """ Constraint A set"""
     for i in range(V):
-        for row in range(Row):
-            for col in range(Col):
+        for row in range(Rows):
+            for col in range(Cols):
                 constrainta_row=[]
                 lista_coeff_key=[]
                 lista_coeff_value=[]
@@ -739,8 +739,8 @@ def build_cplex_model():
     """ Constraint C set"""
     for i in range(V):
         for o in range(Objects):
-            for row in range(Row):
-                for col in range(Col):
+            for row in range(Rows):
+                for col in range(Cols):
                     for n in range(V):
                         if n!=i:
                             constraintc_row=[]
@@ -827,7 +827,7 @@ def solver():
     solution_values = my_prob.solution.get_values()
 
 #     for j in range(numrows):
-#         print("Row %d:  Slack = %10f" % (j, slack[j]))
+#         print("Rows %d:  Slack = %10f" % (j, slack[j]))
     result_set={}
     for j in range(numcols):
         if solution_values[j]==1.0:
