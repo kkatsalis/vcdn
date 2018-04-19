@@ -15,7 +15,7 @@ global M
 M=1
 # Objects
 global Objects  
-Objects=40
+Objects=5
 # Rows of the Grid
 global Rows 
 Rows=1
@@ -33,8 +33,6 @@ sim_r=[[[[[0 for m in range(M)]for row in range(Rows)] for o in range(Objects)] 
 sim_rt=[[[[0 for o in range(Objects)] for n in range(V)] for i in range(V)] for s in range(slots_number)]
 # Defines request rate r[i][o][row][m]. This is updated at each slot
 r=[[[[0 for m in range(M)]for row in range(Rows)] for o in range(Objects)] for i in range(V)] 
-# Defines request rate from others r[i][n][o]
-rt=[[[0 for o in range(Objects)] for n in range(V)] for i in range(V)] 
 
 # Defines benefit b[i][o][row][col][m]   
 b=[[[[[[0 for m in range(M)] for col in range(Cols)]for rowD in range(Rows)] for rowS in range(Rows)] for o in range(Objects)] for i in range(V)]    
@@ -73,7 +71,6 @@ b3_coeff={}
 # Defines c1_coefficients dictionary
 c1_coeff={}
 c2_coeff={}
-c3_coeff={}
 
 # Defines constraintA_bound[i][row][col]
 constraintA_bound=[[[0 for col in range(Cols)] for row in range(Rows)] for i in range(V)]
@@ -113,7 +110,7 @@ def initialize_benefit_b():
                             if distance==0:
                                 b[i][o][rowS][rowD][col][m]=benefit_edge
                             else:
-                                benefit =benefit_edge*0.9/distance
+                                benefit =(i+benefit_edge*0.9)/distance
                                 b[i][o][rowS][rowD][col][m]=max(1,benefit)
     
     
@@ -137,7 +134,7 @@ def initialize_benefit_psi():
 def initialize_benefit_h():    
    
     """ h[i][n][o][row][col] """
-    benefit_edge=10   
+    benefit_edge=1   
     for i in range(V):
         for n in range(V):
             for o in range(Objects):
@@ -295,7 +292,6 @@ def build_model():
     """   Costs  """
     build_c1_cost()   
     build_c2_cost()
-    build_c3_cost()
 #     
     """ Constraints   """  
     build_constraintA()       
@@ -350,19 +346,23 @@ def build_b2_benefit():
 #     pprint.pprint(b2_coeff)
 
 def build_b3_benefit():
-   
+#    r[i][o][row][m]
     for i in range(V):
         for o in range(Objects):
             for row in range(Rows):
                 for col in range(Cols):
                     for n in range(V):
                         if n!=i:
-                            rate=rt[n][i][o]
-                            coef=0
-                            benefit=h[i][n][o][row][col]
-                            coef=rate*benefit
-                            y_key=y_names[n][i][o][row][col]    
-                            b3_coeff[y_key]=str(coef)    
+                            
+                            for m in range(M):
+                                rate=r[n][o][row][m]
+                                coef=0
+                                benefit=h[i][n][o][row][col]
+                                coef=rate*benefit
+                                y_key=y_names[n][i][o][row][col]    
+                             
+                                b3_coeff[y_key]=str(coef)    
+
     
 #     print("--- B3 Gain coefficients ---")              
 #     pprint.pprint(b3_coeff)           
@@ -380,8 +380,19 @@ def build_c1_cost():
                     x_key=x_names[i][o][row][col]    
                     c1_coeff[x_key]=str(coef)    
                     for n in range(V):
-                        w_key=w_names[n][i][o][row][col]    
-                        c1_coeff[w_key]=str(coef)  
+                        if n!=i:
+                        #   w parameters
+                            coef=0
+                            cost=psi[n][i][row][col]
+                            coef=size*cost
+                            w_key=w_names[i][n][o][row][col]    
+                            c1_coeff[w_key]=str(coef)   
+                        #   y parameters
+                            coef=0
+                            cost=h[n][i][o][row][col]
+                            coef=cost
+                            y_key=y_names[i][n][o][row][col]    
+                            c1_coeff[y_key]=str(coef)  
                                         
 #     print("----- C1 Cost coefficients----")
 #     pprint.pprint(c1_coeff)
@@ -392,42 +403,23 @@ def build_c1_cost():
     
 
 def build_c2_cost():
-    """Cost of placing content in CDN n """
+    """Cost of placing content from CDN n """
     for i in range(V):
         for o in range(Objects):
             size=s[o] 
             for row in range(Rows):
                 for col in range(Cols):
+                    cost=c[i][row][col]
                     for n in range(V):
                         if n!=i:
                             coef=0
-                            cost=psi[n][i][row][col]
                             coef=size*cost
-                            w_key=w_names[i][n][o][row][col]    
+                            w_key=w_names[n][i][o][row][col]    
                             c2_coeff[w_key]=str(coef)   
                             
 #     print("----- C2 Cost coefficients----")
 #     pprint.pprint(c2_coeff)
-                             
-def build_c3_cost():
-    """Cost of asking content from CDN n """
-    for i in range(V):
-        for o in range(Objects):
-            for row in range(Rows):
-                for col in range(Cols):
-                    for n in range(V):
-                        if n!=i:
-                            rate=rt[i][n][o]
-                            coef=0
-                            cost=h[n][i][o][row][col]
-                            coef=rate*cost
-                            y_key=y_names[i][n][o][row][col]    
-                            c3_coeff[y_key]=str(coef)      
-
-#     print("----- C3 Cost coefficients----")
-#     pprint.pprint(c3_coeff)
-    
-        
+                                    
 def build_constraintA():       
     """
         Constraint A: Capacity constraints
@@ -541,7 +533,7 @@ def build_cplex_model():
             current_value=int(temp_obj_coeff[b2_key])
             temp_obj_coeff[b2_key]=current_value+float(b2_value)
         else:
-            temp_obj_coeff[b1_key]=float(b2_value)
+            temp_obj_coeff[b2_key]=float(b2_value)
     
     """ B3: Objective function """         
     for b3_key,b3_value in b3_coeff.items():
@@ -571,15 +563,7 @@ def build_cplex_model():
             temp_obj_coeff[c2_key]=current_value-float(c2_value)
         else:
             temp_obj_coeff[c2_key]=-1*float(c2_value)
-    
-    """ C3: Cost function """          
-    for c3_key,c3_value in c3_coeff.items():
-        if c3_key in temp_obj_coeff:
-            current_value=int(temp_obj_coeff[c3_key])
-            temp_obj_coeff[c3_key]=current_value-float(c3_value)
-        else:
-            temp_obj_coeff[c3_key]=-1*int(c3_value)            
-    
+
     """ Prepare the final list"""    
     for key,value in temp_obj_coeff.items():    
         my_obj.append(int(value))  
@@ -721,7 +705,7 @@ def solver(sim_type,slot):
     print("Solution value  = ", my_prob.solution.get_objective_value())
     
     file = open("results.txt","a")
-    message="slot-"+str(slot)+"-"+ sim_type+"-"+ str(my_prob.solution.get_objective_value())+"\n"
+    message="-slot-"+str(slot)+"-"+ sim_type+"-"+ str(my_prob.solution.get_objective_value())
 
     file.write(message)
     file.close() 
@@ -803,17 +787,7 @@ def load_slot_rates(current_slot):
                         for m in range(M):
                             r[i][o][row][m]=sim_r[current_slot][i][o][row][m]
                     
-    for i in range(V):
-        for n in range(V):
-            for o in range(Objects):
-                rt[i][n][o]=0   
-    
-    for slot in range(slots_number):
-        if slot==current_slot:
-            for i in range(V):
-                for n in range(V):
-                    for o in range(Objects):
-                        rt[i][n][o]=sim_rt[current_slot][i][n][o]   
+ 
                         
 def reset_model_variables():          
     # variables  
@@ -1087,6 +1061,8 @@ def simulator():
         build_cplex_model()
         solver("with_sharing",slot)
         
+         
+    
         # simulation without sharing
         print()
         print ("   %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% ")
@@ -1097,6 +1073,10 @@ def simulator():
         solver("with_no_sharing",slot)
         slot=slot+1
 
+        file = open("results.txt","a")
+        message="\n"
+        file.write(message)
+        file.close()
        
                  
 if __name__ == "__main__":
