@@ -9,13 +9,13 @@ from sympy.physics.units.dimensions import current
 
 # CDN providers
 global V 
-V=2
+V=3
 # Mobile operators
 global M
 M=1
 # Objects
 global Objects  
-Objects=5
+Objects=20
 # Rows of the Grid
 global Rows 
 Rows=1
@@ -23,7 +23,7 @@ Rows=1
 global Cols
 Cols=3
 global slots_number
-slots_number=100
+slots_number=1
 
 # Defines objects popularity weights pw[o]
 pw=[0 for o in range(Objects)]
@@ -166,7 +166,7 @@ def initialize_placement_cost():
 def initialize_constraintA_bounds():
 
     """  constraintA_bound[i][row][col] """ 
-    edge_sorage_limit=10
+    edge_sorage_limit=5
     for i in range(V):
         for row in range (Rows):
             for col in range (Cols):
@@ -488,7 +488,11 @@ def build_constraintC():
                                 (constraintC_coeff[i][n][o][row][col])[y_key]=1      
                                 x_key=x_names[n][o][row][col]
                                 (constraintC_coeff[i][n][o][row][col])[x_key]=-1
-  
+                                for j in range(V):
+                                    if j!=i and j!=n:
+                                        w_key=w_names[n][j][o][row][col]
+                                        (constraintC_coeff[i][n][o][row][col])[w_key]=-1
+                                
 #     print("--- constraintC_Bounds --- ")
 #     pprint.pprint(constraintC_bound)
 #     
