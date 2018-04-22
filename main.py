@@ -351,7 +351,7 @@ def initialize_tables():
 #     constraintA_bound[2][1][0]=30
 #     constraintA_bound[2][1][1]=20    
     
-def build_model():
+def cwc_build_model():
     """ XNAMES: x_names[i][o][row][col]"""
     index=0
     for i in range(V):
@@ -388,23 +388,23 @@ def build_model():
 #     pprint.pprint(y_names)                
     
     """   Benefits  """
-    build_b1_benefit()
-    build_b2_benefit()
-    build_b3_benefit()
+    cwc_build_b1_benefit()
+    cwc_build_b2_benefit()
+    cwc_build_b3_benefit()
 
     """   Costs  """
-    build_c1_cost()
-    build_c2_cost()
+    cwc_build_c1_cost()
+    cwc_build_c2_cost()
     build_c3_cost()
 #     
     """ Constraints   """   
-    build_constraintA()       
-    build_constraintB()       
-    build_constraintC()
+    cwc_build_constraintA()       
+    cwc_build_constraintB()       
+    cwc_build_constraintC()
    
 
 
-def build_b1_benefit():
+def cwc_build_b1_benefit():
     """ B1:  Benefit   """ 
     coef=0
     for i in range(V):
@@ -430,7 +430,7 @@ def build_b1_benefit():
 #     pprint.pprint(b1_coeff)
 
 
-def build_b2_benefit():
+def cwc_build_b2_benefit():
    
     for i in range(V):
         for o in range(Objects):
@@ -448,7 +448,7 @@ def build_b2_benefit():
 #     print("--- B2 Gain coefficients ---")              
 #     pprint.pprint(b2_coeff)
 
-def build_b3_benefit():
+def cwc_build_b3_benefit():
    
     for i in range(V):
         for o in range(Objects):
@@ -467,7 +467,7 @@ def build_b3_benefit():
 #     pprint.pprint(b3_coeff)           
 
    
-def build_c1_cost():
+def cwc_build_c1_cost():
     """ C1:  Cost of placement in owned storage  """
     for i in range(V):
         for o in range(Objects):
@@ -489,7 +489,7 @@ def build_c1_cost():
     
     
 
-def build_c2_cost():
+def cwc_build_c2_cost():
     """Cost of placing content in CDN n """
     for i in range(V):
         for o in range(Objects):
@@ -526,7 +526,7 @@ def build_c3_cost():
 #     pprint.pprint(c3_coeff)
     
         
-def build_constraintA():       
+def cwc_build_constraintA():       
     """
         Constraint A: Capacity constraints
     """
@@ -556,7 +556,7 @@ def build_constraintA():
      
     
    
-def build_constraintB():    
+def cwc_build_constraintB():    
     """ 
      Constraint B:  Store only in one place constraint
          
@@ -581,7 +581,7 @@ def build_constraintB():
 #     print("--- constraintB_coeff --- ")
 #     pprint.pprint(constraintB_coeff)   
       
-def build_constraintC():
+def cwc_build_constraintC():
     """ Constraint C: In order to ask for an object from CDN i he needs to have it"""
     for i in range(V):
             for o in range(Objects):
@@ -613,7 +613,7 @@ my_rhs=[]
 my_rows=[]
 my_sense=""
 
-def build_cplex_model():
+def cwc_build_cplex_model():
     temp_obj_coeff={}
     
     """ B1: Objective function """
@@ -866,8 +866,8 @@ def process_results(results_set):
             
 if __name__ == "__main__":
     initialize_tables()
-    build_model() 
-    build_cplex_model()
+    cwc_build_model() 
+    cwc_build_cplex_model()
     solver()
     
     

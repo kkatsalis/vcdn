@@ -45,11 +45,11 @@ h=[[[[[0 for col in range(Cols)] for row in range(Rows)] for o in range(Objects)
 # Defines solution_values[i][o][row][col]   
 x=[[[[0 for col in range(Cols)] for row in range(Rows)] for o in range(Objects)] for i in range(V)] 
 # Defines solution_values[i][o][row][col] without sharing
-x_ns=[[[[0 for col in range(Cols)] for row in range(Rows)] for o in range(Objects)] for i in range(V)] 
+nc_x=[[[[0 for col in range(Cols)] for row in range(Rows)] for o in range(Objects)] for i in range(V)] 
 # x_names[i][o][row][col]
 x_names=[[[[0 for col in range(Cols)] for row in range(Rows)] for o in range(Objects)] for i in range(V)] 
-# x_ns_names[i][o][row][col]
-x_ns_names=[[[[0 for col in range(Cols)] for row in range(Rows)] for o in range(Objects)] for i in range(V)] 
+# nc_x_names[i][o][row][col]
+nc_x_names=[[[[0 for col in range(Cols)] for row in range(Rows)] for o in range(Objects)] for i in range(V)] 
 # Defines w[i][n][o][row][col]   
 w=[[[[[0 for col in range(Cols)] for row in range(Rows)] for o in range(Objects)] for n in range(V)]for i in range(V)] 
 # Defines w_names[i][n][o][row][col]
@@ -64,8 +64,8 @@ c=[[[0 for col in range(Cols)] for row in range(Rows)] for i in range(V)]
 s=[0 for o in range(Objects)]
 
 # Defines benefit_coefficients dictionary for ns
-b1_coeff_ns={}
-c1_coeff_ns={}
+nc_b1_coeff={}
+nc_c1_coeff={}
 # Defines benefit_coefficients dictionary
 b1_coeff={}
 b2_coeff={}
@@ -80,13 +80,13 @@ constraintA_bound=[[[0 for col in range(Cols)] for row in range(Rows)] for i in 
 # Defines constraintA_coeff[i][row][col] when sharing
 constraintA_coeff=[[[0 for col in range(Cols)] for row in range(Rows)] for i in range(V)]
 # Defines constraintA_coeff[i][row][col] when not sharing
-constraintA_coeff_ns=[[[0 for col in range(Cols)] for row in range(Rows)] for i in range(V)]
+nc_constraintA_coeff=[[[0 for col in range(Cols)] for row in range(Rows)] for i in range(V)]
 # Defines constraintB_bound[i][o]
 constraintB_bound=[[1 for o in range(Objects)] for i in range(V)]
 # Defines constraintB_coeff[i][o] when sharing
 constraintB_coeff=[[0 for o in range(Objects)] for i in range(V)]
 # Defines constraintB_coeff[i][o] when not sharing
-constraintB_coeff_ns=[[0 for o in range(Objects)] for i in range(V)]
+nc_constraintB_coeff=[[0 for o in range(Objects)] for i in range(V)]
 # Defines constraintC_bound[i][o]
 constraintC_bound=[[[[[0 for col in range(Cols)] for row in range(Rows)] for o in range(Objects)]for n in range(V)]for i in range(V)]
 # Defines constraintC_coeff[i][o]
@@ -249,13 +249,13 @@ def build_variables_names():
 #     print("X names")              
 #     pprint.pprint(x_names)      
 
-    """ X_ns_ NAMES: x_ns_names[i][o][row][col]"""
+    """ X_ns_ NAMES: nc_x_names[i][o][row][col]"""
     index=0
     for i in range(V):
         for o in range(Objects): 
             for row in range(Rows):
                 for col in range(Cols):
-                    x_ns_names[i][o][row][col]="x_ns["+str(i)+"]["+str(o)+"]["+str(row)+"]["+str(col)+"]"
+                    nc_x_names[i][o][row][col]="nc_x["+str(i)+"]["+str(o)+"]["+str(row)+"]["+str(col)+"]"
                     index=index+1          
       
     """ w_names: w_names[i][n][o][row][col]"""
@@ -286,24 +286,24 @@ def build_variables_names():
 # A: Model when sharing ----------------
 
 
-def build_model():
+def cwc_build_model():
              
     """   Benefits  """
-    build_b1_benefit()
-    build_b2_benefit()
-    build_b3_benefit()
+    cwc_build_b1_benefit()
+    cwc_build_b2_benefit()
+    cwc_build_b3_benefit()
     """   Costs  """
-    build_c1_cost()   
-    build_c2_cost()
+    cwc_build_c1_cost()   
+    cwc_build_c2_cost()
     build_c3_cost()
 #     
     """ Constraints   """  
-    build_constraintA()       
-    build_constraintB()       
-    build_constraintC()  
+    cwc_build_constraintA()       
+    cwc_build_constraintB()       
+    cwc_build_constraintC()  
     
 
-def build_b1_benefit():
+def cwc_build_b1_benefit():
     """ B1:  Benefit   """ 
     coef=0
     for i in range(V):
@@ -329,7 +329,7 @@ def build_b1_benefit():
 #     pprint.pprint(b1_coeff)
 
 
-def build_b2_benefit():
+def cwc_build_b2_benefit():
    
     for i in range(V):
         for o in range(Objects):
@@ -349,7 +349,7 @@ def build_b2_benefit():
 #     print("--- B2 Gain coefficients ---")              
 #     pprint.pprint(b2_coeff)
 
-def build_b3_benefit():
+def cwc_build_b3_benefit():
    
     for i in range(V):
         for o in range(Objects):
@@ -367,7 +367,7 @@ def build_b3_benefit():
 #     print("--- B3 Gain coefficients ---")              
 #     pprint.pprint(b3_coeff)           
 
-def build_c1_cost():
+def cwc_build_c1_cost():
     """ C1:  Cost of placement in owned storage  """
     for i in range(V):
         for o in range(Objects):
@@ -391,7 +391,7 @@ def build_c1_cost():
 
     
 
-def build_c2_cost():
+def cwc_build_c2_cost():
     """Cost of placing content in CDN n """
     for i in range(V):
         for o in range(Objects):
@@ -428,7 +428,7 @@ def build_c3_cost():
 #     pprint.pprint(c3_coeff)
     
         
-def build_constraintA():       
+def cwc_build_constraintA():       
     """
         Constraint A: Capacity constraints
     """
@@ -458,7 +458,7 @@ def build_constraintA():
      
     
    
-def build_constraintB():    
+def cwc_build_constraintB():    
     """ 
      Constraint B:  Store only in one place constraint
          
@@ -483,7 +483,7 @@ def build_constraintB():
 #     print("--- constraintB_coeff --- ")
 #     pprint.pprint(constraintB_coeff)   
       
-def build_constraintC():
+def cwc_build_constraintC():
     """ Constraint C: In order to ask for an object from CDN i he needs to have it"""
     for i in range(V):
             for o in range(Objects):
@@ -522,7 +522,7 @@ my_ctype=""
 global my_sense
 my_sense=""
 
-def build_cplex_model():
+def cwc_build_cplex_model():
     temp_obj_coeff={}
     
     """ B1: Objective function """
@@ -739,7 +739,7 @@ def solver(sim_type,slot):
             if sim_type=="with_sharing":
                 result_set[my_colnames[j]]=solution_values[j]
             elif sim_type=="with_no_sharing":
-                result_set[my_colnames_ns[j]]=solution_values[j]
+                result_set[nc_my_colnames[j]]=solution_values[j]
             
             
     pprint.pprint(result_set)
@@ -757,15 +757,15 @@ def process_results(results_set):
             c=int(param[4])
             x[i][o][r][c]=value
 #             print (key,x[i][o][r][c])
-        if key[0]=="x_ns":
+        if key[0]=="nc_x":
             key1=key.replace("]"," ")
             param=key1.split("[")
             i=int(param[1])
             o=int(param[2])
             r=int(param[3])
             c=int(param[4])
-            x_ns[i][o][r][c]=value
-#             print (key,x_ns[i][o][r][c])
+            nc_x[i][o][r][c]=value
+#             print (key,nc_x[i][o][r][c])
         if key[0]=="w":
             key1=key.replace("]"," ")
             param=key1.split("[")
@@ -815,7 +815,7 @@ def load_slot_rates(current_slot):
                     for o in range(Objects):
                         rt[i][n][o]=sim_rt[current_slot][i][n][o]   
                         
-def reset_model_variables():          
+def cwc_reset_model_variables():          
     # variables  
     for i in range(V):
         for o in range(Objects): 
@@ -846,50 +846,50 @@ def reset_model_variables():
 # B: Model when not sharing 
 # ********************************************************    
 
-my_obj_ns=[]
-my_colnames_ns=[]
-my_ub_ns = []
-my_lb_ns = []
-my_rownames_ns=[]
-my_rhs_ns=[]
-my_rows_ns=[]
-global my_ctype_ns
-my_ctype_ns=""
-global my_sense_ns
-my_sense_ns=""
+nc_my_obj=[]
+nc_my_colnames=[]
+nc_my_ub = []
+nc_my_lb = []
+nc_my_rownames=[]
+nc_my_rhs=[]
+nc_my_rows=[]
+global nc_my_ctype
+nc_my_ctype=""
+global nc_my_sense
+nc_my_sense=""
 
  
-def reset_model_variables_ns():          
+def nc_reset_model_variables():          
     #  variables  
     for i in range(V):
         for o in range(Objects): 
             for row in range(Rows):
                 for col in range(Cols):
-                    x_ns[i][o][row][col]=0
+                    nc_x[i][o][row][col]=0
    
     # objective function                  
-    my_obj_ns.clear()
-    my_colnames_ns.clear()
-    my_ub_ns.clear()
-    my_lb_ns.clear()
-    my_rownames_ns.clear()
-    my_rhs_ns.clear()
-    my_rows_ns.clear()
-    my_sense_ns=""
-    my_ctype_ns="" 
+    nc_my_obj.clear()
+    nc_my_colnames.clear()
+    nc_my_ub.clear()
+    nc_my_lb.clear()
+    nc_my_rownames.clear()
+    nc_my_rhs.clear()
+    nc_my_rows.clear()
+    nc_my_sense=""
+    nc_my_ctype="" 
 
-def build_model_ns():
+def nc_build_model():
              
     # Benefits 
-    build_b1_benefit_ns()
+    nc_build_b1_benefit()
     #  Costs
-    build_c1_cost_ns()
+    nc_build_c1_cost()
 #     #  Constraints
-    build_constraintA_ns()       
-    build_constraintB_ns()       
+    nc_build_constraintA()       
+    nc_build_constraintB()       
     
     
-def build_b1_benefit_ns():
+def nc_build_b1_benefit():
     """ B1:  Benefit   """ 
     coef=0
     for i in range(V):
@@ -902,14 +902,14 @@ def build_b1_benefit_ns():
                             req=r[i][o][rowS][m]
                             gain=b[i][o][rowS][rowD][col][m]
                             coef=coef+req*gain
-                            x_key=x_ns_names[i][o][rowD][col]
-                            b1_coeff_ns[x_key]=str(coef)
+                            x_key=nc_x_names[i][o][rowD][col]
+                            nc_b1_coeff[x_key]=str(coef)
     
 #     print ("b1 coeff ns")                        
-#     pprint.pprint(b1_coeff_ns)
+#     pprint.pprint(nc_b1_coeff)
                             
 
-def build_c1_cost_ns():
+def nc_build_c1_cost():
     """ C1:  Cost of placement in owned storage  """
     for i in range(V):
         for o in range(Objects):
@@ -919,45 +919,45 @@ def build_c1_cost_ns():
                     coef=0
                     cost=c[i][row][col]
                     coef=size*cost
-                    x_key=x_ns_names[i][o][row][col]    
-                    c1_coeff_ns[x_key]=str(coef)    
+                    x_key=nc_x_names[i][o][row][col]    
+                    nc_c1_coeff[x_key]=str(coef)    
                    
 #     print ("c1 coeff ns")     
-#     pprint.pprint(c1_coeff_ns)
+#     pprint.pprint(nc_c1_coeff)
     
-def build_constraintA_ns():       
+def nc_build_constraintA():       
     """
         Constraint A: Capacity constraints
     """
     for i in range(V):
         for row in range(Rows):
             for col in range(Cols):
-                global constraintA_coeff_ns
-                constraintA_coeff_ns[i][row][col]={}
+                global nc_constraintA_coeff
+                nc_constraintA_coeff[i][row][col]={}
     
                 for o in range(Objects):
                     xcoef=s[o]
-                    key=x_ns_names[i][o][row][col]
-                    (constraintA_coeff_ns[i][row][col])[key]=xcoef   
+                    key=nc_x_names[i][o][row][col]
+                    (nc_constraintA_coeff[i][row][col])[key]=xcoef   
 
-def build_constraintB_ns():    
+def nc_build_constraintB():    
     """ 
      Constraint B:  Store only in one place constraint
     """
     for i in range(V):
         for o in range(Objects):
-            constraintB_coeff_ns[i][o]={}
+            nc_constraintB_coeff[i][o]={}
             for row in range(Rows):
                 for col in range(Cols):
-                    key=x_ns_names[i][o][row][col]
-                    (constraintB_coeff_ns[i][o])[key]=1
+                    key=nc_x_names[i][o][row][col]
+                    (nc_constraintB_coeff[i][o])[key]=1
      
 
-def build_cplex_model_ns():
+def nc_build_cplex_model():
     temp_obj_coeff_ns={}
     
     """ B1: Objective function """
-    for b1_key,b1_value in b1_coeff_ns.items():
+    for b1_key,b1_value in nc_b1_coeff.items():
         if b1_key in temp_obj_coeff_ns:
 #             print ("B1 key: found")
             current_value=int(temp_obj_coeff_ns[b1_key])
@@ -968,7 +968,7 @@ def build_cplex_model_ns():
                
 #   
     """ C1: Cost function """          
-    for c1_key,c1_value in c1_coeff_ns.items():
+    for c1_key,c1_value in nc_c1_coeff.items():
         if c1_key in temp_obj_coeff_ns:
             current_value=float(temp_obj_coeff_ns[c1_key])
             new_value=current_value-float(c1_value)
@@ -982,22 +982,22 @@ def build_cplex_model_ns():
     
     """ Prepare the final list"""    
     for key,value in temp_obj_coeff_ns.items():    
-        my_obj_ns.append(int(value))  
-        my_colnames_ns.append(key)
+        nc_my_obj.append(int(value))  
+        nc_my_colnames.append(key)
                  
-#     print("my_obj_ns:")                
-#     pprint.pprint(my_obj_ns)                
-#     print("my_colnames_ns:")                
-#     pprint.pprint(my_colnames_ns)                
+#     print("nc_my_obj:")                
+#     pprint.pprint(nc_my_obj)                
+#     print("nc_my_colnames:")                
+#     pprint.pprint(nc_my_colnames)                
     
     """Variables Bounds """
-    global my_ctype_ns
-    my_ctype_ns=""
+    global nc_my_ctype
+    nc_my_ctype=""
     index=0    
-    while index <len(my_colnames_ns):
-        my_lb_ns.append(0.0)
-        my_ub_ns.append(1.0)
-        my_ctype_ns = my_ctype_ns+"I"
+    while index <len(nc_my_colnames):
+        nc_my_lb.append(0.0)
+        nc_my_ub.append(1.0)
+        nc_my_ctype = nc_my_ctype+"I"
         index=index+1
     
 #     print("my_lb")
@@ -1014,33 +1014,33 @@ def build_cplex_model_ns():
                 constrainta_row=[]
                 lista_coeff_key=[]
                 lista_coeff_value=[]
-                my_rhs_ns.append(constraintA_bound[i][row][col])
+                nc_my_rhs.append(constraintA_bound[i][row][col])
                 identifier="rowA["+str(i)+"]["+str(row)+"]["+str(col)+"]"
-                my_rownames_ns.append(identifier)
+                nc_my_rownames.append(identifier)
                     
-                for key,value in constraintA_coeff_ns[i][row][col].items():
+                for key,value in nc_constraintA_coeff[i][row][col].items():
                     lista_coeff_key.append(key)
                     lista_coeff_value.append(value)    
                 constrainta_row.append(lista_coeff_key)
                 constrainta_row.append(lista_coeff_value)
-                my_rows_ns.append(constrainta_row)
+                nc_my_rows.append(constrainta_row)
                 
 
     """ Constraint B set"""
     for i in range(V):
         for o in range(Objects):
             identifier="rowB["+str(i)+"]["+str(o)+"]"
-            my_rownames_ns.append(identifier)
-            my_rhs_ns.append(constraintB_bound[i][o])
+            nc_my_rownames.append(identifier)
+            nc_my_rhs.append(constraintB_bound[i][o])
             constraintb_row=[]
             listb_coeff_key=[]
             listb_coeff_value=[]
-            for key,value in constraintB_coeff_ns[i][o].items():
+            for key,value in nc_constraintB_coeff[i][o].items():
                 listb_coeff_key.append(key)
                 listb_coeff_value.append(value)    
             constraintb_row.append(listb_coeff_key)
             constraintb_row.append(listb_coeff_value)
-            my_rows_ns.append(constraintb_row)
+            nc_my_rows.append(constraintb_row)
 
 #     print("My row names with B")
 #     pprint.pprint(my_rownames)
@@ -1050,21 +1050,21 @@ def build_cplex_model_ns():
 #     pprint.pprint(my_rhs)
             
     """ My sense """
-    global my_sense_ns
-    my_sense_ns=""
+    global nc_my_sense
+    nc_my_sense=""
     index=0
-    while index <len(my_rows_ns):
-        my_sense_ns=my_sense_ns+"L"
+    while index <len(nc_my_rows):
+        nc_my_sense=nc_my_sense+"L"
         index=index+1
 
 def populatebyrow_ns(prob):
     prob.objective.set_sense(prob.objective.sense.maximize)
 
-    prob.variables.add(obj=my_obj_ns, lb=my_lb_ns, ub=my_ub_ns, types=my_ctype_ns,
-                       names=my_colnames_ns)
+    prob.variables.add(obj=nc_my_obj, lb=nc_my_lb, ub=nc_my_ub, types=nc_my_ctype,
+                       names=nc_my_colnames)
 
-    prob.linear_constraints.add(lin_expr=my_rows_ns, senses=my_sense_ns,
-                                rhs=my_rhs_ns, names=my_rownames_ns)
+    prob.linear_constraints.add(lin_expr=nc_my_rows, senses=nc_my_sense,
+                                rhs=nc_my_rhs, names=nc_my_rownames)
 
 
 def simulator():
@@ -1082,18 +1082,18 @@ def simulator():
         # simulation with sharing
         print (" %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% ")
         print ("   -- simulation with sharing --")
-        reset_model_variables()
-        build_model() 
-        build_cplex_model()
+        cwc_reset_model_variables()
+        cwc_build_model() 
+        cwc_build_cplex_model()
         solver("with_sharing",slot)
         
         # simulation without sharing
         print()
         print ("   %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% ")
         print ("   -- simulation without sharing --")
-        reset_model_variables_ns()
-        build_model_ns()
-        build_cplex_model_ns() 
+        nc_reset_model_variables()
+        nc_build_model()
+        nc_build_cplex_model() 
         solver("with_no_sharing",slot)
         slot=slot+1
 
