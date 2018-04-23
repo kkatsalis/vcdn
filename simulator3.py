@@ -1251,10 +1251,52 @@ def dwc_step3_build_cplex_model(i):
 
 
 
+def dwc_step3_calculate_net_benefit(i,result_set):
+    
+    x_benefit=0
+    for o in range(Objects):
+        if dwc_object_is_placed_in_xd(i,o)==True: 
+            for rowD in range(Rows):
+                for col in range(Cols):
+                    if ds1_x[i][o][rowD][col]>0:
+                        coef=0
+                        for rowS in range(Rows):
+                            for m in range(M):
+                                req=r[i][o][rowS][m]
+                                gain=b[i][o][rowS][rowD][col][m]
+                                coef=coef+req*gain
+                        x_benefit+=coef   
+    
+    x_cost=0
+    for o in range(Objects):
+        if dwc_object_is_placed_in_xd(i,o)==True: 
+            size=s[o] 
+            for row in range(Rows):
+                for col in range(Cols):
+                    if ds1_x[i][o][rowD][col]>0:
+                        coef=0
+                        coef=size*c[i][row][col]
+                        x_cost=x_cost+coef                 
 
+    x_net_benefit=x_benefit-x_cost
+    
+#     print(x_net_benefit)
+    
+#     pprint.pprint(ds3_my_obj)
+#     pprint.pprint(ds3_my_colnames) 
+#     pprint.pprint(result_set)
+    
+    additional_benefit=0
+    for key in result_set:
+        if key in ds3_my_colnames:
+            index=ds3_my_colnames.index(key)
+            additional_benefit+=ds3_my_obj[index]
+            
+#     print(additional_benefit)  
+    
+    step3_total_net_benefit=x_net_benefit+additional_benefit
 
-
-
+    return step3_total_net_benefit
 # ******************** Common Solver methods ***********************
     
 
@@ -1316,7 +1358,8 @@ def solver(sim_type,slot):
             
             
     pprint.pprint(result_set)
-    process_results(result_set)
+    return result_set
+    
     
 def process_results(results_set):
     for key,value in results_set.items():
@@ -1387,7 +1430,11 @@ def process_results(results_set):
             ds3_y[i][n][o][r][c]=value
 #             print (key,ds3_w[i][n][o][r][c])
 
-
+#     pprint.pprint(ds1_x)
+#     pprint.pprint(ds3_w)
+#     pprint.pprint(ds3_y)
+    
+    
 
 
 def simulator():
@@ -1408,8 +1455,8 @@ def simulator():
         cwc_reset_model_variables()
         cwc_build_model() 
         cwc_build_cplex_model()
-        solver("centralized_with_sharing",slot)
-        
+        result_set=solver("centralized_with_sharing",slot)
+        process_results(result_set)
             
         print()
         print ("   %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% ")
@@ -1417,9 +1464,9 @@ def simulator():
         nc_reset_model_variables()
         nc_build_model()
         nc_build_cplex_model() 
-        solver("with_no_sharing",slot)
+        result_set=solver("with_no_sharing",slot)
+        process_results(result_set)
         
-
         print()
         print ("   %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% ")
         print ("   -- simulation with collaboration: distributed --")
@@ -1427,22 +1474,23 @@ def simulator():
         dwc_reset_model_variables()
         dwc_step1_load_xd_from_nc()
         
-
+        total_net_benefit=0
         for i in range(V):
             print ("   --- DWC -provider :",i)
             dwc_step3_build_model(i)
             dwc_step3_build_cplex_model(i)
-            solver("distributed_with_sharing_step3",slot)
-         
-        
+            result_set=solver("distributed_with_sharing_step3",slot)
+            process_results(result_set)
+            total_net_benefit=total_net_benefit+dwc_step3_calculate_net_benefit(i,result_set)
+        print ("Distributed total net benefit:")
+        print (total_net_benefit)
         slot=slot+1
         
         file = open("results.txt","a")
         message="\n"
         file.write(message)
         file.close()
-       
-                 
+              
 if __name__ == "__main__":
     simulator()
     
