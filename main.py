@@ -388,13 +388,13 @@ def cwc_build_model():
 #     pprint.pprint(y_names)                
     
     """   Benefits  """
-    cwc_build_b1_benefit()
-    cwc_build_b2_benefit()
-    cwc_build_b3_benefit()
+    cwc_build_benefit_b1()
+    cwc_build_benefit_b2()
+    cwc_build_benefit_b3()
 
     """   Costs  """
-    cwc_build_c1_cost()
-    cwc_build_c2_cost()
+    cwc_build_cost_c1()
+    cwc_build_cost_c2()
     build_c3_cost()
 #     
     """ Constraints   """   
@@ -404,7 +404,7 @@ def cwc_build_model():
    
 
 
-def cwc_build_b1_benefit():
+def cwc_build_benefit_b1():
     """ B1:  Benefit   """ 
     coef=0
     for i in range(V):
@@ -430,7 +430,7 @@ def cwc_build_b1_benefit():
 #     pprint.pprint(b1_coeff)
 
 
-def cwc_build_b2_benefit():
+def cwc_build_benefit_b2():
    
     for i in range(V):
         for o in range(Objects):
@@ -448,7 +448,7 @@ def cwc_build_b2_benefit():
 #     print("--- B2 Gain coefficients ---")              
 #     pprint.pprint(b2_coeff)
 
-def cwc_build_b3_benefit():
+def cwc_build_benefit_b3():
    
     for i in range(V):
         for o in range(Objects):
@@ -467,7 +467,7 @@ def cwc_build_b3_benefit():
 #     pprint.pprint(b3_coeff)           
 
    
-def cwc_build_c1_cost():
+def cwc_build_cost_c1():
     """ C1:  Cost of placement in owned storage  """
     for i in range(V):
         for o in range(Objects):
@@ -489,7 +489,7 @@ def cwc_build_c1_cost():
     
     
 
-def cwc_build_c2_cost():
+def cwc_build_cost_c2():
     """Cost of placing content in CDN n """
     for i in range(V):
         for o in range(Objects):

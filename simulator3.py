@@ -11,21 +11,21 @@ from sympy.physics.units.dimensions import current
 """parameters for all modes"""
 # CDN providers
 global V 
-V=3
+V=2
 # Mobile operators
 global M
 M=1
 # Objects
 global Objects  
-Objects=10
+Objects=5
 # Rows of the Grid
 global Rows 
 Rows=1
 # Columns of the Grid
 global Cols
-Cols=3
+Cols=1
 global slots_number
-slots_number=2
+slots_number=1
 # Defines objects popularity weights pw[o]
 pw=[[0 for o in range(Objects)]for i in range(V)] 
 # Defines request rate r[i][o][row][m]. This is for the entire simulation
@@ -360,19 +360,19 @@ def load_slot_rates(current_slot):
 def cwc_build_model():
              
     """   Benefits  """
-    cwc_build_b1_benefit()
-    cwc_build_b2_benefit()
-    cwc_build_b3_benefit()
+    cwc_build_benefit_b1()
+    cwc_build_benefit_b2()
+    cwc_build_benefit_b3()
     """   Costs  """
-    cwc_build_c1_cost()   
-    cwc_build_c2_cost()
+    cwc_build_cost_c1()   
+    cwc_build_cost_c2()
 #     
     """ Constraints   """  
     cwc_build_constraintA()       
     cwc_build_constraintB()       
     cwc_build_constraintC()  
     
-def cwc_build_b1_benefit():
+def cwc_build_benefit_b1():
     """ B1:  Benefit   """ 
     coef=0
     for i in range(V):
@@ -394,7 +394,7 @@ def cwc_build_b1_benefit():
                                     b1_coeff[w_key]=str(coef)
                                     b1_coeff[y_key]=str(coef)
                                 
-def cwc_build_b2_benefit():
+def cwc_build_benefit_b2():
    
     for i in range(V):
         for o in range(Objects):
@@ -409,7 +409,7 @@ def cwc_build_b2_benefit():
                             w_key=w_names[n][i][o][row][col]    
                             b2_coeff[w_key]=str(coef)                                                     
 
-def cwc_build_b3_benefit():
+def cwc_build_benefit_b3():
 #    r[i][o][row][m]
     for i in range(V):
         for o in range(Objects):
@@ -427,7 +427,7 @@ def cwc_build_b3_benefit():
                              
                                 b3_coeff[y_key]=str(coef)    
        
-def cwc_build_c1_cost():
+def cwc_build_cost_c1():
     """ C1:  Cost of placement in owned storage  """
     for i in range(V):
         for o in range(Objects):
@@ -454,7 +454,7 @@ def cwc_build_c1_cost():
                             y_key=y_names[i][n][o][row][col]    
                             c1_coeff[y_key]=str(coef)  
                                            
-def cwc_build_c2_cost():
+def cwc_build_cost_c2():
     """Cost of placing content from CDN n """
     for i in range(V):
         for o in range(Objects):
@@ -741,14 +741,14 @@ def nc_reset_model_variables():
 def nc_build_model():
              
     # Benefits 
-    nc_build_b1_benefit()
+    nc_build_benefit_b1()
     #  Costs
-    nc_build_c1_cost()
+    nc_build_cost_c1()
 #     #  Constraints
     nc_build_constraintA()       
     nc_build_constraintB()       
     
-def nc_build_b1_benefit():
+def nc_build_benefit_b1():
     """ B1:  Benefit   """ 
     coef=0
     for i in range(V):
@@ -764,7 +764,7 @@ def nc_build_b1_benefit():
                             x_key=nc_x_names[i][o][rowD][col]
                             nc_b1_coeff[x_key]=str(coef)
                          
-def nc_build_c1_cost():
+def nc_build_cost_c1():
     """ C1:  Cost of placement in owned storage  """
     for i in range(V):
         for o in range(Objects):
@@ -941,20 +941,7 @@ def dwc_step1_load_xd_from_nc():
                     if ds1_x[i][o][row][col]>0:
                         print(ds1_x_names[i][o][row][col])
 
-def dwc_step3_build_constraintA_bound():
-    
-    for i in range (V):     
-        for row in range (Rows):
-            for col in range (Cols): 
-                capacity_reserved=0
-                for o in range(Objects):                      
-                    if ds1_x[i][o][row][col]>0:         
-                        capacity_reserved=capacity_reserved+s[o]
-            ds2_capacity_reserved[i][row][col]=capacity_reserved            
-            ds3_constraintA_bound[i][row][col]= constraintA_bound[i][row][col]-ds2_capacity_reserved[i][row][col]           
-                            
-    print ("constraintA_ds3_bound")                        
-    pprint.pprint(ds3_constraintA_bound)     
+   
                             
 
                 
@@ -999,8 +986,8 @@ def dwc_step3_build_b1(i):
                                     ds3_y_key=ds3_y_names[i][n][o][rowD][col]
                                     ds3_b1_coeff[ds3_w_key]=str(coef)
                                     ds3_b1_coeff[ds3_y_key]=str(coef)
-    print("ds3_b1_coeff")
-    pprint.pprint(ds3_b1_coeff)
+#     print("ds3_b1_coeff")
+#     pprint.pprint(ds3_b1_coeff)
     
     
     
@@ -1027,8 +1014,8 @@ def dwc_step3_build_c1(i):
                         if ds3_y_key in ds3_b1_coeff:
                             ds3_c1_coeff[ds3_y_key]=str(coef)  
 
-    print("ds3_c1_coeff")    
-    pprint.pprint(ds3_c1_coeff)
+#     print("ds3_c1_coeff")    
+#     pprint.pprint(ds3_c1_coeff)
 
 def dwc_step3_build_constraintA_coeff(i):       
     """
@@ -1044,9 +1031,24 @@ def dwc_step3_build_constraintA_coeff(i):
                         if key in ds3_b1_coeff:
                             (ds3_constraintA_coeff[i][n][row][col])[key]=s[o]
 
-    print("ds3_constraintA_coeff")
-    pprint.pprint(ds3_constraintA_coeff)                    
-
+#     print("ds3_constraintA_coeff")
+#     pprint.pprint(ds3_constraintA_coeff)  
+                      
+def dwc_step3_build_constraintA_bound():
+    
+    for i in range (V):     
+        for row in range (Rows):
+            for col in range (Cols): 
+                capacity_reserved=0
+                for o in range(Objects):                      
+                    if ds1_x[i][o][row][col]>0:         
+                        capacity_reserved=capacity_reserved+s[o]
+                ds2_capacity_reserved[i][row][col]=capacity_reserved            
+                ds3_constraintA_bound[i][row][col]= constraintA_bound[i][row][col]-ds2_capacity_reserved[i][row][col]           
+                                  
+#     print ("constraintA_ds3_bound")                        
+#     pprint.pprint(ds3_constraintA_bound)  
+    
 def dwc_step3_build_constraintB_coeff(i):    
     """ 
      Constraint B:  Store only in one place constraint
@@ -1063,8 +1065,8 @@ def dwc_step3_build_constraintB_coeff(i):
                             key=ds3_y_names[i][n][o][row][col]
                             (ds3_constraintB_coeff[i][o])[key]=1  
         
-    print("ds3_constraintB_coeff")                       
-    pprint.pprint(ds3_constraintB_coeff)
+#     print("ds3_constraintB_coeff")                       
+#     pprint.pprint(ds3_constraintB_coeff)
 
     
 def dwc_step3_build_constraintB_bound(i):
@@ -1074,8 +1076,8 @@ def dwc_step3_build_constraintB_bound(i):
         else:
             ds3_constraintB_bound[i][o]=1   
    
-    print ("ds3_constraintB_bound")     
-    pprint.pprint(ds3_constraintB_bound)     
+#     print ("ds3_constraintB_bound")     
+#     pprint.pprint(ds3_constraintB_bound)     
                                                  
 def dwc_step3_build_constraintC_coeff(i):
     """ Constraint C: In order to ask for an object from CDN i he needs to have it"""
@@ -1089,8 +1091,8 @@ def dwc_step3_build_constraintC_coeff(i):
                             ds3_y_key=ds3_y_names[i][n][o][row][col]
                             (ds3_constraintC_coeff[i][n][o][row][col])[ds3_y_key]=1   
     
-    print("ds3_constraintC_coeff")
-    pprint.pprint(ds3_constraintC_coeff)                        
+#     print("ds3_constraintC_coeff")
+#     pprint.pprint(ds3_constraintC_coeff)                        
 
 
 def dwc_step3_build_constraintC_bound(i):                           
@@ -1098,10 +1100,10 @@ def dwc_step3_build_constraintC_bound(i):
         for o in range (Objects):
             for row in range (Rows):
                 for col in range (Cols):
-                    ds3_constraintC_bound[i][n][o][row][col]=ds1_x[n][o][row][col]
+                    ds3_constraintC_bound[i][n][o][row][col]=int(ds1_x[n][o][row][col])
                       
-    print("ds3_constraintC_bound")
-    pprint.pprint(ds3_constraintC_bound)
+#     print("ds3_constraintC_bound")
+#     pprint.pprint(ds3_constraintC_bound)
     
                         
 
@@ -1115,8 +1117,7 @@ def dwc_step3_build_cplex_model(i):
     ds3_my_rownames.clear()
     ds3_my_rhs.clear()
     ds3_my_rows.clear()
-    ds3_my_sense=""
-    ds3_my_ctype=""
+
     
     """ B1: Objective function """
     for b1_key,b1_value in ds3_b1_coeff.items():
@@ -1141,12 +1142,14 @@ def dwc_step3_build_cplex_model(i):
         ds3_my_obj.append(int(value))  
         ds3_my_colnames.append(key)
                  
-    print("my_obj:")                
-    pprint.pprint(ds3_my_obj)                
-    print("my_colnames:")                
-    pprint.pprint(ds3_my_colnames)                
+#     print("my_obj:")                
+#     pprint.pprint(ds3_my_obj)                
+#     print("my_colnames:")                
+#     pprint.pprint(ds3_my_colnames)                
     
     """Variables Bounds """
+    global ds3_my_ctype
+    ds3_my_ctype=""
     index=0    
     while index <len(ds3_my_colnames):
         ds3_my_lb.append(0.0)
@@ -1155,81 +1158,90 @@ def dwc_step3_build_cplex_model(i):
         index=index+1
     
 #     print("my_lb")
-#     pprint.pprint(my_lb)
-#     print("my_temp_ub")
-#     pprint.pprint(my_temp_ub)
+#     pprint.pprint(ds3_my_lb)
+#     print("my_ub")
+#     pprint.pprint(ds3_my_ub)
 #     print("my_ctype")
-#     pprint.pprint(my_ctype)
+#     pprint.pprint(ds3_my_ctype)
 
     """ Constraint A set"""
     for row in range(Rows):
         for col in range(Cols):
-            constrainta_row=[]
-            lista_coeff_key=[]
-            lista_coeff_value=[]
-            ds3_my_rhs.append(ds3_constraintA_bound[i][row][col])
-            identifier="rowA["+str(i)+"]["+str(row)+"]["+str(col)+"]"
-            ds3_my_rownames.append(identifier)
-                
-            for key,value in ds3_constraintA_coeff[i][row][col].items():
-                lista_coeff_key.append(key)
-                lista_coeff_value.append(value)    
-            constrainta_row.append(lista_coeff_key)
-            constrainta_row.append(lista_coeff_value)
-            ds3_my_rows.append(constrainta_row)
-                
+            for n in range(V):
+                if n!=i:
+                    constrainta_row=[]
+                    lista_coeff_key=[]
+                    lista_coeff_value=[]
+                    ds3_my_rhs.append(ds3_constraintA_bound[n][row][col])
+                    identifier="rowA["+str(n)+"]["+str(row)+"]["+str(col)+"]"
+                    ds3_my_rownames.append(identifier)
+                    
+                    for key,value in ds3_constraintA_coeff[i][n][row][col].items():
+                        lista_coeff_key.append(key)
+                        lista_coeff_value.append(value)    
+                    constrainta_row.append(lista_coeff_key)
+                    constrainta_row.append(lista_coeff_value)
+                    ds3_my_rows.append(constrainta_row)
+   
+#     print("ds3_my_rows")
+#     pprint.pprint(ds3_my_rownames)
+#     pprint.pprint(ds3_my_rows)                
 
     """ Constraint B set"""
     for o in range(Objects):
-        identifier="rowB["+str(i)+"]["+str(o)+"]"
-        ds3_my_rownames.append(identifier)
-        ds3_my_rhs.append(ds3_constraintB_bound[i][o])
-        constraintb_row=[]
-        listb_coeff_key=[]
-        listb_coeff_value=[]
-        for key,value in ds3_constraintB_coeff[i][o].items():
-            listb_coeff_key.append(key)
-            listb_coeff_value.append(value)    
-        constraintb_row.append(listb_coeff_key)
-        constraintb_row.append(listb_coeff_value)
-        ds3_my_rows.append(constraintb_row)
+        if dwc_object_is_placed_in_xd(i,o)==False:
+            identifier="rowB["+str(i)+"]["+str(o)+"]"
+            ds3_my_rownames.append(identifier)
+            ds3_my_rhs.append(ds3_constraintB_bound[i][o])
+            constraintb_row=[]
+            listb_coeff_key=[]
+            listb_coeff_value=[]
+            for key,value in ds3_constraintB_coeff[i][o].items():
+                listb_coeff_key.append(key)
+                listb_coeff_value.append(value)    
+            constraintb_row.append(listb_coeff_key)
+            constraintb_row.append(listb_coeff_value)
+            ds3_my_rows.append(constraintb_row)
 
 #     print("My row names with B")
-#     pprint.pprint(my_rownames)
+#     pprint.pprint(ds3_my_rownames)
 #     print("My constraints rows with B")
-#     pprint.pprint(my_rows)
+#     pprint.pprint(ds3_my_rows)
 #     print("My rhs with B")
-#     pprint.pprint(my_rhs)
+#     pprint.pprint(ds3_my_rhs)
 
     """ Constraint C set"""
     for o in range(Objects):
-        for row in range(Rows):
-            for col in range(Cols):
-                for n in range(V):
-                    if n!=i:
-                        constraintc_row=[]
-                        listc_coeff_key=[]
-                        listc_coeff_value=[]
-                        ds3_my_rhs.append(ds3_constraintC_bound[i][n][o][row][col])
-                        identifier="rowC["+str(i)+"]["+str(n)+"]["+str(o)+"]["+str(row)+"]["+str(col)+"]"
-                        ds3_my_rownames.append(identifier)
-                        
-                        for key,value in ds3_constraintC_coeff[i][n][o][row][col].items():
-                            listc_coeff_key.append(key)
-                            listc_coeff_value.append(value)    
-                        constraintc_row.append(listc_coeff_key)
-                        constraintc_row.append(listc_coeff_value)
-                        ds3_my_rows.append(constraintc_row)
-                            
+        if dwc_object_is_placed_in_xd(i,o)==False:
+            for n in range(V):
+                if n!=i:
+                    for row in range(Rows):
+                        for col in range(Cols):
+                            constraintc_row=[]
+                            listc_coeff_key=[]
+                            listc_coeff_value=[]
+                            identifier="rowC["+str(i)+"]["+str(n)+"]["+str(o)+"]["+str(row)+"]["+str(col)+"]"
+                            ds3_my_rownames.append(identifier)
+                            ds3_my_rhs.append(ds3_constraintC_bound[i][n][o][row][col])
+
+                            for key,value in ds3_constraintC_coeff[i][n][o][row][col].items():
+                                listc_coeff_key.append(key)
+                                listc_coeff_value.append(value)    
+                            constraintc_row.append(listc_coeff_key)
+                            constraintc_row.append(listc_coeff_value)
+                            ds3_my_rows.append(constraintc_row)
+                                
                             
 #     print("My row names with C")
-#     pprint.pprint(my_rownames)
-#     print("My constraints rows with B")
-#     pprint.pprint(my_rows)
+#     pprint.pprint(ds3_my_rownames)
+#     print("My constraints rows with C")
+#     pprint.pprint(ds3_my_rows)
 #     print("My rhs with C")
-#     pprint.pprint(my_rhs)
+#     pprint.pprint(ds3_my_rhs)
                             
     """ My sense """
+    global ds3_my_sense
+    ds3_my_sense=""
     index=0
     while index <len(ds3_my_rows):
         ds3_my_sense=ds3_my_sense+"L"
@@ -1300,7 +1312,7 @@ def solver(sim_type,slot):
             elif sim_type=="with_no_sharing":
                 result_set[nc_my_colnames[j]]=solution_values[j]
             elif sim_type=="distributed_with_sharing_step3":
-                result_set[nc_my_colnames[j]]=solution_values[j]    
+                result_set[ds3_my_colnames[j]]=solution_values[j]    
             
             
     pprint.pprint(result_set)
@@ -1415,13 +1427,13 @@ def simulator():
         dwc_reset_model_variables()
         dwc_step1_load_xd_from_nc()
         
-        dwc_step3_build_model(0)
-#         for i in range(V):
-#             print ("   --- DWC -provider :",i)
-#             dwc_step3_build_model(i)
-#             dwc_step3_build_cplex_model(i)
-#             solver("distributed_with_sharing_step3",slot)
-#         
+
+        for i in range(V):
+            print ("   --- DWC -provider :",i)
+            dwc_step3_build_model(i)
+            dwc_step3_build_cplex_model(i)
+            solver("distributed_with_sharing_step3",slot)
+         
         
         slot=slot+1
         
