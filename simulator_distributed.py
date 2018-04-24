@@ -253,6 +253,8 @@ def initialize_request_rates():
 #                     print("***** slot :",slot)
                     for o in range(Objects):
                         sim_r[slot][i][o][row][m]=int(round(sim_requests[slot]*pw[i][o]))  
+    
+    pprint.pprint(sim_r)
   
                                
 def initialize_objects_weights():    
@@ -583,7 +585,12 @@ def cwc_build_cplex_model():
     for key,value in temp_obj_coeff.items():    
         my_obj.append(int(value))  
         my_colnames.append(key)
-                 
+     
+    mmm=0
+    for kkk in my_obj:
+        print("My_COLNAME:",my_colnames[mmm], "My_objective", kkk)
+        mmm = mmm+1
+                    
 #     print("my_obj:")                
 #     pprint.pprint(my_obj)                
 #     print("my_colnames:")                
@@ -1121,26 +1128,25 @@ def dwc_step3_build_cplex_model(i):
     
     """ B1: Objective function """
     for b1_key,b1_value in ds3_b1_coeff.items():
-        if b1_key in temp_obj_coeff:
-            current_value=int(temp_obj_coeff[b1_key])
-            temp_obj_coeff[b1_key]=current_value+float(b1_value)
-        else:
-            temp_obj_coeff[b1_key]=float(b1_value)
+        temp_obj_coeff[b1_key]=float(b1_value)
             #   
     """ C1: Cost function """          
     for c1_key,c1_value in ds3_c1_coeff.items():
-        if c1_key in temp_obj_coeff:
-            current_value=float(temp_obj_coeff[c1_key])
-            new_value=current_value-float(c1_value)
-            temp_obj_coeff[c1_key]=new_value
-        else:
-            value=-1*float(c1_value)
-            temp_obj_coeff[c1_key]=value 
+        current_value=float(temp_obj_coeff[c1_key])
+        new_value=current_value-float(c1_value)
+        temp_obj_coeff[c1_key]=new_value
+        
 
     """ Prepare the final list"""    
     for key,value in temp_obj_coeff.items():    
         ds3_my_obj.append(int(value))  
         ds3_my_colnames.append(key)
+        
+        
+    mmm=0
+    for kkk in ds3_my_obj:
+        print("My_COLNAME:",ds3_my_colnames[mmm], "My_objective", kkk)
+        mmm = mmm+1
                  
 #     print("my_obj:")                
 #     pprint.pprint(ds3_my_obj)                
