@@ -11,7 +11,7 @@ from sympy.physics.units.dimensions import current
 """parameters for all modes"""
 # CDN providers
 global V 
-V=3
+V=2
 # Mobile operators
 global M
 M=1
@@ -20,7 +20,7 @@ global Objects
 Objects=20
 # Rows of the Grid
 global Rows 
-Rows=1
+Rows=2
 # Columns of the Grid
 global Cols
 Cols=3
@@ -1283,7 +1283,7 @@ def dwc_step3_calculate_net_benefit(i,result_set):
 
     x_net_benefit=x_benefit-x_cost
     
-#     print(x_net_benefit)
+    print("x_net_benefit",x_net_benefit)
     
 #     pprint.pprint(ds3_my_obj)
 #     pprint.pprint(ds3_my_colnames) 

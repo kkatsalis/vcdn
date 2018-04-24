@@ -6,6 +6,6 @@
 <pydev_property name="org.python.pydev.PYTHON_PROJECT_VERSION">python 3.0</pydev_property>
 <pydev_property name="org.python.pydev.PYTHON_PROJECT_INTERPRETER">Default</pydev_property>
 <pydev_pathproperty name="org.python.pydev.PROJECT_EXTERNAL_SOURCE_PATH">
-<path>/opt/ibm/ILOG/CPLEX_Studio_Community127/cplex/python/3.5/x86-64_linux</path>
+<path>/opt/ibm/ILOG/CPLEX_Studio1271/cplex/python/3.5/x86-64_linux</path>
 </pydev_pathproperty>
 </pydev_project>

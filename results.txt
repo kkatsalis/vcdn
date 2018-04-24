@@ -204,3 +204,8 @@
 -slot-0-centralized_with_sharing-2664.0-slot-0-with_no_sharing-1052.0-slot-0-distributed_with_sharing_step3-0.0-slot-0-distributed_with_sharing_step3-82.0-slot-0-distributed_with_sharing_step3-119.0
 -slot-0-centralized_with_sharing-2901.0-slot-0-with_no_sharing-1135.0-slot-0-distributed_with_sharing_step3-0.0-slot-0-distributed_with_sharing_step3-36.0-slot-0-distributed_with_sharing_step3-198.0
 -slot-0-centralized_with_sharing-2576.0-slot-0-with_no_sharing-875.0-slot-0-distributed_with_sharing_step3-0.0-slot-0-distributed_with_sharing_step3-70.0-slot-0-distributed_with_sharing_step3-265.0
+-slot-0-centralized_with_sharing-3165.0-slot-0-with_no_sharing-1189.0-slot-0-distributed_with_sharing_step3-27.0-slot-0-distributed_with_sharing_step3-36.0-slot-0-distributed_with_sharing_step3-280.0
+-slot-0-centralized_with_sharing-1288.0-slot-0-with_no_sharing-797.0-slot-0-distributed_with_sharing_step3-0.0-slot-0-distributed_with_sharing_step3-0.0
+-slot-0-centralized_with_sharing-4157.0-slot-0-with_no_sharing-2064.0-slot-0-distributed_with_sharing_step3-9.0-slot-0-distributed_with_sharing_step3-118.0-slot-0-distributed_with_sharing_step3-156.0
+-slot-0-centralized_with_sharing-4442.0-slot-0-with_no_sharing-2290.0-slot-0-distributed_with_sharing_step3-8.0-slot-0-distributed_with_sharing_step3-75.0-slot-0-distributed_with_sharing_step3-160.0
+-slot-0-centralized_with_sharing-48592.0-slot-0-with_no_sharing-38104.0-slot-0-distributed_with_sharing_step3-0.0-slot-0-distributed_with_sharing_step3-0.0-slot-0-distributed_with_sharing_step3-0.0

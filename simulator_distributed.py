@@ -13,16 +13,18 @@ from sympy.physics.units.dimensions import current
 V=3
 
 # Mobile operators
-M=1
+M=2
 
 # Objects >10
-Objects=50
+Objects=200
 
 # Rows of the Grid 
-Rows=1
+Rows=2
 
 # Columns of the Grid
-Cols=3
+Cols=4
+
+default_object_size=5
 
 slots_number=1
 # Defines objects popularity weights pw[o]
@@ -139,7 +141,7 @@ ds3_my_ctype=""
 global ds3_my_sense
 ds3_my_sense=""
 
-default_object_size=5
+
 
 def initialize_objects_size():    
     """ s[o]:  Objects size"""
@@ -215,12 +217,13 @@ def initialize_placement_cost():
 def initialize_constraintA_bounds():
 
     """  constraintA_bound[i][row][col] """ 
-    edge_storage_limit=default_object_size*Objects*0.1
+    edge_storage_limit=default_object_size*Objects*0.05
     
     for i in range(V):
         for row in range (Rows):
             for col in range (Cols):
-                constraintA_bound[i][row][col]=edge_storage_limit
+                constraintA_bound[i][row][col]=edge_storage_limit*(col+1)
+                
                 
                     
 def initialize_simulator():
