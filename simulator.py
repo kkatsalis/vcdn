@@ -99,7 +99,7 @@ def initialize_objects_size():
         s[o]=5    
 
 
-def initialize_benefit_b():    
+def initialize_b():    
     """ Benefit b[i][o][rowS][rowD][col][m]: """
     
     benefit_edge=10
@@ -117,7 +117,7 @@ def initialize_benefit_b():
                                 b[i][o][rowS][rowD][col][m]=max(1,benefit)
     
     
-def initialize_benefit_psi():    
+def initialize_psi():    
 
     """ psi[i][n][row][col] """
     
@@ -134,7 +134,7 @@ def initialize_benefit_psi():
                     
                         
 
-def initialize_benefit_h():    
+def initialize_h():    
    
     """ h[i][n][o][row][col] """
     benefit_edge=10   
@@ -179,9 +179,9 @@ def initialize_constraintA_bounds():
 def initialize_simulator():
     build_variables_names()
     initialize_objects_size()
-    initialize_benefit_b()
-    initialize_benefit_psi()
-    initialize_benefit_h()
+    initialize_b()
+    initialize_psi()
+    initialize_h()
     initialize_placement_cost()
     initialize_constraintA_bounds() 
     initialize_objects_weights()

@@ -11,19 +11,19 @@ from sympy.physics.units.dimensions import current
 """parameters for all modes"""
 # CDN providers
 global V 
-V=2
+V=3
 # Mobile operators
 global M
 M=1
-# Objects
+# Objects >10
 global Objects  
-Objects=5
+Objects=20
 # Rows of the Grid
 global Rows 
 Rows=1
 # Columns of the Grid
 global Cols
-Cols=1
+Cols=3
 global slots_number
 slots_number=1
 # Defines objects popularity weights pw[o]
@@ -140,12 +140,14 @@ ds3_my_ctype=""
 global ds3_my_sense
 ds3_my_sense=""
 
+default_object_size=5
+
 def initialize_objects_size():    
     """ s[o]:  Objects size"""
     for o in range(Objects):
-        s[o]=5    
+        s[o]=default_object_size    
 
-def initialize_benefit_b():    
+def initialize_b():    
     """ Benefit b[i][o][rowS][rowD][col][m]: """
     
     benefit_edge=10
@@ -162,41 +164,39 @@ def initialize_benefit_b():
                                 benefit =(benefit_edge*0.9)/distance
                                 b[i][o][rowS][rowD][col][m]=max(1,benefit)
     
-    pprint.pprint(b)
+#     pprint.pprint(b)
     
-def initialize_benefit_psi():    
+def initialize_psi():    
 
     """ psi[i][n][row][col] """
     
-    benefit_edge=10
     for i in range(V):
         for n in range(V):
             for row in range (Rows):
                 for col in range (Cols):
-                    if col==0:
-                        psi[i][n][row][col]=benefit_edge+i
-                    else:
-                        benefit =(benefit_edge+i)*0.9/col
-                        psi[i][n][row][col]=max(1,benefit)
+                    psi[i][n][row][col]=c[n][row][col]*1.2
+                  
                     
                         
 
-def initialize_benefit_h():    
+def initialize_h():    
    
     """ h[i][n][o][row][col] """
-    benefit_edge=1   
     for i in range(V):
         for n in range(V):
             for o in range(Objects):
-                for row in range (Rows):
-                    for col in range (Cols):
-                        if col==0:
-                            h[i][n][o][row][col]=benefit_edge
-                        else:
-                            benefit =benefit_edge*0.9/col
-                            h[i][n][o][row][col]=max(1,benefit)
+                for rowS in range (Rows):
+                    for rowD in range (Rows):
+                        for col in range (Cols):
+                            avg_b=0
+                            for m in range (M):
+                                avg_b=avg_b+b[n][o][rowS][rowD][col][m]
+                            avg_b=avg_b/M
+                            h[i][n][o][rowD][col]=avg_b*1.2
+        
     
-   
+    
+  
      
 def initialize_placement_cost():     
      
@@ -216,19 +216,21 @@ def initialize_placement_cost():
 def initialize_constraintA_bounds():
 
     """  constraintA_bound[i][row][col] """ 
-    edge_sorage_limit=5
+    edge_storage_limit=default_object_size*Objects*0.1
+    
     for i in range(V):
         for row in range (Rows):
             for col in range (Cols):
-                constraintA_bound[i][row][col]=edge_sorage_limit+edge_sorage_limit*col
-
+                constraintA_bound[i][row][col]=edge_storage_limit+edge_storage_limit*col
+                if i==0:
+                    constraintA_bound[i][row][Cols-1]=10000 
                     
 def initialize_simulator():
     build_variables_names()
     initialize_objects_size()
-    initialize_benefit_b()
-    initialize_benefit_psi()
-    initialize_benefit_h()
+    initialize_b()
+    initialize_psi()
+    initialize_h()
     initialize_placement_cost()
     initialize_constraintA_bounds() 
     initialize_objects_weights()
@@ -241,7 +243,7 @@ def build_simulation_request_rates():
     for i in range(V):
         for row in range(Rows):
             for m in range(M):
-                lamda_r[i][row][m]=50+m
+                lamda_r[i][row][m]=5+m*10+i*50
                 
     for i in range(V):
         for row in range(Rows):
@@ -260,15 +262,16 @@ def initialize_objects_weights():
     """ initializes objects' popularity weights according to zipf distribution. Each cdn has diffrent popularity per object."""
     
     for i in range(V):
-        zipf_parameter = 2.5+i
+        zipf_parameter = 1.5+0.5*i
         popularity_list_sum=0
         zipf_object_popularity=np.random.zipf(zipf_parameter,Objects)
         popularity_list=zipf_object_popularity.tolist()
         popularity_list_sum=sum(popularity_list) 
-        
+#         pprint.pprint(popularity_list)  
         for o in range(Objects):
             pw[i][o]=popularity_list[o]/popularity_list_sum
     
+          
 def build_variables_names():
     """ X_names: x_names[i][o][row][col]"""
     index=0
@@ -1045,9 +1048,9 @@ def dwc_step3_build_constraintA_bound():
                         capacity_reserved=capacity_reserved+s[o]
                 ds2_capacity_reserved[i][row][col]=capacity_reserved            
                 ds3_constraintA_bound[i][row][col]= constraintA_bound[i][row][col]-ds2_capacity_reserved[i][row][col]           
-                                  
-#     print ("constraintA_ds3_bound")                        
-#     pprint.pprint(ds3_constraintA_bound)  
+                                 
+    print ("constraintA_ds3_bound")                        
+    pprint.pprint(ds3_constraintA_bound)  
     
 def dwc_step3_build_constraintB_coeff(i):    
     """ 
