@@ -1,0 +1,19 @@
+def cwc_build_constraintA_coeff():       
+    """
+        Constraint A: Capacity constraints
+    """
+    for i in range(V):
+        for row in range(Rows):
+            for col in range(Cols):
+                global constraintA_coeff
+                constraintA_coeff[i][row][col]={}
+    
+                for o in range(objects_number):
+                    xcoef=s[o]
+                    key=x_names[i][o][row][col]
+                    (constraintA_coeff[i][row][col])[key]=xcoef   
+                    for n in range(V):
+                        if n!=i:
+                            xcoef=s[o]
+                            key=w_names[n][i][o][row][col]
+                            (constraintA_coeff[i][row][col])[key]=xcoef

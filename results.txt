@@ -1,211 +1,419 @@
--slot-0-with_sharing-1174.0-slot-0-with_no_sharing-401.0
--slot-1-with_sharing-1163.0-slot-1-with_no_sharing-391.0
--slot-0-with_sharing-1295.0-slot-0-with_no_sharing-511.0
--slot-1-with_sharing-1487.0-slot-1-with_no_sharing-571.0
--slot-0-with_sharing-1246.0-slot-0-with_no_sharing-561.0-slot-0-with_sharing-1592.0-slot-0-with_no_sharing-781.0
--slot-1-with_sharing-1197.0-slot-1-with_no_sharing-651.0
--slot-0-with_sharing-1273.0-slot-0-with_no_sharing-491.0
--slot-1-with_sharing-1734.0-slot-1-with_no_sharing-681.0
--slot-0-with_sharing-1383.0-slot-0-with_no_sharing-591.0
--slot-1-with_sharing-1158.0-slot-1-with_no_sharing-501.0
--slot-0-with_sharing-1399.0-slot-0-with_no_sharing-491.0
--slot-1-with_sharing-1602.0-slot-1-with_no_sharing-561.0
--slot-0-with_sharing-1383.0-slot-0-with_no_sharing-591.0-slot-0-with_sharing-1289.0-slot-0-with_no_sharing-391.0
--slot-1-with_sharing-1130.0-slot-1-with_no_sharing-361.0
--slot-0-with_sharing-1273.0-slot-0-with_sharing-1367.0-slot-0-with_no_sharing-691.0-slot-0-with_sharing-1317.0
--slot-1-with_sharing-1301.0-slot-1-with_no_sharing-631.0-slot-0-with_sharing-1289.0-slot-0-with_no_sharing-391.0
--slot-1-with_sharing-1311.0-slot-1-with_no_sharing-411.0
--slot-0-with_sharing-1180.0-slot-0-with_no_sharing-501.0
--slot-1-with_sharing-1328.0-slot-1-with_no_sharing-531.0
--slot-0-with_sharing-1284.0-slot-0-with_no_sharing-501.0
--slot-1-with_sharing-1114.0-slot-1-with_no_sharing-461.0
--slot-0-with_sharing-1316.0-slot-0-with_no_sharing-1060.0
--slot-1-with_sharing-1343.0-slot-1-with_no_sharing-1070.0
--slot-0-with_sharing-1557.0-slot-0-with_no_sharing-1425.0
--slot-1-with_sharing-1593.0-slot-1-with_no_sharing-1455.0
--slot-0-with_sharing-1466.0-slot-0-with_no_sharing-1335.0
--slot-1-with_sharing-1563.0-slot-1-with_no_sharing-1425.0
--slot-0-with_no_sharing-660.0
--slot-1-with_no_sharing-1310.0
--slot-0-with_no_sharing-1240.0
--slot-1-with_no_sharing-890.0
--slot-0-with_no_sharing-944.0
--slot-1-with_no_sharing-824.0
--slot-0-with_no_sharing-1260.0
--slot-1-with_no_sharing-990.0
--slot-0-with_no_sharing-685.0
--slot-1-with_no_sharing-1310.0
--slot-0-with_no_sharing-1240.0
--slot-1-with_no_sharing-710.0
--slot-0-with_no_sharing-1050.0
--slot-1-with_no_sharing-760.0
--slot-0-with_no_sharing-1090.0
--slot-1-with_no_sharing-1060.0
--slot-0-with_no_sharing-860.0
--slot-1-with_no_sharing-950.0
--slot-0-with_no_sharing-790.0-slot-0-with_no_sharing-1080.0-slot-0-with_no_sharing-1100.0
--slot-1-with_no_sharing-1120.0
--slot-0-with_no_sharing-1070.0
--slot-1-with_no_sharing-1120.0
--slot-0-with_no_sharing-1250.0
--slot-1-with_no_sharing-920.0
--slot-0-with_no_sharing-655.0
--slot-1-with_no_sharing-715.0
--slot-0-with_no_sharing-1410.0
--slot-1-with_no_sharing-1050.0
--slot-0-with_no_sharing-1350.0
--slot-1-with_no_sharing-1280.0
--slot-0-with_sharing-1822.0-slot-0-with_no_sharing-1610.0
--slot-1-with_sharing-1668.0-slot-1-with_no_sharing-1470.0
--slot-0-with_sharing-1658.0-slot-0-with_no_sharing-1440.0
--slot-1-with_sharing-1559.0-slot-1-with_no_sharing-1350.0
--slot-0-with_sharing-1579.0-slot-0-with_no_sharing-1380.0
--slot-1-with_sharing-1437.0-slot-1-with_no_sharing-1250.0
--slot-0-with_sharing-2009.0-slot-0-with_no_sharing-1780.0-slot-0-with_sharing-1483.0-slot-0-with_no_sharing-1290.0-slot-0-with_sharing-1288.0-slot-0-with_no_sharing-1110.0-slot-0-with_sharing-1572.0-slot-0-with_no_sharing-1380.0-slot-0-with_sharing-1610.0-slot-0-with_no_sharing-1410.0-slot-0-with_sharing-1708.0-slot-0-with_no_sharing-1490.0-slot-0-with_sharing-1539.0-slot-0-with_no_sharing-1340.0-slot-0-with_sharing-1651.0-slot-0-with_no_sharing-1460.0-slot-0-with_sharing-1672.0-slot-0-with_no_sharing-1470.0-slot-0-with_sharing-1644.0-slot-0-with_no_sharing-1440.0
--slot-1-with_sharing-1648.0-slot-1-with_no_sharing-1450.0
--slot-0-centralized_with_sharing-1565.0-slot-0-with_no_sharing-1360.0-slot-0-centralized_with_sharing-1263.0-slot-0-with_no_sharing-1090.0-slot-0-centralized_with_sharing-1549.0-slot-0-with_no_sharing-1360.0-slot-0-centralized_with_sharing-1240.0-slot-0-with_no_sharing-1070.0-slot-0-centralized_with_sharing-1253.0-slot-0-with_no_sharing-1080.0-slot-0-centralized_with_sharing-1647.0-slot-0-with_no_sharing-1450.0-slot-0-centralized_with_sharing-1773.0-slot-0-with_no_sharing-1512.0-slot-0-centralized_with_sharing-1228.0-slot-0-with_no_sharing-1002.0-slot-0-centralized_with_sharing-1419.0-slot-0-with_no_sharing-821.0-slot-0-centralized_with_sharing-1530.0-slot-0-with_no_sharing-811.0-slot-0-centralized_with_sharing-1485.0-slot-0-with_no_sharing-921.0-slot-0-centralized_with_sharing-1405.0-slot-0-with_no_sharing-771.0
--slot-1-centralized_with_sharing-1533.0-slot-1-with_no_sharing-851.0
--slot-0-centralized_with_sharing-1482.0-slot-0-with_no_sharing-841.0
--slot-1-centralized_with_sharing-1739.0-slot-1-with_no_sharing-1001.0
--slot-0-centralized_with_sharing-1464.0-slot-0-with_no_sharing-861.0
--slot-1-centralized_with_sharing-1442.0-slot-1-with_no_sharing-841.0
--slot-0-centralized_with_sharing-1592.0-slot-0-with_no_sharing-941.0
--slot-1-centralized_with_sharing-1387.0-slot-1-with_no_sharing-791.0
--slot-0-centralized_with_sharing-1621.0-slot-0-with_no_sharing-931.0
--slot-1-centralized_with_sharing-1459.0-slot-1-with_no_sharing-821.0
--slot-0-centralized_with_sharing-1305.0-slot-0-with_no_sharing-791.0
--slot-1-centralized_with_sharing-1294.0-slot-1-with_no_sharing-781.0
--slot-0-centralized_with_sharing-1571.0-slot-0-with_no_sharing-811.0
--slot-1-centralized_with_sharing-1582.0-slot-1-with_no_sharing-821.0
--slot-0-centralized_with_sharing-1499.0-slot-0-with_no_sharing-891.0
--slot-1-centralized_with_sharing-1551.0-slot-1-with_no_sharing-901.0
--slot-0-centralized_with_sharing-1438.0-slot-0-with_no_sharing-801.0
--slot-1-centralized_with_sharing-1533.0-slot-1-with_no_sharing-851.0
--slot-0-centralized_with_sharing-1368.0-slot-0-with_no_sharing-811.0
--slot-1-centralized_with_sharing-1357.0-slot-1-with_no_sharing-801.0
--slot-0-centralized_with_sharing-1684.0-slot-0-with_no_sharing-951.0
--slot-1-centralized_with_sharing-1588.0-slot-1-with_no_sharing-901.0
--slot-0-centralized_with_sharing-1711.0-slot-0-centralized_with_sharing-1279.0-slot-0-with_no_sharing-731.0
--slot-0-with_no_sharing-1021.0
--slot-1-centralized_with_sharing-1632.0-slot-1-centralized_with_sharing-1506.0-slot-1-with_no_sharing-941.0-slot-1-with_no_sharing-881.0
-
--slot-0-centralized_with_sharing-1460.0-slot-0-with_no_sharing-821.0-slot-0-centralized_with_sharing-1457.0-slot-0-with_no_sharing-781.0
--slot-1-centralized_with_sharing-1342.0-slot-1-with_no_sharing-751.0-slot-0-centralized_with_sharing-1693.0-slot-0-with_no_sharing-921.0-slot-0-centralized_with_sharing-1769.0-slot-0-with_no_sharing-991.0-slot-0-centralized_with_sharing-1518.0-slot-0-with_no_sharing-911.0
--slot-1-centralized_with_sharing-1626.0-slot-1-with_no_sharing-971.0
--slot-0-centralized_with_sharing-1578.0-slot-0-with_no_sharing-891.0
--slot-1-centralized_with_sharing-1353.0-slot-1-with_no_sharing-761.0
--slot-0-centralized_with_sharing-1699.0-slot-0-with_no_sharing-1001.0
--slot-1-centralized_with_sharing-1658.0-slot-1-with_no_sharing-1001.0
--slot-0-centralized_with_sharing-1626.0-slot-0-with_no_sharing-971.0
--slot-1-centralized_with_sharing-1391.0-slot-1-with_no_sharing-831.0
--slot-0-centralized_with_sharing-1422.0-slot-0-with_no_sharing-861.0
--slot-1-centralized_with_sharing-1702.0-slot-1-with_no_sharing-1041.0
--slot-0-centralized_with_sharing-1187.0-slot-0-with_no_sharing-528.0
--slot-1-centralized_with_sharing-1299.0-slot-1-with_no_sharing-585.0
--slot-0-centralized_with_sharing-1291.0-slot-0-with_no_sharing-556.0
--slot-1-centralized_with_sharing-1100.0-slot-1-with_no_sharing-473.0
--slot-0-centralized_with_sharing-1550.0-slot-0-with_no_sharing-696.0
--slot-1-centralized_with_sharing-1422.0-slot-1-with_no_sharing-625.0
--slot-0-centralized_with_sharing-1322.0-slot-0-with_no_sharing-580.0
--slot-1-centralized_with_sharing-1300.0-slot-1-with_no_sharing-561.0
--slot-0-centralized_with_sharing-971.0-slot-0-with_no_sharing-397.0
--slot-1-centralized_with_sharing-1300.0-slot-1-with_no_sharing-561.0
--slot-0-centralized_with_sharing-1293.0-slot-0-with_no_sharing-556.0
--slot-1-centralized_with_sharing-1198.0-slot-1-with_no_sharing-512.0
--slot-0-centralized_with_sharing-1492.0-slot-0-with_no_sharing-779.0
--slot-1-centralized_with_sharing-1343.0-slot-1-with_no_sharing-689.0
--slot-0-centralized_with_sharing-1555.0-slot-0-with_no_sharing-749.0-slot-0-centralized_with_sharing-1362.0-slot-0-with_no_sharing-621.0
--slot-1-centralized_with_sharing-1383.0-slot-1-with_no_sharing-606.0
--slot-0-centralized_with_sharing-1297.0-slot-0-with_no_sharing-600.0
--slot-1-centralized_with_sharing-1510.0-slot-1-with_no_sharing-704.0
--slot-0-centralized_with_sharing-1272.0-slot-0-with_no_sharing-634.0
--slot-1-centralized_with_sharing-1400.0-slot-1-with_no_sharing-672.0
--slot-0-centralized_with_sharing-1323.0-slot-0-with_no_sharing-582.0
--slot-1-centralized_with_sharing-1367.0-slot-1-with_no_sharing-620.0
--slot-0-centralized_with_sharing-1250.0-slot-0-with_no_sharing-560.0
--slot-1-centralized_with_sharing-1388.0-slot-1-with_no_sharing-641.0
--slot-0-centralized_with_sharing-1309.0-slot-0-with_no_sharing-736.0
--slot-1-centralized_with_sharing-1510.0-slot-1-with_no_sharing-859.0
--slot-0-centralized_with_sharing-1193.0-slot-0-with_no_sharing-593.0-slot-0-centralized_with_sharing-1396.0-slot-0-with_no_sharing-734.0
--slot-1-centralized_with_sharing-1375.0-slot-1-with_no_sharing-714.0
--slot-0-centralized_with_sharing-1172.0-slot-0-with_no_sharing-580.0
--slot-1-centralized_with_sharing-1205.0-slot-1-with_no_sharing-610.0
--slot-0-centralized_with_sharing-1820.0-slot-0-with_no_sharing-768.0
--slot-1-centralized_with_sharing-1239.0-slot-1-with_no_sharing-509.0
--slot-0-centralized_with_sharing-1317.0-slot-0-with_no_sharing-489.0
--slot-1-centralized_with_sharing-1317.0-slot-1-with_no_sharing-489.0
--slot-0-centralized_with_sharing-1374.0-slot-0-with_no_sharing-671.0
--slot-1-centralized_with_sharing-1653.0-slot-1-with_no_sharing-835.0
--slot-0-centralized_with_sharing-1504.0-slot-0-with_no_sharing-694.0
--slot-1-centralized_with_sharing-1515.0-slot-1-with_no_sharing-704.0
--slot-0-centralized_with_sharing-1110.0-slot-0-with_no_sharing-478.0
--slot-1-centralized_with_sharing-1269.0-slot-1-with_no_sharing-533.0
--slot-0-centralized_with_sharing-1588.0-slot-0-with_no_sharing-825.0
--slot-1-centralized_with_sharing-1429.0-slot-1-with_no_sharing-770.0
--slot-0-centralized_with_sharing-1383.0-slot-0-with_no_sharing-549.0
--slot-1-centralized_with_sharing-1267.0-slot-1-with_no_sharing-489.0
--slot-0-centralized_with_sharing-1326.0-slot-0-with_no_sharing-582.0-slot-0-centralized_with_sharing-1267.0-slot-0-with_no_sharing-650.0
--slot-0-centralized_with_sharing-1420.0-slot-0-with_no_sharing-861.0
--slot-0-centralized_with_sharing-1223.0-slot-0-with_no_sharing-449.0
--slot-0-centralized_with_sharing-1238.0-slot-0-with_no_sharing-504.0-slot-0-centralized_with_sharing-1296.0-slot-0-with_no_sharing-635.0-slot-0-centralized_with_sharing-1289.0-slot-0-with_no_sharing-675.0-slot-0-centralized_with_sharing-1301.0-slot-0-with_no_sharing-561.0-slot-0-centralized_with_sharing-1499.0-slot-0-with_no_sharing-694.0-slot-0-centralized_with_sharing-1355.0-slot-0-with_no_sharing-608.0-slot-0-centralized_with_sharing-1596.0-slot-0-with_no_sharing-879.0-slot-0-centralized_with_sharing-1260.0-slot-0-with_no_sharing-525.0-slot-0-centralized_with_sharing-1404.0-slot-0-with_no_sharing-654.0-slot-0-centralized_with_sharing-1390.0-slot-0-with_no_sharing-723.0-slot-0-centralized_with_sharing-1481.0-slot-0-with_no_sharing-724.0-slot-0-centralized_with_sharing-1066.0-slot-0-with_no_sharing-399.0-slot-0-centralized_with_sharing-1338.0-slot-0-with_no_sharing-632.0-slot-0-centralized_with_sharing-1572.0-slot-0-with_no_sharing-714.0-slot-0-centralized_with_sharing-1187.0-slot-0-with_no_sharing-504.0-slot-0-centralized_with_sharing-1360.0-slot-0-with_no_sharing-752.0
--slot-0-centralized_with_sharing-1214.0-slot-0-with_no_sharing-617.0-slot-0-centralized_with_sharing-1376.0-slot-0-with_no_sharing-658.0-slot-0-centralized_with_sharing-1304.0-slot-0-with_no_sharing-689.0-slot-0-centralized_with_sharing-1288.0-slot-0-with_no_sharing-580.0-slot-0-centralized_with_sharing-1415.0-slot-0-with_no_sharing-576.0-slot-0-centralized_with_sharing-1484.0-slot-0-with_no_sharing-639.0-slot-0-centralized_with_sharing-1341.0-slot-0-with_no_sharing-698.0-slot-0-centralized_with_sharing-1314.0-slot-0-with_no_sharing-573.0-slot-0-centralized_with_sharing-1645.0-slot-0-with_no_sharing-815.0-slot-0-centralized_with_sharing-1506.0-slot-0-with_no_sharing-756.0-slot-0-centralized_with_sharing-1311.0-slot-0-with_no_sharing-525.0
--slot-0-centralized_with_sharing-1530.0-slot-0-with_no_sharing-799.0
--slot-0-centralized_with_sharing-1260.0-slot-0-with_no_sharing-523.0
--slot-0-centralized_with_sharing-1427.0-slot-0-with_no_sharing-849.0
--slot-0-centralized_with_sharing-1468.0-slot-0-with_no_sharing-806.0-slot-0-centralized_with_sharing-1519.0-slot-0-with_no_sharing-717.0-slot-0-centralized_with_sharing-1533.0-slot-0-with_no_sharing-799.0-slot-0-centralized_with_sharing-1400.0-slot-0-with_no_sharing-742.0-slot-0-centralized_with_sharing-1414.0-slot-0-with_no_sharing-681.0-slot-0-centralized_with_sharing-1388.0-slot-0-with_no_sharing-621.0-slot-0-centralized_with_sharing-1311.0-slot-0-with_no_sharing-596.0-slot-0-centralized_with_sharing-1364.0-slot-0-with_no_sharing-662.0-slot-0-centralized_with_sharing-1543.0-slot-0-with_no_sharing-777.0-slot-0-centralized_with_sharing-1429.0-slot-0-with_no_sharing-587.0-slot-0-centralized_with_sharing-1259.0-slot-0-with_no_sharing-608.0-slot-0-centralized_with_sharing-1262.0-slot-0-with_no_sharing-572.0-slot-0-centralized_with_sharing-820.0-slot-0-with_no_sharing-557.0-slot-0-centralized_with_sharing-689.0-slot-0-with_no_sharing-398.0-slot-0-centralized_with_sharing-628.0-slot-0-with_no_sharing-340.0-slot-0-centralized_with_sharing-746.0-slot-0-with_no_sharing-524.0-slot-0-centralized_with_sharing-707.0-slot-0-with_no_sharing-437.0-slot-0-centralized_with_sharing-731.0-slot-0-with_no_sharing-422.0-slot-0-centralized_with_sharing-546.0-slot-0-with_no_sharing-282.0-slot-0-centralized_with_sharing-472.0-slot-0-with_no_sharing-275.0-slot-0-centralized_with_sharing-671.0-slot-0-with_no_sharing-328.0-slot-0-centralized_with_sharing-553.0-slot-0-with_no_sharing-276.0-slot-0-centralized_with_sharing-561.0-slot-0-with_no_sharing-310.0-slot-0-centralized_with_sharing-598.0-slot-0-with_no_sharing-380.0-slot-0-centralized_with_sharing-503.0-slot-0-with_no_sharing-300.0-slot-0-centralized_with_sharing-617.0-slot-0-with_no_sharing-470.0-slot-0-centralized_with_sharing-652.0-slot-0-with_no_sharing-520.0-slot-0-centralized_with_sharing-760.0-slot-0-with_no_sharing-600.0-slot-0-centralized_with_sharing-534.0-slot-0-with_no_sharing-340.0-slot-0-centralized_with_sharing-570.0-slot-0-with_no_sharing-400.0-slot-0-centralized_with_sharing-524.0-slot-0-with_no_sharing-240.0-slot-0-distributed_with_sharing_step3-69.0
--slot-0-centralized_with_sharing-746.0-slot-0-with_no_sharing-560.0-slot-0-distributed_with_sharing_step3-69.0
--slot-0-centralized_with_sharing-468.0-slot-0-with_no_sharing-280.0-slot-0-distributed_with_sharing_step3-69.0-slot-0-centralized_with_sharing-543.0-slot-0-with_no_sharing-330.0-slot-0-distributed_with_sharing_step3-29.0
--slot-0-centralized_with_sharing-440.0-slot-0-with_no_sharing-200.0-slot-0-distributed_with_sharing_step3-99.0
--slot-0-centralized_with_sharing-434.0-slot-0-with_no_sharing-240.0-slot-0-distributed_with_sharing_step3-79.0-slot-0-distributed_with_sharing_step3-89.0
--slot-0-centralized_with_sharing-593.0-slot-0-with_no_sharing-430.0-slot-0-distributed_with_sharing_step3-0.0-slot-0-distributed_with_sharing_step3-0.0
--slot-0-centralized_with_sharing-481.0-slot-0-with_no_sharing-310.0-slot-0-distributed_with_sharing_step3-79.0-slot-0-distributed_with_sharing_step3-59.0
--slot-0-centralized_with_sharing-415.0-slot-0-with_no_sharing-250.0-slot-0-distributed_with_sharing_step3-59.0-slot-0-distributed_with_sharing_step3-79.0
--slot-0-centralized_with_sharing-562.0-slot-0-with_no_sharing-420.0-slot-0-distributed_with_sharing_step3-39.0-slot-0-distributed_with_sharing_step3-59.0
--slot-0-centralized_with_sharing-606.0-slot-0-with_no_sharing-460.0-slot-0-distributed_with_sharing_step3-59.0-slot-0-distributed_with_sharing_step3-39.0
--slot-0-centralized_with_sharing-557.0-slot-0-with_no_sharing-270.0-slot-0-distributed_with_sharing_step3-9.0-slot-0-distributed_with_sharing_step3-89.0
--slot-0-centralized_with_sharing-476.0-slot-0-with_no_sharing-260.0-slot-0-distributed_with_sharing_step3-49.0-slot-0-centralized_with_sharing-566.0-slot-0-with_no_sharing-360.0-slot-0-distributed_with_sharing_step3-0.0-slot-0-distributed_with_sharing_step3-0.0
--slot-0-centralized_with_sharing-841.0-slot-0-with_no_sharing-610.0-slot-0-distributed_with_sharing_step3-99.0-slot-0-centralized_with_sharing-589.0-slot-0-with_no_sharing-390.0-slot-0-distributed_with_sharing_step3-89.0-slot-0-centralized_with_sharing-566.0-slot-0-with_no_sharing-360.0-slot-0-distributed_with_sharing_step3-0.0-slot-0-centralized_with_sharing-524.0-slot-0-with_no_sharing-240.0-slot-0-distributed_with_sharing_step3-0.0-slot-0-distributed_with_sharing_step3-0.0
--slot-0-centralized_with_sharing-467.0-slot-0-with_no_sharing-270.0-slot-0-distributed_with_sharing_step3-59.0-slot-0-distributed_with_sharing_step3-109.0-slot-0-centralized_with_sharing-380.0-slot-0-with_no_sharing-200.0-slot-0-distributed_with_sharing_step3-59.0-slot-0-centralized_with_sharing-405.0-slot-0-with_no_sharing-250.0-slot-0-distributed_with_sharing_step3-79.0-slot-0-distributed_with_sharing_step3-49.0
--slot-0-centralized_with_sharing-580.0-slot-0-with_no_sharing-300.0-slot-0-distributed_with_sharing_step3-69.0-slot-0-distributed_with_sharing_step3-109.0
--slot-0-centralized_with_sharing-535.0-slot-0-with_no_sharing-350.0-slot-0-distributed_with_sharing_step3-59.0-slot-0-distributed_with_sharing_step3-89.0
--slot-0-centralized_with_sharing-686.0-slot-0-with_no_sharing-360.0-slot-0-distributed_with_sharing_step3-169.0-slot-0-distributed_with_sharing_step3-119.0
--slot-0-centralized_with_sharing-535.0-slot-0-with_no_sharing-330.0-slot-0-distributed_with_sharing_step3-0.0-slot-0-distributed_with_sharing_step3-0.0
--slot-0-centralized_with_sharing-398.0-slot-0-with_no_sharing-180.0-slot-0-distributed_with_sharing_step3-109.0-slot-0-distributed_with_sharing_step3-89.0
--slot-0-centralized_with_sharing-609.0-slot-0-with_no_sharing-390.0-slot-0-distributed_with_sharing_step3-99.0-slot-0-distributed_with_sharing_step3-79.0
--slot-0-centralized_with_sharing-479.0-slot-0-with_no_sharing-290.0-slot-0-distributed_with_sharing_step3-79.0-slot-0-distributed_with_sharing_step3-79.0
--slot-0-centralized_with_sharing-580.0-slot-0-with_no_sharing-368.0-slot-0-distributed_with_sharing_step3-53.0-slot-0-distributed_with_sharing_step3-33.0
--slot-0-centralized_with_sharing-519.0-slot-0-with_no_sharing-271.0-slot-0-distributed_with_sharing_step3-61.0-slot-0-distributed_with_sharing_step3-79.0
--slot-0-centralized_with_sharing-554.0-slot-0-with_no_sharing-339.0-slot-0-distributed_with_sharing_step3-58.0-slot-0-distributed_with_sharing_step3-60.0
--slot-0-centralized_with_sharing-1312.0-slot-0-with_no_sharing-882.0-slot-0-distributed_with_sharing_step3-0.0-slot-0-distributed_with_sharing_step3-0.0
--slot-0-centralized_with_sharing-1119.0-slot-0-with_no_sharing-740.0-slot-0-distributed_with_sharing_step3-0.0-slot-0-distributed_with_sharing_step3-0.0
--slot-0-centralized_with_sharing-421.0-slot-0-with_no_sharing-263.0-slot-0-distributed_with_sharing_step3-31.0-slot-0-distributed_with_sharing_step3-55.0
--slot-0-centralized_with_sharing-556.0-slot-0-with_no_sharing-422.0-slot-0-distributed_with_sharing_step3-0.0-slot-0-distributed_with_sharing_step3-55.0
--slot-0-centralized_with_sharing-515.0-slot-0-with_no_sharing-298.0-slot-0-distributed_with_sharing_step3-87.0-slot-0-distributed_with_sharing_step3-38.0
--slot-0-centralized_with_sharing-620.0-slot-0-with_no_sharing-255.0-slot-0-distributed_with_sharing_step3-31.0-slot-0-distributed_with_sharing_step3-38.0
--slot-0-centralized_with_sharing-3022.0-slot-0-with_no_sharing-251.0-slot-0-distributed_with_sharing_step3-0.0-slot-0-distributed_with_sharing_step3-0.0
--slot-0-centralized_with_sharing-3542.0-slot-0-with_no_sharing-321.0-slot-0-distributed_with_sharing_step3-0.0-slot-0-distributed_with_sharing_step3-0.0
--slot-0-centralized_with_sharing-1909.0-slot-0-with_no_sharing-180.0-slot-0-distributed_with_sharing_step3-0.0-slot-0-distributed_with_sharing_step3-0.0
--slot-0-centralized_with_sharing-3267.0-slot-0-with_no_sharing-316.0-slot-0-distributed_with_sharing_step3-60.0-slot-0-distributed_with_sharing_step3-210.0
--slot-0-centralized_with_sharing-4821.0-slot-0-with_no_sharing-400.0-slot-0-distributed_with_sharing_step3-0.0-slot-0-distributed_with_sharing_step3-112.0
--slot-0-centralized_with_sharing-7436.0-slot-0-with_no_sharing-515.0-slot-0-distributed_with_sharing_step3-0.0-slot-0-distributed_with_sharing_step3-238.0
--slot-0-centralized_with_sharing-7833.0-slot-0-with_no_sharing-609.0-slot-0-distributed_with_sharing_step3-0.0-slot-0-distributed_with_sharing_step3-126.0
--slot-0-centralized_with_sharing-6687.0-slot-0-with_no_sharing-454.0-slot-0-distributed_with_sharing_step3-0.0-slot-0-distributed_with_sharing_step3-182.0
--slot-0-centralized_with_sharing-6250.0-slot-0-with_no_sharing-421.0-slot-0-distributed_with_sharing_step3-0.0-slot-0-distributed_with_sharing_step3-182.0
--slot-0-centralized_with_sharing-9329.0-slot-0-with_no_sharing-634.0-slot-0-distributed_with_sharing_step3-0.0-slot-0-distributed_with_sharing_step3-238.0
--slot-0-centralized_with_sharing-9523.0-slot-0-with_no_sharing-645.0-slot-0-distributed_with_sharing_step3-0.0-slot-0-distributed_with_sharing_step3-238.0
--slot-0-centralized_with_sharing-8766.0-slot-0-with_no_sharing-825.0-slot-0-distributed_with_sharing_step3-0.0-slot-0-distributed_with_sharing_step3-0.0
--slot-0-centralized_with_sharing-7905.0-slot-0-with_no_sharing-587.0-slot-0-distributed_with_sharing_step3-0.0-slot-0-distributed_with_sharing_step3-182.0
--slot-0-centralized_with_sharing-12575.0-slot-0-with_no_sharing-1005.0-slot-0-distributed_with_sharing_step3-0.0-slot-0-distributed_with_sharing_step3-218.0
--slot-0-centralized_with_sharing-10685.0-slot-0-with_no_sharing-955.0-slot-0-distributed_with_sharing_step3-0.0-slot-0-distributed_with_sharing_step3-29.0
--slot-0-centralized_with_sharing-10212.0-slot-0-with_no_sharing-898.0-slot-0-distributed_with_sharing_step3-0.0-slot-0-distributed_with_sharing_step3-47.0
--slot-0-centralized_with_sharing-2884.0-slot-0-with_no_sharing-251.0-slot-0-distributed_with_sharing_step3-0.0-slot-0-distributed_with_sharing_step3-26.0
--slot-0-centralized_with_sharing-8771.0-slot-0-with_no_sharing-537.0-slot-0-distributed_with_sharing_step3-0.0-slot-0-distributed_with_sharing_step3-65.0-slot-0-distributed_with_sharing_step3-153.0
--slot-0-centralized_with_sharing-2810.0-slot-0-with_no_sharing-952.0-slot-0-distributed_with_sharing_step3-4.0-slot-0-distributed_with_sharing_step3-34.0-slot-0-distributed_with_sharing_step3-315.0
--slot-0-centralized_with_sharing-2664.0-slot-0-with_no_sharing-1052.0-slot-0-distributed_with_sharing_step3-0.0-slot-0-distributed_with_sharing_step3-82.0-slot-0-distributed_with_sharing_step3-119.0
--slot-0-centralized_with_sharing-2901.0-slot-0-with_no_sharing-1135.0-slot-0-distributed_with_sharing_step3-0.0-slot-0-distributed_with_sharing_step3-36.0-slot-0-distributed_with_sharing_step3-198.0
--slot-0-centralized_with_sharing-2576.0-slot-0-with_no_sharing-875.0-slot-0-distributed_with_sharing_step3-0.0-slot-0-distributed_with_sharing_step3-70.0-slot-0-distributed_with_sharing_step3-265.0
--slot-0-centralized_with_sharing-3165.0-slot-0-with_no_sharing-1189.0-slot-0-distributed_with_sharing_step3-27.0-slot-0-distributed_with_sharing_step3-36.0-slot-0-distributed_with_sharing_step3-280.0
--slot-0-centralized_with_sharing-1288.0-slot-0-with_no_sharing-797.0-slot-0-distributed_with_sharing_step3-0.0-slot-0-distributed_with_sharing_step3-0.0
--slot-0-centralized_with_sharing-4157.0-slot-0-with_no_sharing-2064.0-slot-0-distributed_with_sharing_step3-9.0-slot-0-distributed_with_sharing_step3-118.0-slot-0-distributed_with_sharing_step3-156.0
--slot-0-centralized_with_sharing-4442.0-slot-0-with_no_sharing-2290.0-slot-0-distributed_with_sharing_step3-8.0-slot-0-distributed_with_sharing_step3-75.0-slot-0-distributed_with_sharing_step3-160.0
--slot-0-centralized_with_sharing-48592.0-slot-0-with_no_sharing-38104.0-slot-0-distributed_with_sharing_step3-0.0-slot-0-distributed_with_sharing_step3-0.0-slot-0-distributed_with_sharing_step3-0.0
+-slot-1-cwc-12631.0-nc-9482.0-dwc-10343.5
+-slot-2-cwc-12244.0-nc-9344.0-dwc-9908.5
+-slot-1-cwc-11649.0-nc-8586.0-dwc-9411.0
+-slot-2-cwc-11628.0-nc-8462.0-dwc-9318.0
+-slot-1-cwc-9977.0-nc-7182.0-dwc-8049.5
+-slot-1-cwc-11143.0-nc-8435.0-dwc-9167.0
+-slot-1-cwc-10479.0-nc-7623.0-dwc-8364.0
+-slot-2-cwc-11429.0-nc-8375.0-dwc-9181.5
+-slot-1-cwc-11402.0-nc-8943.0-dwc-8948.5
+-slot-2-cwc-12223.0-nc-9463.0-dwc-9761.0
+-slot-1-cwc-10844.0-nc-8745.0-dwc_s3-41.0
+-slot-2-cwc-10683.0-nc-8657.0-dwc_s3-23.0
+-slot-1-cwc-11801.0-nc-8652.0-dwc_s3-870.0
+-slot-2-cwc-11746.0-nc-8617.0-dwc_s3-813.0
+-slot-1-cwc-12093.0-nc-8863.0-dwc_s3-867.0
+-slot-2-cwc-12204.0-nc-9140.0-dwc_s3-875.0
+-slot-1-cwc-10790.0-nc-7818.0-dwc_s3-864.0
+-slot-1-cwc-11327.0-nc-8350.0-dwc_s3-910.0
+-slot-1-cwc-12008.0-nc-8937.0-dwc_s3-9755.0
+-slot-1-cwc-669316.0-nc-251396.0-dwc_s3-259856.0
+-slot-1-cwc-679996.0-nc-299196.0-dwc_s3-299916.0
+-slot-1-cwc-1006764.0-nc-298204.0-dwc_s3-320704.0
+-slot-1-cwc-745704.0-nc-274504.0-dwc_s3-320504.0
+-slot-1-cwc-831496.0-nc-222806.0-dwc_s3-430766.0
+-slot-1-cwc-848196.0-nc-265796.0-dwc_s3-276596.0
+-slot-1-cwc-707096.0-nc-210596.0-dwc_s3-278096.0
+-slot-1-cwc-699096.0-nc-209796.0-dwc_s3-308096.0
+-slot-1-cwc-710796.0-nc-215696.0-dwc_s3-340796.0
+-slot-1-cwc-861696.0-nc-263996.0-dwc_s3-374696.0
+-slot-1-cwc-757796.0-nc-228796.0-dwc_s3-291796.0
+-slot-1-cwc-808096.0-nc-289996.0-dwc_s3-384496.0
+-slot-1-cwc-879596.0-nc-301896.0-dwc_s3-382896.0
+-slot-1-cwc-753296.0-nc-230387.0-dwc_s3-393992.0
+-slot-1-cwc-893396.0-nc-317396.0-dwc_s3-419096.0
+-slot-1-cwc-818696.0-nc-274496.0-dwc_s3-353796.0
+-slot-1-cwc-703996.0-nc-241396.0-dwc_s3-316196.0
+-slot-1-cwc-752296.0-nc-209496.0-dwc_s3-318496.0
+-slot-1-cwc-858896.0-nc-237971.0-dwc_s3-434996.0
+-slot-1-cwc-687596.0-nc-228096.0-dwc_s3-258696.0
+-slot-1-cwc-802796.0-nc-223717.0-dwc_s3-424972.0
+-slot-1-cwc-713896.0-nc-223096.0-dwc_s3-327496.0
+-slot-1-cwc-723796.0-nc-239196.0-dwc_s3-312096.0
+-slot-1-cwc-703596.0-nc-260296.0-dwc_s3-337696.0
+-slot-1-cwc-1413474.0-nc-469374.0-dwc_s3-579374.0
+-slot-1-cwc-1370974.0-nc-455174.0-dwc_s3-560474.0
+-slot-1-cwc-1838994.0-nc-796432.0-dwc_s3-931120.0
+-slot-1-cwc-1910394.0-nc-789132.0-dwc_s3-923220.0
+-slot-1-cwc-1969494.0-nc-887432.0-dwc_s3-996520.0
+-slot-1-cwc-1881994.0-nc-717732.0-dwc_s3-886620.0
+-slot-1-cwc-912596.0-nc-252396.0-dwc_s3-437996.0
+-slot-1-cwc-466200.0-nc-181692.0-dwc_s3-238392.0
+-slot-1-cwc-368100.0-nc-115992.0-dwc_s3-275002.0
+-slot-1-cwc-397800.0-nc-139392.0-dwc_s3-294402.0
+-slot-1-cwc-430200.0-nc-138492.0-dwc_s3-301502.0
+-slot-1-cwc-473400.0-nc-141192.0-dwc_s3-336202.0
+-slot-1-cwc-452648.0-nc-153073.0-dwc_s3-276992.0
+-slot-1-cwc-421748.0-nc-165285.0-dwc_s3-283804.0
+-slot-1-cwc-426948.0-nc-221085.0-dwc_s3-251614.0
+-slot-1-cwc-423248.0-nc-148685.0-dwc_s3-280704.0
+-slot-1-cwc-406348.0-nc-150885.0-dwc_s3-274962.0
+-slot-1-cwc-464846.0-nc-222847.0-dwc_s3-286976.0
+-slot-1-cwc-942594.0-nc-442432.0-dwc_s3-585979.0
+-slot-1-cwc-976688.0-nc-455044.0-dwc_s3-595024.0
+-slot-1-cwc-972688.0-nc-413844.0-dwc_s3-618820.0
+-slot-1-cwc-993388.0-nc-385884.0-dwc_s3-600760.0
+-slot-1-cwc-934588.0-nc-393844.0-dwc_s3-609620.0
+-slot-1-cwc-879888.0-nc-382044.0-dwc_s3-581620.0
+-slot-1-cwc-899788.0-nc-408744.0-dwc_s3-557757.0
+-slot-1-cwc-888388.0-nc-350744.0-dwc_s3-586320.0
+-slot-1-cwc-1003488.0-nc-382320.0-dwc_s3-605296.0
+-slot-1-cwc-944688.0-nc-392444.0-dwc_s3-601920.0
+-slot-1-cwc-876388.0-nc-420244.0-dwc_s3-554879.0
+-slot-1-cwc-837788.0-nc-330244.0-dwc_s3-560420.0
+-slot-1-cwc-984788.0-nc-335029.0-dwc_s3-594905.0
+-slot-1-cwc-917888.0-nc-434944.0-dwc_s3-559811.0
+-slot-1-cwc-792088.0-nc-320844.0-dwc_s3-537520.0
+-slot-1-cwc-842488.0-nc-397444.0-dwc_s3-522201.0
+-slot-1-cwc-913288.0-nc-369244.0-dwc_s3-593120.0
+-slot-1-cwc-855288.0-nc-326344.0-dwc_s3-563720.0
+-slot-1-cwc-890988.0-nc-378344.0-dwc_s3-583320.0
+-slot-1-cwc-928488.0-nc-387344.0-dwc_s3-603120.0
+-slot-1-cwc-877888.0-nc-414444.0-dwc_s3-549891.0
+-slot-1-cwc-903188.0-nc-385344.0-dwc_s3-594820.0
+-slot-1-cwc-1019788.0-nc-365744.0-dwc_s3-650820.0
+-slot-1-cwc-904088.0-nc-330175.0-dwc_s3-555167.0
+-slot-1-cwc-961688.0-nc-413744.0-dwc_s3-612636.0
+-slot-1-cwc-914288.0-nc-368344.0-dwc_s3-586136.0
+-slot-1-cwc-942888.0-nc-417638.0-dwc_s3-537763.0
+-slot-1-cwc-921788.0-nc-427093.0-dwc_s3-527705.0
+-slot-1-cwc-941288.0-nc-363556.0-dwc_s3-570548.0
+-slot-1-cwc-830088.0-nc-313544.0-dwc_s3-548436.0
+-slot-1-cwc-965888.0-nc-393144.0-dwc_s3-623536.0
+-slot-1-cwc-879588.0-nc-314773.0-dwc_s3-531665.0
+-slot-1-cwc-918388.0-nc-393044.0-dwc_s3-591936.0
+-slot-1-cwc-893388.0-nc-434144.0-dwc_s3-552456.0
+-slot-1-cwc-949888.0-nc-359844.0-dwc_s3-604636.0
+-slot-1-cwc-912688.0-nc-369144.0-dwc_s3-506676
+-slot-1-cwc-837988.0-nc-323244.0-dwc_s3-471576
+-slot-1-cwc-918988.0-nc-355544.0-dwc_s3-511476
+-slot-1-cwc-897688.0-nc-362644.0-dwc_s3-509576
+-slot-1-cwc-862588.0-nc-326044.0-dwc_s3-488876
+-slot-1-cwc-823888.0-nc-346444.0-dwc_s3-467876
+-slot-1-cwc-921988.0-nc-348993.0-dwc_s3-547376
+-slot-1-cwc-985688.0-nc-442444.0-dwc_s3-544876
+-slot-1-cwc-895188.0-nc-419944.0-dwc_s3-477700
+-slot-1-cwc-958188.0-nc-399544.0-dwc_s3-531376
+-slot-1-cwc-902488.0-nc-419844.0-dwc_s3-480132
+-slot-1-cwc-818688.0-nc-427844.0-dwc_s3-414052
+-slot-1-cwc-967788.0-nc-352011.0-dwc_s3-571876
+-slot-1-cwc-950088.0-nc-406944.0-dwc_s3-531876
+-slot-1-cwc-908688.0-nc-410744.0-dwc_s3-475119
+-slot-1-cwc-1019688.0-nc-431244.0-dwc_s3-568776
+-slot-1-cwc-905388.0-nc-440844.0-dwc_s3-477796
+-slot-1-cwc-971888.0-nc-463544.0-dwc_s3-513464
+-slot-1-cwc-814788.0-nc-338344.0-dwc_s3-457376
+-slot-1-cwc-843588.0-nc-294138.0-dwc_s3-510276
+-slot-1-cwc-989388.0-nc-408144.0-dwc_s3-549276
+-slot-1-cwc-934388.0-nc-376044.0-dwc_s3-525576
+-slot-1-cwc-861188.0-nc-366544.0-dwc_s3-478176
+-slot-0-cwc-986788.0-nc-412093.0-dwc_s3-578776
+-slot-0-cwc-937288.0-nc-386044.0-dwc_s3-530376
+-slot-0-cwc-969288.0-nc-399544.0-dwc_s3-539376
+-slot-0-cwc-831588.0-nc-337444.0-dwc_s3-554336.0
+-slot-0-cwc-835488.0-nc-351044.0-dwc_s3-556236.0
+-slot-0-cwc-902388.0-nc-367844.0-dwc_s3-582036.0
+-slot-0-cwc-947588.0-nc-395444.0-dwc_s3-603336.0
+-slot-0-cwc-961288.0-nc-435744.0-dwc_s3-590896.0
+-slot-0-cwc-915088.0-nc-367444.0-dwc_s3-587936.0
+-slot-0-cwc-901088.0-nc-336344.0-dwc_s3-578436.0
+-slot-0-cwc-924088.0-nc-384644.0-dwc_s3-592536.0
+-slot-0-cwc-771388.0-nc-347744.0-dwc_s3-496147.0
+-slot-0-cwc-899488.0-nc-362444.0-dwc_s3-580236.0
+-slot-0-cwc-907488.0-nc-376844.0-dwc_s3-591036.0
+-slot-0-cwc-968188.0-nc-475644.0-dwc_s3-592576.0
+-slot-0-cwc-871588.0-nc-344144.0-dwc_s3-569136.0
+-slot-0-cwc-912488.0-nc-379044.0-dwc_s3-589636.0
+-slot-0-cwc-929888.0-nc-435244.0-dwc_s3-576856.0
+-slot-0-cwc-971988.0-nc-382844.0-dwc_s3-614136.0
+-slot-0-cwc-887688.0-nc-428044.0-dwc_s3-545516.0
+-slot-0
+-cwc-986188.0
+-nc-418844.0
+-dwc_s3-630336.0
+-dwc_s4-417301.08
+-slot-0
+   -cwc-967688.0
+    -nc-411244.0
+-dwc_s3-625436.0
+-dwc_s4-409701.08
+-slot-0
+    cwc:1008388.0
+     nc:479444.0
+ dwc_s3:609847.0
+ dwc_s4:479541.28
+-slot-0
+    cwc:835288.0
+     nc:332244.0
+ dwc_s3:550936.0
+ dwc_s4:330701.08
+-slot-0
+    cwc:801188.0
+     nc:313644.0
+ dwc_s3:538636.0
+ dwc_s4:541388.28
+-slot-0
+    cwc:670128.0
+     nc:289428.0
+ dwc_s3:303128.0
+ dwc_s4:305843.48000000004
+-slot-0
+    cwc:813488.0
+     nc:319044.0
+ dwc_s3:543136.0
+ dwc_s4:438592.07999999996
+-slot-0
+    cwc:947888.0
+     nc:303144.0
+ dwc_s3:611836.0
+ dwc_s4:455120.88
+-slot-0
+    cwc:877588.0
+     nc:356444.0
+ dwc_s3:569736.0
+ dwc_s4:477793.88
+-slot-0
+    cwc:941688.0
+     nc:415844.0
+ dwc_s3:601236.0
+ dwc_s4:515593.88
+-slot-0
+    cwc:1025488.0
+     nc:431644.0
+ dwc_s3:646736.0
+ dwc_s4:552993.88
+-slot-0
+    cwc:775128.0
+     nc:317828.0
+ dwc_s3:347628.0
+ dwc_s4:350343.48000000004
+-slot-0
+    cwc:730728.0
+     nc:295828.0
+ dwc_s3:322128.0
+ dwc_s4:324843.48000000004
+-slot-0
+    cwc:634028.0
+     nc:249728.0
+ dwc_s3:267528.0
+ dwc_s4:270243.48
+-slot-0
+    cwc:649528.0
+     nc:271928.0
+ dwc_s3:286728.0
+ dwc_s4:289443.48
+-slot-0
+    cwc:907528.0
+     nc:399491.0
+ dwc_s3:454148.0
+ dwc_s4:435418.2
+-slot-0
+    cwc:942288.0
+     nc:380444.0
+ dwc_s3:600036.0
+ dwc_s4:496376.6
+-slot-0
+    cwc:730288.0
+     nc:346544.0
+ dwc_s3:470296.0
+ dwc_s4:470319.2
+-slot-0
+    cwc:912688.0
+     nc:368744.0
+ dwc_s3:593772.8
+ dwc_s4:593772.8
+-slot-0
+    cwc:929488.0
+     nc:396444.0
+ dwc_s3:597172.8
+ dwc_s4:597172.8
+-slot-0
+    cwc:667128.0
+     nc:302328.0
+ dwc_s3:315228.0
+ dwc_s4:315228.0
+-slot-0
+    cwc:794488.0
+     nc:304344.0
+ dwc_s3:533872.8
+ dwc_s4:433776.6
+-slot-0
+    cwc:936488.0
+     nc:359983.0
+ dwc_s3:566111.8
+ dwc_s4:555509.8
+-slot-0
+    cwc:795788.0
+     nc:309544.0
+ dwc_s3:536372.8
+ dwc_s4:536372.8
+-slot-0
+    cwc:537194.0
+     nc:216894.0
+ dwc_s3:235894.0
+ dwc_s4:235894.0
+-slot-0
+    cwc:302314.0
+     nc:231094.0
+ dwc_s3:253144.0
+ dwc_s4:253144.0
+-slot-0
+    cwc:324764.0
+     nc:246594.0
+ dwc_s3:269644.0
+ dwc_s4:269644.0
+-slot-0
+    cwc:177684.0
+     nc:116794.0
+ dwc_s3:144524.0
+ dwc_s4:144524.0
+-slot-0
+    cwc:231134.0
+     nc:183694.0
+ dwc_s3:204434.0
+ dwc_s4:204434.0
+-slot-0
+    cwc:263904.0
+     nc:204294.0
+ dwc_s3:225394.0
+ dwc_s4:225394.0
+-slot-0
+    cwc:254254.0
+     nc:180294.0
+ dwc_s3:218854.0
+ dwc_s4:218854.0
+-slot-0
+    cwc:600351.0
+     nc:263983.0
+ dwc_s3:558686.2000000001
+ dwc_s4:558686.2000000001
+-slot-0
+    cwc:641991.0
+     nc:400883.0
+ dwc_s3:596283.8
+ dwc_s4:596283.8
+-slot-0
+    cwc:611961.0
+     nc:293383.0
+ dwc_s3:569286.2000000001
+ dwc_s4:569286.2000000001
+-slot-0
+    cwc:634741.0
+     nc:327783.0
+ dwc_s3:589186.2000000001
+ dwc_s4:589186.2000000001
+-slot-0
+    cwc:625001.0
+     nc:531983.0
+ dwc_s3:580433.6
+ dwc_s4:580433.6
+-slot-0
+    cwc:559991.0
+     nc:433483.0
+ dwc_s3:523344.6
+ dwc_s4:523344.6
+-slot-0
+    cwc:581831.0
+     nc:410683.0
+ dwc_s3:539069.8
+ dwc_s4:539069.8
+-slot-0
+    cwc:603321.0
+     nc:305083.0
+ dwc_s3:562486.2000000001
+ dwc_s4:562486.2000000001
+-slot-0
+    cwc:557371.0
+     nc:249583.0
+ dwc_s3:519286.2
+ dwc_s4:519286.2
+-slot-0
+    cwc:566981.0
+     nc:275983.0
+ dwc_s3:528686.2000000001
+ dwc_s4:528686.2000000001
+-slot-0
+    cwc:638181.0
+     nc:304383.0
+ dwc_s3:593686.2000000001
+ dwc_s4:593686.2000000001
+-slot-0
+    cwc:560671.0
+     nc:250727.0
+ dwc_s3:515730.2
+ dwc_s4:515730.2
+-slot-0
+    cwc:591041.0
+     nc:272383.0
+ dwc_s3:550086.2000000001
+ dwc_s4:550086.2000000001
+-slot-0
+    cwc:593601.0
+     nc:269083.0
+ dwc_s3:553286.2000000001
+ dwc_s4:553286.2000000001
+-slot-0
+    cwc:608061.0
+     nc:290883.0
+ dwc_s3:566286.2000000001
+ dwc_s4:566286.2000000001
+-slot-0
+    cwc:651331.0
+     nc:326783.0
+ dwc_s3:606386.2000000001
+ dwc_s4:606386.2000000001
+-slot-0
+    cwc:642351.0
+     nc:307983.0
+ dwc_s3:599886.2000000001
+ dwc_s4:599886.2000000001
+-slot-0
+    cwc:614911.0
+     nc:306983.0
+ dwc_s3:571286.2000000001
+ dwc_s4:571286.2000000001
+-slot-0
+    cwc:659041.0
+     nc:337611.0
+ dwc_s3:605314.2000000001
+ dwc_s4:605314.2000000001
+-slot-0
+    cwc:634911.0
+     nc:318383.0
+ dwc_s3:589686.2000000001
+ dwc_s4:589686.2000000001
+-slot-0
+    cwc:573411.0
+     nc:272183.0
+ dwc_s3:534086.2000000001
+ dwc_s4:534086.2000000001
+-slot-0
+    cwc:585891.0
+     nc:275046.0
+ dwc_s3:538849.2000000001
+ dwc_s4:538849.2000000001
+-slot-0
+    cwc:591581.0
+     nc:287983.0
+ dwc_s3:549786.2000000001
+ dwc_s4:549786.2000000001
+-slot-0
+    cwc:234304.0
+     nc:167894.0
+ dwc_s3:205554.0
+ dwc_s4:205554.0
+-slot-0
+    cwc:292754.0
+     nc:223994.0
+ dwc_s3:248934.0
+ dwc_s4:248934.0

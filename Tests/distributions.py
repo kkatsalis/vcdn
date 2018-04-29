@@ -11,9 +11,9 @@ V=1
 # Mobile operators
 global M
 M=1
-# Objects
-global Objects  
-Objects=5
+# objects_number
+global objects_number  
+objects_number=5
 # Rows of the Grid
 global Rows 
 Rows=2
@@ -25,15 +25,15 @@ global slots_number
 slots_number=3
 
 
-pw=[0 for o in range(Objects)]
-sim_r=[[[[[0 for m in range(M)]for row in range(Rows)] for o in range(Objects)] for i in range(V)] for s in range(slots_number)]
+pw=[0 for o in range(objects_number)]
+sim_r=[[[[[0 for m in range(M)]for row in range(Rows)] for o in range(objects_number)] for i in range(V)] for s in range(slots_number)]
 
 zipf_parameter = 2.5
-zipf_object_popularity=np.random.zipf(zipf_parameter,Objects)
+zipf_object_popularity=np.random.zipf(zipf_parameter,objects_number)
 popularity_list=zipf_object_popularity.tolist()
 popularity_list_sum=sum(popularity_list) 
 
-for i in range(Objects):
+for i in range(objects_number):
     pw[i]=popularity_list[i]/popularity_list_sum
 
 # pprint.pprint(popularity_list)
@@ -50,7 +50,7 @@ for i in range(V):
             pprint.pprint(sim_requests)
             for slot in range(slots_number):
                 print("***** slot :",slot)
-                for o in range(Objects):
+                for o in range(objects_number):
                     sim_r[slot][i][o][row][m]=int(round(sim_requests[slot]*pw[o]))
                     print("R :",sim_r[slot][i][o][row][m])
 #                 slot_r.append("slot")
@@ -61,7 +61,7 @@ pprint.pprint(sim_r)
 
 # for s in range(slots_number):
 #    
-#         for o in range(Objects): 
+#         for o in range(objects_number): 
 #             
                 
                 

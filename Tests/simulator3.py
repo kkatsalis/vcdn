@@ -15,9 +15,9 @@ V=2
 # Mobile operators
 global M
 M=1
-# Objects >10
-global Objects  
-Objects=20
+# objects_number >10
+global objects_number  
+objects_number=20
 # Rows of the Grid
 global Rows 
 Rows=2
@@ -27,21 +27,21 @@ Cols=3
 global slots_number
 slots_number=1
 # Defines objects popularity weights pw[o]
-pw=[[0 for o in range(Objects)]for i in range(V)] 
+pw=[[0 for o in range(objects_number)]for i in range(V)] 
 # Defines request rate r[i][o][row][m]. This is for the entire simulation
-sim_r=[[[[[0 for m in range(M)]for row in range(Rows)] for o in range(Objects)] for i in range(V)] for s in range(slots_number)]
+sim_r=[[[[[0 for m in range(M)]for row in range(Rows)] for o in range(objects_number)] for i in range(V)] for s in range(slots_number)]
 # Defines request rate r[i][o][row][m]. This is updated at each slot
-r=[[[[0 for m in range(M)]for row in range(Rows)] for o in range(Objects)] for i in range(V)] 
+r=[[[[0 for m in range(M)]for row in range(Rows)] for o in range(objects_number)] for i in range(V)] 
 # Defines benefit b[i][o][row][col][m]   
-b=[[[[[[0 for m in range(M)] for col in range(Cols)]for rowD in range(Rows)] for rowS in range(Rows)] for o in range(Objects)] for i in range(V)]    
+b=[[[[[[0 for m in range(M)] for col in range(Cols)]for rowD in range(Rows)] for rowS in range(Rows)] for o in range(objects_number)] for i in range(V)]    
 # Defines benefit psi[i][n][o][row][col]   
 psi=[[[[0 for col in range(Cols)] for row in range(Rows)] for n in range(V)]for i in range(V)] 
 # Defines benefit h[i][n][o][row][col]   
-h=[[[[[0 for col in range(Cols)] for row in range(Rows)] for o in range(Objects)] for n in range(V)]for i in range(V)] 
+h=[[[[[0 for col in range(Cols)] for row in range(Rows)] for o in range(objects_number)] for n in range(V)]for i in range(V)] 
 # Defines c[i][row][col] unit cost    
 c=[[[0 for col in range(Cols)] for row in range(Rows)] for i in range(V)] 
 # Defines s[o] size of object o   
-s=[0 for o in range(Objects)]
+s=[0 for o in range(objects_number)]
 
 # x[i][o][row][col]  
 # w[i][n][o][row][col] 
@@ -51,13 +51,13 @@ s=[0 for o in range(Objects)]
 # y_names[i][n][o][row][col]
 
 """Centralized case"""
-x=[[[[0 for col in range(Cols)] for row in range(Rows)] for o in range(Objects)] for i in range(V)]
-w=[[[[[0 for col in range(Cols)] for row in range(Rows)] for o in range(Objects)] for n in range(V)]for i in range(V)] 
-y=[[[[[0 for col in range(Cols)] for row in range(Rows)] for o in range(Objects)] for n in range(V)]for i in range(V)] 
+x=[[[[0 for col in range(Cols)] for row in range(Rows)] for o in range(objects_number)] for i in range(V)]
+w=[[[[[0 for col in range(Cols)] for row in range(Rows)] for o in range(objects_number)] for n in range(V)]for i in range(V)] 
+y=[[[[[0 for col in range(Cols)] for row in range(Rows)] for o in range(objects_number)] for n in range(V)]for i in range(V)] 
 
-x_names=[[[[0 for col in range(Cols)] for row in range(Rows)] for o in range(Objects)] for i in range(V)] 
-w_names=[[[[[0 for col in range(Cols)] for row in range(Rows)] for o in range(Objects)] for n in range(V)]for i in range(V)] 
-y_names=[[[[[0 for col in range(Cols)] for row in range(Rows)] for o in range(Objects)] for n in range(V)]for i in range(V)] 
+x_names=[[[[0 for col in range(Cols)] for row in range(Rows)] for o in range(objects_number)] for i in range(V)] 
+w_names=[[[[[0 for col in range(Cols)] for row in range(Rows)] for o in range(objects_number)] for n in range(V)]for i in range(V)] 
+y_names=[[[[[0 for col in range(Cols)] for row in range(Rows)] for o in range(objects_number)] for n in range(V)]for i in range(V)] 
 
 b1_coeff={}
 b2_coeff={}
@@ -67,10 +67,10 @@ c2_coeff={}
 
 constraintA_bound=[[[0 for col in range(Cols)] for row in range(Rows)] for i in range(V)]
 constraintA_coeff=[[[0 for col in range(Cols)] for row in range(Rows)] for i in range(V)]
-constraintB_bound=[[1 for o in range(Objects)] for i in range(V)]
-constraintB_coeff=[[0 for o in range(Objects)] for i in range(V)]
-constraintC_bound=[[[[[0 for col in range(Cols)] for row in range(Rows)] for o in range(Objects)]for n in range(V)]for i in range(V)]
-constraintC_coeff=[[[[[0 for col in range(Cols)] for row in range(Rows)] for o in range(Objects)]for n in range(V)]for i in range(V)]
+constraintB_bound=[[1 for o in range(objects_number)] for i in range(V)]
+constraintB_coeff=[[0 for o in range(objects_number)] for i in range(V)]
+constraintC_bound=[[[[[0 for col in range(Cols)] for row in range(Rows)] for o in range(objects_number)]for n in range(V)]for i in range(V)]
+constraintC_coeff=[[[[[0 for col in range(Cols)] for row in range(Rows)] for o in range(objects_number)]for n in range(V)]for i in range(V)]
 
 my_obj=[]
 my_colnames=[]
@@ -86,14 +86,14 @@ my_sense=""
 
 
 """Without collaboration"""
-nc_x=[[[[0 for col in range(Cols)] for row in range(Rows)] for o in range(Objects)] for i in range(V)] 
-nc_x_names=[[[[0 for col in range(Cols)] for row in range(Rows)] for o in range(Objects)] for i in range(V)] 
+nc_x=[[[[0 for col in range(Cols)] for row in range(Rows)] for o in range(objects_number)] for i in range(V)] 
+nc_x_names=[[[[0 for col in range(Cols)] for row in range(Rows)] for o in range(objects_number)] for i in range(V)] 
 
 nc_b1_coeff={}
 nc_c1_coeff={}
 
 nc_constraintA_coeff=[[[0 for col in range(Cols)] for row in range(Rows)] for i in range(V)]
-nc_constraintB_coeff=[[0 for o in range(Objects)] for i in range(V)]
+nc_constraintB_coeff=[[0 for o in range(objects_number)] for i in range(V)]
 
 nc_my_obj=[]
 nc_my_colnames=[]
@@ -108,13 +108,13 @@ global nc_my_sense
 nc_my_sense=""
 
 """Distributed with collaboration"""
-ds1_x=[[[[0 for col in range(Cols)] for row in range(Rows)] for o in range(Objects)] for i in range(V)] 
-ds3_w=[[[[[0 for col in range(Cols)] for row in range(Rows)] for o in range(Objects)] for n in range(V)]for i in range(V)] 
-ds3_y=[[[[[0 for col in range(Cols)] for row in range(Rows)] for o in range(Objects)] for n in range(V)]for i in range(V)] 
+ds1_x=[[[[0 for col in range(Cols)] for row in range(Rows)] for o in range(objects_number)] for i in range(V)] 
+ds3_w=[[[[[0 for col in range(Cols)] for row in range(Rows)] for o in range(objects_number)] for n in range(V)]for i in range(V)] 
+ds3_y=[[[[[0 for col in range(Cols)] for row in range(Rows)] for o in range(objects_number)] for n in range(V)]for i in range(V)] 
 
-ds1_x_names=[[[[0 for col in range(Cols)] for row in range(Rows)] for o in range(Objects)] for i in range(V)] 
-ds3_w_names=[[[[[0 for col in range(Cols)] for row in range(Rows)] for o in range(Objects)] for n in range(V)]for i in range(V)] 
-ds3_y_names=[[[[[0 for col in range(Cols)] for row in range(Rows)] for o in range(Objects)] for n in range(V)]for i in range(V)]
+ds1_x_names=[[[[0 for col in range(Cols)] for row in range(Rows)] for o in range(objects_number)] for i in range(V)] 
+ds3_w_names=[[[[[0 for col in range(Cols)] for row in range(Rows)] for o in range(objects_number)] for n in range(V)]for i in range(V)] 
+ds3_y_names=[[[[[0 for col in range(Cols)] for row in range(Rows)] for o in range(objects_number)] for n in range(V)]for i in range(V)]
 
 ds3_b1_coeff={}
 ds3_c1_coeff={}
@@ -123,10 +123,10 @@ ds2_capacity_reserved=[[[0 for col in range(Cols)] for row in range(Rows)] for i
 
 ds3_constraintA_bound=[[[0 for col in range(Cols)] for row in range(Rows)] for i in range(V)]
 ds3_constraintA_coeff=[[[[0 for col in range(Cols)] for row in range(Rows)] for n in range(V)]for i in range(V)]
-ds3_constraintB_bound=[[0 for o in range(Objects)] for i in range(V)]
-ds3_constraintB_coeff=[[0 for o in range(Objects)] for i in range(V)]
-ds3_constraintC_bound=[[[[[0 for col in range(Cols)] for row in range(Rows)] for o in range(Objects)]for n in range(V)]for i in range(V)]
-ds3_constraintC_coeff=[[[[[0 for col in range(Cols)] for row in range(Rows)] for o in range(Objects)]for n in range(V)]for i in range(V)]
+ds3_constraintB_bound=[[0 for o in range(objects_number)] for i in range(V)]
+ds3_constraintB_coeff=[[0 for o in range(objects_number)] for i in range(V)]
+ds3_constraintC_bound=[[[[[0 for col in range(Cols)] for row in range(Rows)] for o in range(objects_number)]for n in range(V)]for i in range(V)]
+ds3_constraintC_coeff=[[[[[0 for col in range(Cols)] for row in range(Rows)] for o in range(objects_number)]for n in range(V)]for i in range(V)]
 
 ds3_my_obj=[]
 ds3_my_colnames=[]
@@ -143,8 +143,8 @@ ds3_my_sense=""
 default_object_size=5
 
 def initialize_objects_size():    
-    """ s[o]:  Objects size"""
-    for o in range(Objects):
+    """ s[o]:  objects_number size"""
+    for o in range(objects_number):
         s[o]=default_object_size    
 
 def initialize_b():    
@@ -152,7 +152,7 @@ def initialize_b():
     
     benefit_edge=10
     for i in range(V):
-        for o in range(Objects):
+        for o in range(objects_number):
             for rowS in range (Rows):
                 for rowD in range (Rows):
                     for col in range (Cols):
@@ -184,7 +184,7 @@ def initialize_h():
     """ h[i][n][o][row][col] """
     for i in range(V):
         for n in range(V):
-            for o in range(Objects):
+            for o in range(objects_number):
                 for rowS in range (Rows):
                     for rowD in range (Rows):
                         for col in range (Cols):
@@ -213,10 +213,10 @@ def initialize_placement_cost():
                
 
 
-def initialize_constraintA_bounds():
+def initialize_capacity_constraints():
 
     """  constraintA_bound[i][row][col] """ 
-    edge_storage_limit=default_object_size*Objects*0.1
+    edge_storage_limit=default_object_size*objects_number*0.1
     
     for i in range(V):
         for row in range (Rows):
@@ -232,7 +232,7 @@ def initialize_simulator():
     initialize_psi()
     initialize_h()
     initialize_placement_cost()
-    initialize_constraintA_bounds() 
+    initialize_capacity_constraints() 
     initialize_objects_weights()
     build_simulation_request_rates()
 
@@ -254,7 +254,7 @@ def build_simulation_request_rates():
 #                 pprint.pprint(sim_requests)
                 for slot in range(slots_number):
 #                     print("***** slot :",slot)
-                    for o in range(Objects):
+                    for o in range(objects_number):
                         sim_r[slot][i][o][row][m]=int(round(sim_requests[slot]*pw[i][o]))  
   
                                
@@ -264,11 +264,11 @@ def initialize_objects_weights():
     for i in range(V):
         zipf_parameter = 1.5+0.5*i
         popularity_list_sum=0
-        zipf_object_popularity=np.random.zipf(zipf_parameter,Objects)
+        zipf_object_popularity=np.random.zipf(zipf_parameter,objects_number)
         popularity_list=zipf_object_popularity.tolist()
         popularity_list_sum=sum(popularity_list) 
 #         pprint.pprint(popularity_list)  
-        for o in range(Objects):
+        for o in range(objects_number):
             pw[i][o]=popularity_list[o]/popularity_list_sum
     
           
@@ -276,7 +276,7 @@ def build_variables_names():
     """ X_names: x_names[i][o][row][col]"""
     index=0
     for i in range(V):
-        for o in range(Objects): 
+        for o in range(objects_number): 
             for row in range(Rows):
                 for col in range(Cols):
                     x_names[i][o][row][col]="x["+str(i)+"]["+str(o)+"]["+str(row)+"]["+str(col)+"]"
@@ -285,7 +285,7 @@ def build_variables_names():
     """ X_ns_ NAMES: nc_x_names[i][o][row][col]"""
     index=0
     for i in range(V):
-        for o in range(Objects): 
+        for o in range(objects_number): 
             for row in range(Rows):
                 for col in range(Cols):
                     nc_x_names[i][o][row][col]="nc_x["+str(i)+"]["+str(o)+"]["+str(row)+"]["+str(col)+"]"
@@ -294,7 +294,7 @@ def build_variables_names():
     """ X_d_ NAMES: nc_x_names[i][o][row][col]"""
     index=0
     for i in range(V):
-        for o in range(Objects): 
+        for o in range(objects_number): 
             for row in range(Rows):
                 for col in range(Cols):
                     ds1_x_names[i][o][row][col]="ds1_x["+str(i)+"]["+str(o)+"]["+str(row)+"]["+str(col)+"]"
@@ -304,7 +304,7 @@ def build_variables_names():
     index=0
     for i in range(V):
         for n in range(V):
-            for o in range(Objects): 
+            for o in range(objects_number): 
                 for row in range(Rows):
                     for col in range(Cols):
                         w_names[i][n][o][row][col]="w["+str(i)+"]["+str(n)+"]["+str(o)+"]["+str(row)+"]["+str(col)+"]"
@@ -314,7 +314,7 @@ def build_variables_names():
     index=0
     for i in range(V):
         for n in range(V):
-            for o in range(Objects): 
+            for o in range(objects_number): 
                 for row in range(Rows):
                     for col in range(Cols):
                         ds3_w_names[i][n][o][row][col]="ds3_w["+str(i)+"]["+str(n)+"]["+str(o)+"]["+str(row)+"]["+str(col)+"]"
@@ -325,7 +325,7 @@ def build_variables_names():
     index=0
     for i in range(V):
         for n in range(V):
-            for o in range(Objects): 
+            for o in range(objects_number): 
                 for row in range(Rows):
                     for col in range(Cols):
                         y_names[i][n][o][row][col]="y["+str(i)+"]["+str(n)+"]["+str(o)+"]["+str(row)+"]["+str(col)+"]"
@@ -336,7 +336,7 @@ def build_variables_names():
     index=0
     for i in range(V):
         for n in range(V):
-            for o in range(Objects): 
+            for o in range(objects_number): 
                 for row in range(Rows):
                     for col in range(Cols):
                         ds3_y_names[i][n][o][row][col]="ds3_y["+str(i)+"]["+str(n)+"]["+str(o)+"]["+str(row)+"]["+str(col)+"]"
@@ -344,7 +344,7 @@ def build_variables_names():
 
 def load_slot_rates(current_slot):                 
     for i in range(V):
-        for o in range(Objects): 
+        for o in range(objects_number): 
             for row in range(Rows):
                 for m in range(M):
                     r[i][o][row][m]=0
@@ -352,7 +352,7 @@ def load_slot_rates(current_slot):
     for slot in range(slots_number):
         if slot==current_slot:
             for i in range(V):
-                for o in range(Objects): 
+                for o in range(objects_number): 
                     for row in range(Rows):
                         for m in range(M):
                             r[i][o][row][m]=sim_r[current_slot][i][o][row][m]
@@ -371,15 +371,15 @@ def cwc_build_model():
     cwc_build_cost_c2()
 #     
     """ Constraints   """  
-    cwc_build_constraintA()       
-    cwc_build_constraintB()       
-    cwc_build_constraintC()  
+    cwc_build_constraintA_coeff()       
+    cwc_build_constraintB_coeff()       
+    cwc_build_constraintC_coeff()  
     
 def cwc_build_benefit_b1():
     """ B1:  Benefit   """ 
     coef=0
     for i in range(V):
-        for o in range(Objects): 
+        for o in range(objects_number): 
             for rowD in range(Rows):
                 for col in range(Cols):
                     coef=0
@@ -400,7 +400,7 @@ def cwc_build_benefit_b1():
 def cwc_build_benefit_b2():
    
     for i in range(V):
-        for o in range(Objects):
+        for o in range(objects_number):
             size=s[o] 
             for row in range(Rows):
                 for col in range(Cols):
@@ -415,7 +415,7 @@ def cwc_build_benefit_b2():
 def cwc_build_benefit_b3():
 #    r[i][o][row][m]
     for i in range(V):
-        for o in range(Objects):
+        for o in range(objects_number):
             for row in range(Rows):
                 for col in range(Cols):
                     for n in range(V):
@@ -433,7 +433,7 @@ def cwc_build_benefit_b3():
 def cwc_build_cost_c1():
     """ C1:  Cost of placement in owned storage  """
     for i in range(V):
-        for o in range(Objects):
+        for o in range(objects_number):
             size=s[o] 
             for row in range(Rows):
                 for col in range(Cols):
@@ -460,7 +460,7 @@ def cwc_build_cost_c1():
 def cwc_build_cost_c2():
     """Cost of placing content from CDN n """
     for i in range(V):
-        for o in range(Objects):
+        for o in range(objects_number):
             size=s[o] 
             for row in range(Rows):
                 for col in range(Cols):
@@ -472,7 +472,7 @@ def cwc_build_cost_c2():
                             w_key=w_names[n][i][o][row][col]    
                             c2_coeff[w_key]=str(coef)   
                                                               
-def cwc_build_constraintA():       
+def cwc_build_constraintA_coeff():       
     """
         Constraint A: Capacity constraints
     """
@@ -482,7 +482,7 @@ def cwc_build_constraintA():
                 global constraintA_coeff
                 constraintA_coeff[i][row][col]={}
     
-                for o in range(Objects):
+                for o in range(objects_number):
                     xcoef=s[o]
                     key=x_names[i][o][row][col]
                     (constraintA_coeff[i][row][col])[key]=xcoef   
@@ -492,13 +492,13 @@ def cwc_build_constraintA():
                             key=w_names[n][i][o][row][col]
                             (constraintA_coeff[i][row][col])[key]=xcoef
 
-def cwc_build_constraintB():    
+def cwc_build_constraintB_coeff():    
     """ 
      Constraint B:  Store only in one place constraint
          
     """
     for i in range(V):
-        for o in range(Objects):
+        for o in range(objects_number):
             constraintB_coeff[i][o]={}
             for row in range(Rows):
                 for col in range(Cols):
@@ -511,10 +511,10 @@ def cwc_build_constraintB():
                             key=y_names[i][n][o][row][col]
                             (constraintB_coeff[i][o])[key]=1                        
     
-def cwc_build_constraintC():
+def cwc_build_constraintC_coeff():
     """ Constraint C: In order to ask for an object from CDN i he needs to have it"""
     for i in range(V):
-            for o in range(Objects):
+            for o in range(objects_number):
                 for row in range(Rows):
                     for col in range(Cols):
                         for n in range(V):
@@ -630,7 +630,7 @@ def cwc_build_cplex_model():
 
     """ Constraint B set"""
     for i in range(V):
-        for o in range(Objects):
+        for o in range(objects_number):
             identifier="rowB["+str(i)+"]["+str(o)+"]"
             my_rownames.append(identifier)
             my_rhs.append(constraintB_bound[i][o])
@@ -653,7 +653,7 @@ def cwc_build_cplex_model():
 
     """ Constraint C set"""
     for i in range(V):
-        for o in range(Objects):
+        for o in range(objects_number):
             for row in range(Rows):
                 for col in range(Cols):
                     for n in range(V):
@@ -691,14 +691,14 @@ def cwc_build_cplex_model():
 def cwc_reset_model_variables():          
     # variables  
     for i in range(V):
-        for o in range(Objects): 
+        for o in range(objects_number): 
             for row in range(Rows):
                 for col in range(Cols):
                     x[i][o][row][col]=0
                     
     for i in range(V):
         for n in range(V):
-            for o in range(Objects): 
+            for o in range(objects_number): 
                 for row in range(Rows):
                     for col in range(Cols):
                         w[i][n][o][row][col]=0                
@@ -725,7 +725,7 @@ def cwc_reset_model_variables():
 def nc_reset_model_variables():          
     #  variables  
     for i in range(V):
-        for o in range(Objects): 
+        for o in range(objects_number): 
             for row in range(Rows):
                 for col in range(Cols):
                     nc_x[i][o][row][col]=0
@@ -755,7 +755,7 @@ def nc_build_benefit_b1():
     """ B1:  Benefit   """ 
     coef=0
     for i in range(V):
-        for o in range(Objects): 
+        for o in range(objects_number): 
             for rowD in range(Rows):
                 for col in range(Cols):
                     coef=0
@@ -770,7 +770,7 @@ def nc_build_benefit_b1():
 def nc_build_cost_c1():
     """ C1:  Cost of placement in owned storage  """
     for i in range(V):
-        for o in range(Objects):
+        for o in range(objects_number):
             size=s[o] 
             for row in range(Rows):
                 for col in range(Cols):
@@ -790,7 +790,7 @@ def nc_build_constraintA():
                 global nc_constraintA_coeff
                 nc_constraintA_coeff[i][row][col]={}
     
-                for o in range(Objects):
+                for o in range(objects_number):
                     xcoef=s[o]
                     key=nc_x_names[i][o][row][col]
                     (nc_constraintA_coeff[i][row][col])[key]=xcoef   
@@ -800,7 +800,7 @@ def nc_build_constraintB():
      Constraint B:  Store only in one place constraint
     """
     for i in range(V):
-        for o in range(Objects):
+        for o in range(objects_number):
             nc_constraintB_coeff[i][o]={}
             for row in range(Rows):
                 for col in range(Cols):
@@ -882,7 +882,7 @@ def nc_build_cplex_model():
 
     """ Constraint B set"""
     for i in range(V):
-        for o in range(Objects):
+        for o in range(objects_number):
             identifier="rowB["+str(i)+"]["+str(o)+"]"
             nc_my_rownames.append(identifier)
             nc_my_rhs.append(constraintB_bound[i][o])
@@ -917,14 +917,14 @@ def nc_build_cplex_model():
 def dwc_reset_model_variables():          
     # variables  
     for i in range(V):
-        for o in range(Objects): 
+        for o in range(objects_number): 
             for row in range(Rows):
                 for col in range(Cols):
                     ds1_x[i][o][row][col]=0
                     
     for i in range(V):
         for n in range(V):
-            for o in range(Objects): 
+            for o in range(objects_number): 
                 for row in range(Rows):
                     for col in range(Cols):
                         ds1_x[i][o][row][col]=0
@@ -937,7 +937,7 @@ def dwc_reset_model_variables():
 def dwc_step1_load_xd_from_nc():  
 
     for i in range (V):
-        for o in range(Objects):
+        for o in range(objects_number):
             for row in range (Rows):
                 for col in range (Cols):
                     ds1_x[i][o][row][col]=nc_x[i][o][row][col]
@@ -973,7 +973,7 @@ def dwc_step3_build_b1(i):
     """ B1:  Benefit   """ 
     coef=0
     ds3_b1_coeff.clear()
-    for o in range(Objects):
+    for o in range(objects_number):
         if dwc_object_is_placed_in_xd(i,o)==False: 
             for rowD in range(Rows):
                 for col in range(Cols):
@@ -996,7 +996,7 @@ def dwc_step3_build_b1(i):
     
 def dwc_step3_build_c1(i):
     ds3_c1_coeff.clear()
-    for o in range(Objects):
+    for o in range(objects_number):
         size=s[o] 
         for row in range(Rows):
             for col in range(Cols):
@@ -1029,7 +1029,7 @@ def dwc_step3_build_constraintA_coeff(i):
             for n in range(V):
                 if n!=i:
                     ds3_constraintA_coeff[i][n][row][col]={}
-                    for o in range(Objects):
+                    for o in range(objects_number):
                         key=ds3_w_names[i][n][o][row][col]
                         if key in ds3_b1_coeff:
                             (ds3_constraintA_coeff[i][n][row][col])[key]=s[o]
@@ -1043,7 +1043,7 @@ def dwc_step3_build_constraintA_bound():
         for row in range (Rows):
             for col in range (Cols): 
                 capacity_reserved=0
-                for o in range(Objects):                      
+                for o in range(objects_number):                      
                     if ds1_x[i][o][row][col]>0:         
                         capacity_reserved=capacity_reserved+s[o]
                 ds2_capacity_reserved[i][row][col]=capacity_reserved            
@@ -1056,7 +1056,7 @@ def dwc_step3_build_constraintB_coeff(i):
     """ 
      Constraint B:  Store only in one place constraint
     """
-    for o in range(Objects):
+    for o in range(objects_number):
         if dwc_object_is_placed_in_xd(i,o)==False: 
             ds3_constraintB_coeff[i][o]={}
             for row in range(Rows):
@@ -1073,7 +1073,7 @@ def dwc_step3_build_constraintB_coeff(i):
 
     
 def dwc_step3_build_constraintB_bound(i):
-    for o in range(Objects):
+    for o in range(objects_number):
         if dwc_object_is_placed_in_xd(i,o):
             ds3_constraintB_bound[i][o]=0
         else:
@@ -1084,7 +1084,7 @@ def dwc_step3_build_constraintB_bound(i):
                                                  
 def dwc_step3_build_constraintC_coeff(i):
     """ Constraint C: In order to ask for an object from CDN i he needs to have it"""
-    for o in range(Objects):
+    for o in range(objects_number):
         if dwc_object_is_placed_in_xd(i,o)==False: 
             for row in range(Rows):
                 for col in range(Cols):
@@ -1100,7 +1100,7 @@ def dwc_step3_build_constraintC_coeff(i):
 
 def dwc_step3_build_constraintC_bound(i):                           
     for n in range(V):
-        for o in range (Objects):
+        for o in range (objects_number):
             for row in range (Rows):
                 for col in range (Cols):
                     ds3_constraintC_bound[i][n][o][row][col]=int(ds1_x[n][o][row][col])
@@ -1191,7 +1191,7 @@ def dwc_step3_build_cplex_model(i):
 #     pprint.pprint(ds3_my_rows)                
 
     """ Constraint B set"""
-    for o in range(Objects):
+    for o in range(objects_number):
         if dwc_object_is_placed_in_xd(i,o)==False:
             identifier="rowB["+str(i)+"]["+str(o)+"]"
             ds3_my_rownames.append(identifier)
@@ -1214,7 +1214,7 @@ def dwc_step3_build_cplex_model(i):
 #     pprint.pprint(ds3_my_rhs)
 
     """ Constraint C set"""
-    for o in range(Objects):
+    for o in range(objects_number):
         if dwc_object_is_placed_in_xd(i,o)==False:
             for n in range(V):
                 if n!=i:
@@ -1257,7 +1257,7 @@ def dwc_step3_build_cplex_model(i):
 def dwc_step3_calculate_net_benefit(i,result_set):
     
     x_benefit=0
-    for o in range(Objects):
+    for o in range(objects_number):
         if dwc_object_is_placed_in_xd(i,o)==True: 
             for rowD in range(Rows):
                 for col in range(Cols):
@@ -1271,7 +1271,7 @@ def dwc_step3_calculate_net_benefit(i,result_set):
                         x_benefit+=coef   
     
     x_cost=0
-    for o in range(Objects):
+    for o in range(objects_number):
         if dwc_object_is_placed_in_xd(i,o)==True: 
             size=s[o] 
             for row in range(Rows):
