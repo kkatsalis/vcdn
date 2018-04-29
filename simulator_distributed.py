@@ -160,6 +160,7 @@ ds4_y_number_allocated=[[0 for n in range(V)] for i in range(V)]
 ds5_x=[[[[0 for col in range(Cols)] for row in range(Rows)] for o in range(objects_number)] for i in range(V)] 
 ds5_w=[[[[[0 for col in range(Cols)] for row in range(Rows)] for o in range(objects_number)] for n in range(V)]for i in range(V)] 
 ds5_y=[[[[[0 for col in range(Cols)] for row in range(Rows)] for o in range(objects_number)] for n in range(V)]for i in range(V)] 
+ds5_x_number_allocated=[0 for i in range(V)]
 ds5_w_number_allocated=[[0 for n in range(V)] for i in range(V)]
 ds5_y_number_allocated=[[0 for n in range(V)] for i in range(V)]
 
@@ -167,21 +168,36 @@ ds5_x_names=[[[[0 for col in range(Cols)] for row in range(Rows)] for o in range
 ds5_w_names=[[[[[0 for col in range(Cols)] for row in range(Rows)] for o in range(objects_number)] for n in range(V)]for i in range(V)] 
 ds5_y_names=[[[[[0 for col in range(Cols)] for row in range(Rows)] for o in range(objects_number)] for n in range(V)]for i in range(V)]
 
+ds5_x_fixed=[0 for i in range(V)]
+ds5_y_fixed=[[0 for n in range(V) ] for i in range(V)]
+
 ds5_b1_coeff={}
 ds5_b2_coeff={}
 ds5_b3_coeff={}
 ds5_c1_coeff={}
 ds5_c2_coeff={}
 
-ds5_constraintA_bound=[[[0 for col in range(Cols)] for row in range(Rows)] for i in range(V)]
-ds5_constraintA_coeff=[[[0 for col in range(Cols)] for row in range(Rows)] for i in range(V)]
+ds5_constraintA1_bound=[[[0 for col in range(Cols)] for row in range(Rows)] for i in range(V)]
+ds5_constraintA1_coeff=[[[0 for col in range(Cols)] for row in range(Rows)] for i in range(V)]
+ds5_constraintA2_bound=[[[[0 for col in range(Cols)] for row in range(Rows)] for n in range(V)] for i in range(V)]
+ds5_constraintA2_coeff=[[[[0 for col in range(Cols)] for row in range(Rows)] for n in range(V)] for i in range(V)]
 ds5_constraintB_bound=[[0 for o in range(objects_number)] for i in range(V)]
 ds5_constraintB_coeff=[[0 for o in range(objects_number)] for i in range(V)]
 ds5_constraintC_bound=[[[[[0 for col in range(Cols)] for row in range(Rows)] for o in range(objects_number)]for n in range(V)]for i in range(V)]
 ds5_constraintC_coeff=[[[[[0 for col in range(Cols)] for row in range(Rows)] for o in range(objects_number)]for n in range(V)]for i in range(V)]
-ds5_constraintD_coeff=[[0 for o in range(objects_number)]for i in range(V)]
-ds5_constraintD_bound=[[1 for o in range(objects_number)]for i in range(V)]
 
+
+ds5_my_obj=[]
+ds5_my_colnames=[]
+ds5_my_ub = []
+ds5_my_lb = []
+ds5_my_rownames=[]
+ds5_my_rhs=[]
+ds5_my_rows=[]
+global ds5_my_ctype
+ds5_my_ctype=""
+global ds5_my_sense
+ds5_my_sense=""
 
 
 def initialize_objects_size():    
@@ -1024,7 +1040,7 @@ def nc_build_cplex_model():
 
 
 # ******************** Case C: Distributed with collaboration ***********************
-def dwc_reset_model_variables():          
+def dwc_step3_reset_model_variables():          
     for i in range(V):
         for n in range(V):
             for o in range(objects_number): 
@@ -1033,6 +1049,7 @@ def dwc_reset_model_variables():
                         ds1_x[i][o][row][col]=0
                         ds3_w[i][n][o][row][col]=0                
                         ds3_y[i][n][o][row][col]=0
+
                  
     
 
@@ -1477,239 +1494,405 @@ def dwc_s4_update_variables_values():
                     for n in range(V): 
                         ds4_y[i][n][o][row][col]=ds3_y[i][n][o][row][col]
 
+def dwc_step5_reset_variables():
+    for i in range(V): 
+        for o in range(objects_number):
+            for row in range(Rows):
+                for col in range(Cols):
+                    ds5_x[i][o][row][col]=0
+                    ds5_x_number_allocated[i]=0
+                    for n in range(V): 
+                        ds5_w[i][n][o][row][col]=0
+                        ds5_w_number_allocated[i][n]=0
+                        ds5_y[i][n][o][row][col]=0
+                        ds5_y_number_allocated[i][n]=0
+                        
+    
+    
 
+    
+    
+    
+def dwc_step5_fix_requested_x():
+    for i in range (V):
+        ds5_x_fixed[i]=[]
+        for o in range(objects_number):
+            for row in range(Rows):
+                for col in range(Cols):
+                    for n in range(V):
+                        if n!=i:
+                            if ds4_y[n][i][o][row][col]>0:
+                                ds5_x[i][o][row][col]=1 
+                                ds5_x_fixed[i].append(ds5_x_names[i][o][row][col])
+
+def dwc_step5_fix_requested_y():
+    
+    for i in range (V):
+        for n in range(V):
+            if n!=i:
+                ds5_y_fixed[i][n]=[]
+                for o in range(objects_number):
+                    for row in range(Rows):
+                        for col in range(Cols):     
+                            if ds4_y[i][n][o][row][col]>0:
+                                ds5_y[i][n][o][row][col]=1 
+                                ds5_y_fixed[i][n].append(ds5_y_names[i][n][o][row][col])
+                            
+    
+    
 def dwc_step5_build_model(i):
 
     dwc_step5_build_benefit_b1(i)
-    dwc_step5_build_benefit_b2(i)
-    dwc_step5_build_benefit_b3(i)
     dwc_step5_build_cost_c1(i)
-    dwc_step5_build_cost_c2(i)
     
-    dwc_step5_build_constraintA_coeff(i)
-    dwc_step5_build_constraintA_bound(i)
-    dwc_step5_build_constraintB_coeff(i)
-    dwc_step5_build_constraintB_bound(i)
-    dwc_step5_build_constraintC_coeff(i)
-    dwc_step5_build_constraintC_bound(i)
-    dwc_step5_build_constraintD_coeff(i)
-    dwc_step5_build_constraintD_bound(i)
-    
-    
-def dwc_step5_find_storage_used_remotely(i,n):
-    
-    storage_used=0
-    for o in range(objects_number):
-        object_size=s[o] 
-        for row in range(Rows):
-            for col in range(Cols):
-                if ds4_w[i][n][o][row][col]>0:
-                    storage_used+=object_size
-    
-    return storage_used
-    
-    
-def dwc_step5_find_objects_requested(i,n):
-    
-    objects_list=[]
-    for o in range(objects_number):
-        for row in range(Rows):
-            for col in range(Cols):
-                if ds3_y[i][n][o][row][col]>0:
-                    objects_list.append(o)
-                    
-    return objects_list
- 
+    dwc_step5_build_constraintA1_coeff(i)
+    dwc_step5_build_constraintA1_bound(i)
+    dwc_step5_build_constraintA2_coeff(i)
+    dwc_step5_build_constraintA2_bound(i)
+    dwc_step5_build_constraintB_coeff_and_bound(i)
+    dwc_step5_build_constraintC_coeff_and_bound(i)
 
+    
+    
+def dwc_step5_check_if_object_is_fixed(i,o):
+    
+    fixed=False
+    for row in range(Rows):
+        for col in range(Cols):
+            x_name=ds5_x_names[i][o][row][col]
+            if x_name in ds5_x_fixed[i]:
+                return True
+    for row in range(Rows):
+        for col in range(Cols):
+            for row in range(Rows):
+                for n in range(V):
+                    if n!=i:
+                        y_name=ds5_y_names[i][n][o][row][col] 
+                        if y_name in ds5_y_fixed[i][n]:
+                            return True
+    
+    return fixed
+    
 
 def dwc_step5_build_benefit_b1(i):
     """ B1:  Benefit   """ 
     coef=0
-    for o in range(objects_number): 
-        for rowD in range(Rows):
-            for col in range(Cols):
-                coef=0
-                for rowS in range(Rows):
-                    for m in range(M):
-                        req=r[i][o][rowS][m]
-                        gain=b[i][o][rowS][rowD][col][m]
-                        coef=coef+req*gain
-                ds5_x_key=ds5_x_names[i][o][rowD][col]
-                ds5_b1_coeff[ds5_x_key]=str(coef)
-                for n in range(V):
-                    if n!=i:
-                        ds5_w_key=ds5_w_names[i][n][o][rowD][col]
-                        ds5_y_key=ds5_y_names[i][n][o][rowD][col]
-                        ds5_b1_coeff[ds5_w_key]=str(coef)
-                        ds5_b1_coeff[ds5_y_key]=str(coef)
-
-def dwc_step5_build_benefit_b2(i):
-   
+    ds5_b1_coeff.clear()
     for o in range(objects_number):
-        size=s[o] 
-        for row in range(Rows):
-            for col in range(Cols):
-                for n in range(V):
-                    if n!=i:
-                        coef=0
-                        benefit=psi[i][n][row][col]
-                        coef=size*benefit
-                        ds5_w_key=ds5_w_names[n][i][o][row][col]    
-                        ds5_b2_coeff[ds5_w_key]=str(coef) 
-
-def dwc_step5_build_benefit_b3(i):
-#    r[i][o][row][m]
-    for o in range(objects_number):
-        for row in range(Rows):
-            for col in range(Cols):
-                for n in range(V):
-                    if n!=i:
-                        coef=0
+        if dwc_step5_check_if_object_is_fixed(i,o)==False: 
+            for rowD in range(Rows):
+                for col in range(Cols):
+                    coef=0
+                    for rowS in range(Rows):
                         for m in range(M):
-                            rate=r[n][o][row][m]
-                            benefit=h[i][n][o][row][col]
-                            coef=coef+rate*benefit
-                        ds5_y_key=ds5_y_names[n][i][o][row][col]    
-                        ds5_b3_coeff[ds5_y_key]=str(coef)    
+                            req=r[i][o][rowS][m]
+                            gain=b[i][o][rowS][rowD][col][m]
+                            coef=coef+req*gain
+                    ds5_x_key=ds5_x_names[i][o][rowD][col]
+                    ds5_b1_coeff[ds5_x_key]=str(coef)
+                    for n in range(V):
+                        if n!=i:
+                            ds5_w_key=ds5_w_names[i][n][o][rowD][col]
+                            ds5_y_key=ds5_y_names[i][n][o][rowD][col]
+                            ds5_b1_coeff[ds5_w_key]=str(coef)
+                            ds5_b1_coeff[ds5_y_key]=str(coef)
+
 
 def dwc_step5_build_cost_c1(i):
     """ C1:  Cost of placement in owned storage  """
+    ds5_c1_coeff.clear()
     for o in range(objects_number):
-        size=s[o] 
-        for row in range(Rows):
-            for col in range(Cols):
-                coef=0
-                cost=c[i][row][col]
-                coef=size*cost
-                ds5_x_key=ds5_x_names[i][o][row][col]    
-                ds5_c1_coeff[ds5_x_key]=str(coef)    
-                for n in range(V):
-                    if n!=i:
-                    #   w parameters
-                        coef=0
-                        cost=psi[n][i][row][col]
-                        coef=size*cost
-                        ds5_w_key=ds5_w_names[i][n][o][row][col]    
-                        ds5_c1_coeff[ds5_w_key]=str(coef)   
-                    #   y parameters
-                        coef=0
-                        cost=h[n][i][o][row][col]
-                        coef=cost
-                        ds5_y_key=ds5_y_names[i][n][o][row][col]    
-                        ds5_c1_coeff[ds5_y_key]=str(coef)  
-
-def dwc_step5_build_cost_c2(i):
-    """Cost of placing content from CDN n """
-    for o in range(objects_number):
-        size=s[o] 
-        for row in range(Rows):
-            for col in range(Cols):
-                cost=c[i][row][col]
-                for n in range(V):
-                    if n!=i:
-                        coef=0
-                        coef=size*cost
-                        ds5_w_key=ds5_w_names[n][i][o][row][col]    
-                        ds5_c2_coeff[ds5_w_key]=str(coef)   
+        if dwc_step5_check_if_object_is_fixed(i,o)==False: 
+            size=s[o] 
+            for row in range(Rows):
+                for col in range(Cols):
+                    coef=0
+                    cost=c[i][row][col]
+                    coef=size*cost
+                    ds5_x_key=ds5_x_names[i][o][row][col]
+                    ds5_c1_coeff[ds5_x_key]=str(coef)    
+                    for n in range(V):
+                        if n!=i:
+                        #   w parameters
+                            coef=0
+                            cost=psi[n][i][row][col]
+                            coef=size*cost
+                            ds5_w_key=ds5_w_names[i][n][o][row][col]    
+                            ds5_c1_coeff[ds5_w_key]=str(coef)   
+                        #   y parameters
+                            coef=0
+                            cost=h[n][i][o][row][col]
+                            coef=cost
+                            ds5_y_key=ds5_y_names[i][n][o][row][col]    
+                            ds5_c1_coeff[ds5_y_key]=str(coef)  
 
 
-def dwc_step5_build_constraintA_coeff(i):       
+
+def dwc_step5_build_constraintA1_coeff(i):       
     """
-        Constraint A: Capacity constraints
+        Constraint A: Local Capacity constraints for x that are not fixed
     """
     for row in range(Rows):
         for col in range(Cols):
-            global ds5_constraintA_coeff
-            ds5_constraintA_coeff[i][row][col]={}
+            global ds5_constraintA1_coeff
+            ds5_constraintA1_coeff[i][row][col]={}
 
             for o in range(objects_number):
-                xcoef=s[o]
-                key=ds5_x_names[i][o][row][col]
-                (ds5_constraintA_coeff[i][row][col])[key]=xcoef   
+                if dwc_step5_check_if_object_is_fixed(i,o)==False: 
+                    key=ds5_x_names[i][o][row][col]
+                    if key not in ds5_x_fixed[i]:
+                        (ds5_constraintA1_coeff[i][row][col])[key]=s[o]   
 
+def dwc_step5_build_constraintA2_coeff(i):       
+    """
+        Constraint A: Capacity constraints for remote n
+    """
+    for row in range(Rows):
+        for col in range(Cols):
+            global ds5_constraintA2_coeff
+            for n in range (V):
+                ds5_constraintA2_coeff[i][n][row][col]={}
+                for o in range(objects_number):
+                    if dwc_step5_check_if_object_is_fixed(i,o)==False: 
+                        w_key=ds5_w_names[i][n][o][row][col]
+                        coeff=s[o]
+                        (ds5_constraintA2_coeff[i][n][row][col])[w_key]=coeff  
 
-def dwc_step5_build_constraintA_bound(i):
-       
+def dwc_step5_build_constraintA1_bound(i):
+    """ Bound because others stored to i"""   
     for row in range (Rows):
         for col in range (Cols): 
             capacity_promised=0
-            for o in range(objects_number): 
+            for o in range(objects_number):
                 for n in range(V):                     
                     if ds4_w[n][i][o][row][col]>0:         
                         capacity_promised=capacity_promised+s[o]
-        ds5_constraintA_bound[i][row][col]= capacity_constraint[i][row][col]-capacity_promised          
+        ds5_constraintA1_bound[i][row][col]= capacity_constraint[i][row][col]-capacity_promised          
+
+def dwc_step5_build_constraintA2_bound(i):
+    """" Capacity constraint in remote cdn n"""   
+    for row in range (Rows):
+        for col in range (Cols): 
+            capacity_reserved=0
+            for n in range(V):             
+                if n!=i:        
+                    for o in range(objects_number):
+                        if ds4_w[i][n][o][row][col]>0:         
+                            capacity_reserved=capacity_reserved+s[o]
+                ds5_constraintA2_bound[i][n][row][col]= capacity_reserved    
 
 
-def dwc_step5_build_constraintB_coeff(i):    
+
+
+
+def dwc_step5_build_constraintB_coeff_and_bound(i):    
     """ 
      Constraint B:  Store only in one place constraint
          
     """
     for o in range(objects_number):
-        ds5_constraintB_coeff[i][o]={}
-        for row in range(Rows):
-            for col in range(Cols):
-                key=ds5_x_names[i][o][row][col]
-                (ds5_constraintB_coeff[i][o])[key]=1
-                for n in range(V):
-                    if n!=i:
-                        key=ds5_w_names[i][n][o][row][col]
-                        (ds5_constraintB_coeff[i][o])[key]=1
-                        key=ds5_y_names[i][n][o][row][col]
-                        (ds5_constraintB_coeff[i][o])[key]=1   
-                            
-def dwc_step5_build_constraintB_bound(i):
+        if dwc_step5_check_if_object_is_fixed(i,o)==False:
+            ds5_constraintB_bound[i][o]=1 
+            ds5_constraintB_coeff[i][o]={}
+            for row in range(Rows):
+                for col in range(Cols):
+                    key=ds5_x_names[i][o][row][col]
+                    (ds5_constraintB_coeff[i][o])[key]=1
+                    for n in range(V):
+                        if n!=i:
+                            key=ds5_w_names[i][n][o][row][col]
+                            (ds5_constraintB_coeff[i][o])[key]=1
+                            key=ds5_y_names[i][n][o][row][col]
+                            (ds5_constraintB_coeff[i][o])[key]=1   
+                                
+                                    
 
-    for o in range(objects_number):
-        ds5_constraintB_bound[i][o]=1                            
-
-def dwc_step5_build_constraintC_coeff(i):
+def dwc_step5_build_constraintC_coeff_and_bound(i):
     """ Constraint C: In order to ask for an object from CDN i he needs to have it"""
     for o in range(objects_number):
-        for row in range(Rows):
-            for col in range(Cols):
-                for n in range(V):
-                    if n!=i:
-                        ds5_constraintC_coeff[i][n][o][row][col]={}
-                        y_key=ds5_y_names[i][n][o][row][col]
-                        (ds5_constraintC_coeff[i][n][o][row][col])[y_key]=1      
-                        x_key=ds5_x_names[n][o][row][col]
-                        (ds5_constraintC_coeff[i][n][o][row][col])[x_key]=-1
-                        for j in range(V):
-                            if j!=i and j!=n:
-                                w_key=ds5_w_names[n][j][o][row][col]
-                                (ds5_constraintC_coeff[i][n][o][row][col])[w_key]=-1  
-                                
-                                        
-def dwc_step5_build_constraintC_bound(i):
-    
-    for n in range(V):
-        for o in range(objects_number):
+        if dwc_step5_check_if_object_is_fixed(i,o)==False: 
             for row in range(Rows):
                 for col in range(Cols):
-                    ds5_constraintC_bound[i][n][o][row][col]=0                                        
+                    for n in range(V):
+                        if n!=i:
+                            ds5_constraintC_coeff[i][n][o][row][col]={}
+                            y_key=ds5_y_names[i][n][o][row][col]
+                            (ds5_constraintC_coeff[i][n][o][row][col])[y_key]=1
+                            x_remote_key=ds5_x_names[n][o][row][col]
+                            if x_remote_key in ds5_x_fixed[n]:
+                                ds5_constraintC_bound[i][n][o][row][col]=1
+                            else:
+                                ds5_constraintC_bound[i][n][o][row][col]=0
+
                                         
                                         
-def dwc_step5_build_constraintD_coeff(i):  
-    """ kEEP Hosting objects that are requested"""    
-    for o in range(objects_number):
-        ds5_constraintD_coeff[i][o]={}
-        for n in range (V):
-            for row in range(Rows):
-                for col in range(Cols):
-                    if ds4_y[n][i][o][row][col]>0:
-                        key=ds5_x_names[i][o][row][col]
-                        ds5_constraintD_coeff[i][o][key]=1
-                        print("**********************************i keep hosting x",i,key)                                                
+                                              
                             
-                    
-                    
-def dwc_step5_build_constraintD_bound(i):  
-    """ kEEP Hosting objects that are requested"""    
-    for o in range(objects_number):
-        ds5_constraintD_coeff[i][o]=1
+              
         
+        
+        
+def dwc_step5_build_cplex_model(i):
+    temp_obj_coeff={}
+    
+    ds5_my_obj.clear()
+    ds5_my_colnames.clear()
+    ds5_my_ub.clear()
+    ds5_my_lb.clear()
+    ds5_my_rownames.clear()
+    ds5_my_rhs.clear()
+    ds5_my_rows.clear()
+    
+    """ B1: Objective function """
+    for b1_key,b1_value in ds5_b1_coeff.items():
+        if b1_key in temp_obj_coeff:
+            current_value=int(temp_obj_coeff[b1_key])
+            temp_obj_coeff[b1_key]=current_value+float(b1_value)
+        else:
+            temp_obj_coeff[b1_key]=float(b1_value)
             
+#   
+    """ C1: Cost function """          
+    for c1_key,c1_value in ds5_c1_coeff.items():
+        if c1_key in temp_obj_coeff:
+            current_value=float(temp_obj_coeff[c1_key])
+            new_value=current_value-float(c1_value)
+            temp_obj_coeff[c1_key]=new_value
+        else:
+            value=-1*float(c1_value)
+            temp_obj_coeff[c1_key]=value 
+    
+
+    """ Prepare the final list"""    
+    for key,value in temp_obj_coeff.items():    
+        ds5_my_obj.append(int(value))  
+        ds5_my_colnames.append(key)
+     
+#     mmm=0
+#     for kkk in my_obj:
+#         print("My_COLNAME:",my_colnames[mmm], "My_objective", kkk)
+#         mmm = mmm+1
+                    
+    print("------------------------ds5_my_obj i:",i)                
+    pprint.pprint(ds5_my_obj)                
+    print("------------------------ds5 my_colnames:")                
+    pprint.pprint(ds5_my_colnames)                
+    
+    """Variables Bounds """
+    global ds5_my_ctype
+    ds5_my_ctype=""
+    index=0    
+    while index <len(ds5_my_colnames):
+        ds5_my_lb.append(0.0)
+        ds5_my_ub.append(1.0)
+        ds5_my_ctype = ds5_my_ctype+"I"
+        index=index+1
+    
+#     print("my_lb")
+#     pprint.pprint(my_lb)
+#     print("my_temp_ub")
+#     pprint.pprint(my_temp_ub)
+#     print("my_ctype")
+#     pprint.pprint(my_ctype)
+
+    """ Constraint A1 set"""
+    for row in range(Rows):
+        for col in range(Cols):
+            constrainta_row=[]
+            lista_coeff_key=[]
+            lista_coeff_value=[]
+            ds5_my_rhs.append(ds5_constraintA1_bound[i][row][col])
+            identifier="ds5_rowA1["+str(i)+"]["+str(row)+"]["+str(col)+"]"
+            ds5_my_rownames.append(identifier)
+                
+            for key,value in ds5_constraintA1_coeff[i][row][col].items():
+                lista_coeff_key.append(key)
+                lista_coeff_value.append(value)    
+            constrainta_row.append(lista_coeff_key)
+            constrainta_row.append(lista_coeff_value)
+            ds5_my_rows.append(constrainta_row)
+    
+    """ Constraint A2 set"""
+    for row in range(Rows):
+        for col in range(Cols):
+            constrainta2_row=[]
+            lista2_coeff_key=[]
+            lista2_coeff_value=[]
+            for n in range (V):
+                if i!=n:
+                    ds5_my_rhs.append(ds5_constraintA2_bound[i][n][row][col])
+                    identifier="ds5_rowA2["+str(i)+"]["+str(n)+"]["+str(row)+"]["+str(col)+"]"
+                    ds5_my_rownames.append(identifier)
+                        
+                    for key,value in ds5_constraintA2_coeff[i][n][row][col].items():
+                        lista2_coeff_key.append(key)
+                        lista2_coeff_value.append(value)    
+                    constrainta2_row.append(lista2_coeff_key)
+                    constrainta2_row.append(lista2_coeff_value)
+                    ds5_my_rows.append(constrainta2_row)           
+
+    """ Constraint B set"""
+    for o in range(objects_number):
+        if dwc_step5_check_if_object_is_fixed(i,o)==False:
+            identifier="ds5_rowB["+str(i)+"]["+str(o)+"]"
+            ds5_my_rownames.append(identifier)
+            ds5_my_rhs.append(ds5_constraintB_bound[i][o])
+            constraintb_row=[]
+            listb_coeff_key=[]
+            listb_coeff_value=[]
+            for key,value in ds5_constraintB_coeff[i][o].items():
+                listb_coeff_key.append(key)
+                listb_coeff_value.append(value)    
+            constraintb_row.append(listb_coeff_key)
+            constraintb_row.append(listb_coeff_value)
+            ds5_my_rows.append(constraintb_row)
+
+#     print("My row names with B")
+#     pprint.pprint(my_rownames)
+#     print("My constraints rows with B")
+#     pprint.pprint(my_rows)
+#     print("My rhs with B")
+#     pprint.pprint(my_rhs)
+
+    """ Constraint C set"""
+    for o in range(objects_number):
+        if dwc_step5_check_if_object_is_fixed(i,o)==False: 
+            for row in range(Rows):
+                for col in range(Cols):
+                    for n in range(V):
+                        if n!=i:
+                            constraintc_row=[]
+                            listc_coeff_key=[]
+                            listc_coeff_value=[]
+                            ds5_my_rhs.append(ds5_constraintC_bound[i][n][o][row][col])
+                            identifier="ds5_rowC["+str(i)+"]["+str(n)+"]["+str(o)+"]["+str(row)+"]["+str(col)+"]"
+                            ds5_my_rownames.append(identifier)
+                            
+                            for key,value in ds5_constraintC_coeff[i][n][o][row][col].items():
+                                listc_coeff_key.append(key)
+                                listc_coeff_value.append(value)    
+                            constraintc_row.append(listc_coeff_key)
+                            constraintc_row.append(listc_coeff_value)
+                            ds5_my_rows.append(constraintc_row)
+                                
+      
+
+                            
+#     print("My row names with C")
+#     pprint.pprint(my_rownames)
+#     print("My constraints rows with B")
+#     pprint.pprint(my_rows)
+#     print("My rhs with C")
+#     pprint.pprint(my_rhs)
+                            
+    """ My sense """
+    global ds5_my_sense
+    ds5_my_sense=""
+    index=0
+    while index <len(ds5_my_rows):
+        ds5_my_sense=ds5_my_sense+"L"
+        index=index+1
+                    
 def dwc_find_benefit_b1(i,x_var,w_var,y_var):
     x_benefit=0
     w_benefit=0
@@ -1839,25 +2022,25 @@ def dwc_caclulate_net_benefit(x_var,w_var,y_var):
         print("****** Provider:", i)
         b1_results=dwc_find_benefit_b1(i,x_var,w_var,y_var)
         b1_benefit=b1_results["benefit"]
-        b1_x_benefit=float(b1_results["x_benefit"])
-        b1_w_benefit=float(b1_results["w_benefit"])
-        b1_y_benefit=float(b1_results["y_benefit"])
-        print("(b1-x-w-y):",b1_benefit,b1_x_benefit,b1_w_benefit,b1_y_benefit)
-        b2_w_benefit=dwc_find_benefit_b2(i,w_var) 
-        b3_y_benefit=dwc_find_benefit_b3(i,y_var) 
+#         b1_x_benefit=float(b1_results["x_benefit"])
+#         b1_w_benefit=float(b1_results["w_benefit"])
+#         b1_y_benefit=float(b1_results["y_benefit"])
+#         print("(b1-x-w-y):",b1_benefit,b1_x_benefit,b1_w_benefit,b1_y_benefit)
+        b2_benefit=dwc_find_benefit_b2(i,w_var) 
+        b3_benefit=dwc_find_benefit_b3(i,y_var) 
         
         c1_results=dwc_find_cost_c1(i,x_var,w_var,y_var)                               
         c1_cost=c1_results["cost"]
-        c1_x_cost=c1_results["x_cost"]
-        c1_w_cost=c1_results["w_cost"]
-        c1_y_cost=c1_results["y_cost"]
-        print("(c1-x-w-y):",c1_cost,c1_x_cost,c1_w_cost,c1_y_cost)
-        c2_w_cost=dwc_find_cost_c2(i,w_var)
-        print()
-        print("(b1-b2-b3-c1-c2):",b1_benefit,b2_w_benefit,b3_y_benefit,c1_cost,c2_w_cost)
-        print("w3 allocated):",ds3_w_number_allocated)
-        print("y3 allocated):",ds3_y_number_allocated)
-        print("w4 allocated):",ds4_w_number_allocated)
+#         c1_x_cost=c1_results["x_cost"]
+#         c1_w_cost=c1_results["w_cost"]
+#         c1_y_cost=c1_results["y_cost"]
+#         print("(c1-x-w-y):",c1_cost,c1_x_cost,c1_w_cost,c1_y_cost)
+        c2_cost=dwc_find_cost_c2(i,w_var)
+#         print()
+#         print("(b1-b2-b3-c1-c2):",b1_benefit,b2_w_benefit,b3_y_benefit,c1_cost,c2_w_cost)
+#         print("w3 allocated):",ds3_w_number_allocated)
+#         print("y3 allocated):",ds3_y_number_allocated)
+#         print("w4 allocated):",ds4_w_number_allocated)
         
         total_benefit=total_benefit+(b1_benefit+b2_benefit+b3_benefit)  
         total_cost=total_cost+c1_cost+c2_cost
@@ -1887,6 +2070,8 @@ def solver(sim_type,slot):
             populatebyrows(my_prob,nc_my_obj,nc_my_lb,nc_my_ub,nc_my_ctype,nc_my_colnames,nc_my_rows,nc_my_sense,nc_my_rhs,nc_my_rownames)
         elif sim_type=="dwc_s3":
             populatebyrows(my_prob,ds3_my_obj,ds3_my_lb,ds3_my_ub,ds3_my_ctype,ds3_my_colnames,ds3_my_rows,ds3_my_sense,ds3_my_rhs,ds3_my_rownames)
+        elif sim_type=="dwc_s5":
+            populatebyrows(my_prob,ds5_my_obj,ds5_my_lb,ds5_my_ub,ds5_my_ctype,ds5_my_colnames,ds5_my_rows,ds5_my_sense,ds5_my_rhs,ds5_my_rownames)
             
         my_prob.solve()
     except CplexError as exc:
@@ -1918,7 +2103,9 @@ def solver(sim_type,slot):
             elif sim_type=="nc":
                 result_set[nc_my_colnames[j]]=solution_values[j]
             elif sim_type=="dwc_s3":
-                result_set[ds3_my_colnames[j]]=solution_values[j]    
+                result_set[ds3_my_colnames[j]]=solution_values[j]
+            elif sim_type=="dwc_s5":
+                result_set[ds5_my_colnames[j]]=solution_values[j]       
             
             
     pprint.pprint(result_set)
@@ -1994,6 +2181,39 @@ def process_results(sim_type,results_set):
                 ds3_y[i][n][o][r][c]=value
                 ds3_y_number_allocated[i][n]+=1
     #             print (key,ds3_w[i][n][o][r][c])
+    elif sim_type=="dwc_s5":
+        for key,value in results_set.items():
+            if key[0:5]=="ds5_x":
+                key1=key.replace("]"," ")
+                param=key1.split("[")
+                i=int(param[1])
+                o=int(param[2])
+                r=int(param[3])
+                c=int(param[4])
+                ds5_x[i][o][r][c]=value
+                ds5_x_number_allocated[i]+=1
+            if key[0:5]=="ds5_w":
+                key1=key.replace("]"," ")
+                param=key1.split("[")
+                i=int(param[1])
+                n=int(param[2])
+                o=int(param[3])
+                r=int(param[4])
+                c=int(param[5])
+                ds5_w[i][n][o][r][c]=value
+                ds5_w_number_allocated[i][n]+=1
+    #             print (key,ds3_w[i][n][o][r][c])
+            elif key[0:5]=="ds5_y":
+                key1=key.replace("]"," ")
+                param=key1.split("[")
+                i=int(param[1])
+                n=int(param[2])
+                o=int(param[3])
+                r=int(param[4])
+                c=int(param[5])
+                ds5_y[i][n][o][r][c]=value
+                ds5_y_number_allocated[i][n]+=1
+    #             print (key,ds3_w[i][n][o][r][c])
 
 #     pprint.pprint(ds1_x)
 #     pprint.pprint(ds3_w)
@@ -2038,7 +2258,7 @@ def simulator():
         """ SIMULATION C: Distributed with Collaboration (DWC) """
         sim_type="dwc"
         util_print_new_simtype(sim_type)
-        dwc_reset_model_variables()
+        dwc_step3_reset_model_variables()
         
         
         #  STEP 1: calculate x
@@ -2054,7 +2274,6 @@ def simulator():
             dwc_step3_build_cplex_model(i)
             s3_solution=solver(sim_type,slot)
             s3_results_sets.append(s3_solution["result_set"])
-            
             process_results(sim_type,s3_solution["result_set"])
 #             s3_nb=dwc_step3_calculate_net_benefit(i,s3_solution["result_set"])
 #             s3_total_net_benefit=s3_total_net_benefit+s3_nb
@@ -2068,20 +2287,20 @@ def simulator():
         dwc_step4_solve_storage_violations(s3_results_sets)
         s4_total_net_benefit=dwc_caclulate_net_benefit(ds1_x,ds4_w,ds3_y)
         dwc_s4_update_variables_values()
-        file = open("results.txt","a")
-        s1="\n    cwc:"+str(cwc_solution["net_benefit"])
-        s2="\n     nc:"+str(nc_solution["net_benefit"])
-        s3="\n dwc_s3:"+str(s3_total_net_benefit)
-        s4="\n dwc_s4:"+str(s4_total_net_benefit)
-        message="-slot-"+str(slot) + s1 + s2 + s3 + s4
-        
-        print (message)
-        
-        
-        file.write(message)
-        message="\n"
-        file.write(message)
-        file.close()
+#         file = open("results.txt","a")
+#         s1="\n    cwc:"+str(cwc_solution["net_benefit"])
+#         s2="\n     nc:"+str(nc_solution["net_benefit"])
+#         s3="\n dwc_s3:"+str(s3_total_net_benefit)
+#         s4="\n dwc_s4:"+str(s4_total_net_benefit)
+#         message="-slot-"+str(slot) + s1 + s2 + s3 + s4
+#         
+#         print (message)
+#         
+#         
+#         file.write(message)
+#         message="\n"
+#         file.write(message)
+#         file.close()
         
         #  STEP 5: run again optimization
         
@@ -2089,10 +2308,30 @@ def simulator():
         # B1+B2+B3-C1-C2, s.t. A,B,C plus following constraints:
         # constraint D, that was requested must remain-new : 1<=x<=1
         # Constraint A: bounds must be updated, based on what n advertised in the previous step
+        sim_type="dwc_s5"
+        s5_total_net_benefit=0
+        s5_results_sets=[]
+        dwc_step5_reset_variables()
+        dwc_step5_fix_requested_x()
+        dwc_step5_fix_requested_y()
+        
         for i in range(V):
             dwc_step5_build_model(i)
+            dwc_step5_build_cplex_model(i)
+            s5_solution=solver(sim_type,slot)
+            s5_results_sets.append(s5_solution["result_set"])
+            process_results(sim_type,s5_solution["result_set"])
+            
+        s5_total_net_benefit=dwc_caclulate_net_benefit(ds5_x,ds5_w,ds5_y)
+            
+        s1="\n    cwc:"+str(cwc_solution["net_benefit"])
+        s2="\n     nc:"+str(nc_solution["net_benefit"])
+        s3="\n dwc_s3:"+str(s3_total_net_benefit)
+        s4="\n dwc_s4:"+str(s4_total_net_benefit)
+        s5="\n dwc_s5:"+str(s5_total_net_benefit)
         
-#         dwc_step5_find_storage_used_remotely(i,n)
+        message="-slot-"+str(slot) + s1 + s2 + s3 + s4+s5
+        print (message)
         
         slot=slot+1
         

@@ -1,19 +1,14 @@
-def cwc_build_constraintA_coeff():       
-    """
-        Constraint A: Capacity constraints
-    """
-    for i in range(V):
+""" Constraint C: In order to ask for an object from CDN i he needs to have it"""
+for o in range(objects_number):
+    if dwc_step5_check_if_object_is_fixed(i,o)==False: 
         for row in range(Rows):
             for col in range(Cols):
-                global constraintA_coeff
-                constraintA_coeff[i][row][col]={}
-    
-                for o in range(objects_number):
-                    xcoef=s[o]
-                    key=x_names[i][o][row][col]
-                    (constraintA_coeff[i][row][col])[key]=xcoef   
-                    for n in range(V):
-                        if n!=i:
-                            xcoef=s[o]
-                            key=w_names[n][i][o][row][col]
-                            (constraintA_coeff[i][row][col])[key]=xcoef
+                for n in range(V):
+                    ds5_constraintC_coeff[i][n][o][row][col]={}
+                    x_remote_key=ds5_x_names[n][o][row][col]
+                    if n!=i and x_remote_key in ds5_x_fixed[n]:
+                        y_key=ds5_y_names[i][n][o][row][col]
+                        (ds5_constraintC_coeff[i][n][o][row][col])[y_key]=1
+                        ds5_constraintC_bound[i][n][o][row][col]=1
+                    else:
+                        ds5_constraintC_bound[i][n][o][row][col]=0

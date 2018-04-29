@@ -914,7 +914,7 @@ def nc_build_cplex_model():
 
 
 # ******************** Case C: Distributed with collaboration ***********************
-def dwc_reset_model_variables():          
+def dwc_step3_reset_model_variables():          
     # variables  
     for i in range(V):
         for o in range(objects_number): 
@@ -1474,7 +1474,7 @@ def simulator():
         print ("   %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% ")
         print ("   -- simulation with collaboration: distributed --")
         
-        dwc_reset_model_variables()
+        dwc_step3_reset_model_variables()
         dwc_step1_load_xd_from_nc()
         
         total_net_benefit=0
