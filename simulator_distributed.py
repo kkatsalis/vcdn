@@ -232,7 +232,7 @@ def initialize_psi():
         for n in range(V):
             for row in range (Rows):
                 for col in range (Cols):
-                    value=c[n][row][col]*(1.2+n)
+                    value=c[n][row][col]*(1.1+n)
                     psi[i][n][row][col]=value
     
 #     pprint.pprint(psi)
@@ -280,9 +280,8 @@ def initialize_capacity_constraints():
             for col in range (Cols):
                 capacity_constraint[i][row][col]=edge_storage_limit*(col+0.2)
                 if i==0 and col==Cols-1:
-                    capacity_constraint[i][row][col]=100
-                else:
-                    capacity_constraint[i][row][col]=20
+                    capacity_constraint[i][row][col]=1000
+         
 
 
 
@@ -1667,7 +1666,7 @@ def dwc_step5_build_constraintA1_bound(i):
                 for n in range(V):                     
                     if ds4_w[n][i][o][row][col]>0:         
                         capacity_promised=capacity_promised+s[o]
-        ds5_constraintA1_bound[i][row][col]= capacity_constraint[i][row][col]-capacity_promised          
+            ds5_constraintA1_bound[i][row][col]= capacity_constraint[i][row][col]-capacity_promised          
 
 def dwc_step5_build_constraintA2_bound(i):
     """" Capacity constraint in remote cdn n"""   
@@ -1773,10 +1772,7 @@ def dwc_step5_build_cplex_model(i):
 #         print("My_COLNAME:",my_colnames[mmm], "My_objective", kkk)
 #         mmm = mmm+1
                     
-    print("------------------------ds5_my_obj i:",i)                
-    pprint.pprint(ds5_my_obj)                
-    print("------------------------ds5 my_colnames:")                
-    pprint.pprint(ds5_my_colnames)                
+              
     
     """Variables Bounds """
     global ds5_my_ctype
@@ -1937,18 +1933,17 @@ def dwc_find_benefit_b2(i,w_var):
 
 def dwc_find_benefit_b3(i,y_var):
     benefit=0                       
-    for i in range(V):
-        for o in range(objects_number):
-            for row in range(Rows):
-                for col in range(Cols):
-                    for n in range(V):
-                        if n!=i:
-                            coef=0
-                            for m in range(M):
-                                rate=r[n][o][row][m]
-                                benefit=h[i][n][o][row][col]
-                                coef=coef+rate*benefit
-                            benefit=benefit+y_var[n][i][o][row][col]*coef
+    for o in range(objects_number):
+        for row in range(Rows):
+            for col in range(Cols):
+                for n in range(V):
+                    if n!=i:
+                        coef=0
+                        for m in range(M):
+                            rate=r[n][o][row][m]
+                            benefit=h[i][n][o][row][col]
+                            coef=coef+rate*benefit
+                        benefit=benefit+y_var[n][i][o][row][col]*coef
     return benefit
 
 def dwc_find_cost_c1(i,x_var,w_var,y_var):
@@ -2019,7 +2014,6 @@ def dwc_caclulate_net_benefit(x_var,w_var,y_var):
     
     for i in range(V):
         print()
-        print("****** Provider:", i)
         b1_results=dwc_find_benefit_b1(i,x_var,w_var,y_var)
         b1_benefit=b1_results["benefit"]
 #         b1_x_benefit=float(b1_results["x_benefit"])
@@ -2190,7 +2184,7 @@ def process_results(sim_type,results_set):
                 o=int(param[2])
                 r=int(param[3])
                 c=int(param[4])
-                ds5_x[i][o][r][c]=value
+                ds5_x[i][o][r][c]=1
                 ds5_x_number_allocated[i]+=1
             if key[0:5]=="ds5_w":
                 key1=key.replace("]"," ")
@@ -2200,7 +2194,7 @@ def process_results(sim_type,results_set):
                 o=int(param[3])
                 r=int(param[4])
                 c=int(param[5])
-                ds5_w[i][n][o][r][c]=value
+                ds5_w[i][n][o][r][c]=1
                 ds5_w_number_allocated[i][n]+=1
     #             print (key,ds3_w[i][n][o][r][c])
             elif key[0:5]=="ds5_y":
@@ -2211,7 +2205,7 @@ def process_results(sim_type,results_set):
                 o=int(param[3])
                 r=int(param[4])
                 c=int(param[5])
-                ds5_y[i][n][o][r][c]=value
+                ds5_y[i][n][o][r][c]=1
                 ds5_y_number_allocated[i][n]+=1
     #             print (key,ds3_w[i][n][o][r][c])
 
@@ -2244,7 +2238,7 @@ def simulator():
         cwc_build_model() 
         cwc_build_cplex_model()
         cwc_solution=solver(sim_type,slot)
-        
+        process_results(sim_type, cwc_solution["result_set"])
         """ SIMULATION B: Centralized without Collaboration (NC) """
 
         sim_type="nc"
@@ -2324,19 +2318,40 @@ def simulator():
             
         s5_total_net_benefit=dwc_caclulate_net_benefit(ds5_x,ds5_w,ds5_y)
             
-        s1="\n    cwc:"+str(cwc_solution["net_benefit"])
-        s2="\n     nc:"+str(nc_solution["net_benefit"])
-        s3="\n dwc_s3:"+str(s3_total_net_benefit)
-        s4="\n dwc_s4:"+str(s4_total_net_benefit)
-        s5="\n dwc_s5:"+str(s5_total_net_benefit)
+        s1="-    cwc:"+str(cwc_solution["net_benefit"])
+        s2="-     nc:"+str(nc_solution["net_benefit"])
+        s3="- dwc_s3:"+str(s3_total_net_benefit)
+        s4="- dwc_s4:"+str(s4_total_net_benefit)
+        s5="- dwc_s5:"+str(s5_total_net_benefit)
+        s6="- dwc_diff:"+str(cwc_solution["net_benefit"]-s5_total_net_benefit)+"\n"
         
-        message="-slot-"+str(slot) + s1 + s2 + s3 + s4+s5
+        file = open("results.txt","a")
+        message="-slot-"+str(slot) + s1 +s2 + s3 + s4+s5+s6
         print (message)
         
+        file.write(message)
+        file.close()
         slot=slot+1
         
         
-       
+def dwc_step5_check_for_violation():
+    for i in range (V):
+        for o in range(objects_number):
+            for row in range(Rows):
+                for col in range(Cols):
+                    if ds5_x[i][o][row][col]>0:
+                        for n in range(V):
+                            if n!=i:
+                                for row2 in range(Rows):
+                                    for col2 in range(Cols):
+                                        if ds5_w[i][n][o][row2][col2]>0:
+                                            print ("w VIOLATION")
+                                        if ds5_y[i][n][o][row2][col2]>0:
+                                            print ("y VIOLATION")
+                
+
+     
+
         
 def util_print_new_simtype(sim_type):
     print()    

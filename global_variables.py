@@ -14,11 +14,11 @@ global edge_storage_limit
 
 V=3
 M=1
-objects_number=1000
+objects_number=500
 Rows=1
 Cols=2
-default_object_size=10
-slots_number=1
+default_object_size=5
+slots_number=50
 zipf_parameter=2.2
 edge_benefit=1000
 edge_cost=2
